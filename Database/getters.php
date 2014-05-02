@@ -9,24 +9,23 @@
     /** Karl
       *@param query - single SELECT query to database
       *@return results of query as an array of asociative arrays
-                     where eah associative array is a record from the DB
+                     where eah associative array is a record from the DB + null on success
+                On Failure, returns null + error message
       *@note helper
       *@spec returns null on error
-      *@caller
+      *@caller EVERY OTHER FUNCTION IN HERE
       */
     function retrieve( $query ) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return null;
+            return array( null, "Error: cannot connect to database. Try again later<br>" );
         }
         
         $result= $mysqli->query( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return null;
+            return array( null,"$mysqli->error<br>" ) ;
         }
         $records= array();//array of associative arrays
         $entry= $result->fetch_assoc();
@@ -35,7 +34,7 @@
             $entry= $result->fetch_assoc();               
         }
         $mysqli->close();
-        return $records;
+        return array( $records, null );
     }
  
  
@@ -43,7 +42,7 @@
     /************ START VIDEO GETTERS */
     /** KARL
       *@param memberID - (valid?) member id
-      *@return the videos (videoIDs) associated with 'memberID'
+      *@return the videos (videoIDs) associated with 'memberID' + null on success, null + error message on failure
       *@spec if memberID is not in table, returns empty array
       *@calling retrieve
       */
@@ -81,7 +80,7 @@
     
     /** KARL
       *@param videoID - target video (its ID)
-      *@return all information associated with videoID,
+      *@return all information associated with videoID, (+ null)
                except members that performed in it,
                in the following format:
                
@@ -93,15 +92,14 @@
                vidInfo["performanceLocation"] =>
                vidInfo["performanceDate"] =>
 
-               on mysqli error, return null
+               on mysqli error, return (null, error message)
                
       */
     function getVideoInfo($videoID) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return null;
+            return array( null, "Error: cannot connect to database. Try again later<br>");
         }
         $vidInfo= array();//will be mapping: [relevantVideoField] => [correspondingValueInField]
         //query for retrieving all content in Videos and Performances tables
@@ -122,9 +120,8 @@
             //schema guarantees at most one result row.
                 
         } else {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return null;
+            return array( null, "$mysqli->error<br>" );
         }
         if ( $genres ) {
             $row= $genres->fetch_row();
@@ -137,19 +134,18 @@
             }
                 
         } else {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return null;
+            return array( null, "$mysqli->error<br>" );
         }
         $mysqli->close();
-        return $vidInfo;
+        return array( $vidInfo, null );
     }  
     
     /** Karl
       *@param videoID - target video
       *@return Videos records of all videos 
-      *               that have at least one genre in common with target
-      *@spec returns null on error, empty array on no matches
+      *               that have at least one genre in common with target + null
+      *@spec returns (null , error message) on error, (empty array,null) on no matches
       *@calling retrieve
       */
     function getRelatedVideos($videoID) {
@@ -161,8 +157,7 @@
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return null;
+            return array( null, "Error: cannot connect to database. Try again later<br>" );
         }
         //this query gets all the genreIDs linked to this video
         $query= "SELECT genreID 
@@ -196,8 +191,8 @@
         
      /** Karl
       *@param memberID - target video
-      *@return videos (videoIDs)  choreographed by target member
-      *@spec returns null on error
+      *@return videos (videoIDs)  choreographed by target member + null
+      *@spec returns (null, error message) on error
       *@calling retrieve
       */
     function getVidsChoreographedByMember($memberID) {
@@ -213,10 +208,10 @@
     
     /** Karl
       *@param videoID - target video
-      *@return members that appear in/are linked to the target video
+      *@return members that appear in/are linked to the target video + null
                Specifically, returns member info from Members in MemberContactInfo
                in an array where [index] => [memberinfoField] => [value]
-      *@spec returns null on error, empty array on no matches
+      *@spec returns (null, error message) on error, (empty array, null) on no matches
       *@calling retrieve
       */
     function getMembersForVideo($videoID) {
@@ -234,7 +229,7 @@
     /** KARL
       *@param memberID - target member
       *@return all info corresponding to 'memberID'
-              from Members, MemberContactInfo, MemberHistory
+              from Members, MemberContactInfo, MemberHistory (+ null)
               in the following format:
               
               memberInfo["idMembers"] => same as memberID
@@ -258,13 +253,14 @@
               memberInfo["country"] =>
               memberInfo["state"] =>
               memberInfo["city"] =>
+              
+              On error, return (null, error message)
       */ 
     function getMemberInfo($memberID) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return null;
+            return array( null, "Error: cannot connect to database. Try again later<br>" );
         }
         //query for retrieving all of this member's info from Members and MemberContactInfo
         $query= "SELECT * 
@@ -286,9 +282,8 @@
             $memberInfo= $memberNContactInfo->fetch_assoc();
             //schema should guarante at most one result.   
         } else {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return null;
+            return array( null, "$mysqli->error<br>" );
         }
         
         if ( $memberHistory ) {
@@ -300,12 +295,11 @@
                 $row= $memberHistory->fetch_assoc();
             }
         } else {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return null;
+            return array( null, "$mysqli->error<br>" );
         }
         $mysqi->close();
-        return $memberInfo;
+        return array( $memberInfo, null );
     }
     
     /** Karl
@@ -319,8 +313,8 @@
     
     /** Karl
       *@param videoID - target video
-      *@return members (memberIDs) who choreograohed target video
-      *@spec returns null on error
+      *@return members (memberIDs) who choreograohed target video + null
+      *@spec returns (null, error message) on error
       *@calling retrieve
       */
     function getChoreographersOfVideo($videoID) {
@@ -334,8 +328,9 @@
     /******************** START PERFORMANCE GETTERS ***/
     
     /** Karl
-      *@return all performances from Performances table. Specifically, an array of associtaive
+      *@return all performances from Performances table + null. Specifically, an array of associtaive
       *     arrays such that [0] => ["PerformanceField"] => ["its value"]
+            on error, return (null, error message)
       *@caller addVideoForm, addForm
       *@calling retrieve
       */
@@ -346,8 +341,9 @@
     
     /** Karl
       *@param performanceID - target performance
-      *@return all videos of a given performance in an array such that
+      *@return all videos of a given performance  (+ null) in an array such that
                array[0] => [videoField] =>[value]
+               on error, return (null, error message)
       *@spec does not return dance genre information for the videos
       *@calling retrieve
       */
@@ -361,8 +357,9 @@
     /******************** START GENRE GETTERS ***/
     
     /** Karl
-      *@return all genres from Genres table. Specifically, an array of associtaive
+      *@return all genres from Genres table + null. Specifically, an array of associtaive
       *     arrays such that [0] => ["GenresField"] => ["Value"]
+            on error, return (null, error message)
       *@caller addVideoForm, addForm
       *@calling retrieve
       */
@@ -373,9 +370,9 @@
     
     /** Karl
       *@param videoID - target video
-      *@return Genres records that are linked to this video as an array
+      *@return Genres records that are linked to this video as an array + null
                such that array[0] => [GenresField] => [value]
-      *@spec returns null on errors, empty array if video has no associated genre
+      *@spec returns (null, error message) on errors, (empty array, null) if video has no associated genre
       *@calling retrieve
       */
     function getGenresInVideo($videoID) {
@@ -384,7 +381,7 @@
                  WHERE EXISTS (SELECT *
                                FROM GenresInVid
                                WHERE genreID = g.idGenres 
-                                     AND videoID = $videoID");
+                                     AND videoID = $videoID)";
          return retrieve( $query );
     }
     
@@ -393,9 +390,9 @@
     /******************* START PICTURE GETTERS ***/
     
     /** Karl
-      *@return all pictures from Pictures table. Specifically, an array of associtaive
+      *@return all pictures from Pictures table + null. Specifically, an array of associtaive
       *     arrays such that [0] => ["PicturesField"] => ["Value"]
-      *@spec returns null on error
+      *@spec returns (null, error message) on error
       *@calling retrieve
       */
     function getPictures() {
@@ -405,9 +402,9 @@
     
     /** Karl
       *@param performanceID - target performance
-      *@return pictures taken of that performance in an array such that
+      *@return pictures taken of that performance in an array (+ null) such that
                array[0]=> [PicturesField] => [value]
-      *@spec returns null on error, empty array if there are no pictures of
+      *@spec returns (null, error message) on error, (empty array, null) if there are no pictures of
              that performance (in DB, no Pictures record with matching 
              performanceID field)
       *@calling retrieve
@@ -422,9 +419,9 @@
     /********************************START POSITION GETTERS ***/
     
     /** Karl
-      *@return all records in Positions as array where
-                     array[0] => position record as associative array
-      *@spec returns null on error
+      *@return (all records in Positions as array where
+                     array[0] => position record as associative array, null)
+      *@spec returns (null, error message) on error
       *@calling retrieve
       */
     function getPositions() {

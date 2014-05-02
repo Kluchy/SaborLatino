@@ -9,7 +9,7 @@
     /** Karl
       *@param query - query inserting/deleting into/from relationship set
       *@spec executes input query (must be single query)
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@note helper
       *@caller remGenreFromVideo, addGenreToVideo, addChoreographerOfVid,
                     addMemToVideo, remMemFromVideo, remChoreographerOfVid,
@@ -22,17 +22,15 @@
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;
+        return null;
     }
     
     /******************** START VIDEO UPDATERS ***/
@@ -40,7 +38,7 @@
     /** Karl
       *@param genreID - genre to remove
       *@param videoID - video from which to remove it
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec removes relationship between given dance genre and video
       *@note  helper - use updateVidInfo instead
       *@caller updateVidInfo
@@ -56,7 +54,7 @@
     /** Karl
       *@param genreID - genre to add
       *@param videoID - video to add it to
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec adds relationship between given dance genre and video
       *@note  helper - use updateVidInfo instead
       *@caller updateVidInfo
@@ -71,17 +69,16 @@
       *@param videoID - target video
       *@param newInfo - associative array fieldToUpdate => newValue
       *                 fieldToUpdate can be in Videos, Performances or Genres
-      *@return 1 for success, 0 for failure
-      *@spec only updates entities that already exist
+      *@return null for success, error message otherwise
+      *@spec only updates entities that already exist, returns o and error if any one query fails
+      *@TODO explicitly start/end transaction?? -- do rollback on single error?
       *@calling remGenreFromVideo, addGenreToVideo
-      *TODO remove performances schema (use updatePerfInfo instead)
       */
     function updateVidInfo($videoID, $newInfo) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>.";
         }
         //the fields from Videos that can be updated through admin input
         $videosSchema= array( 'urlV', 'captionV' );
@@ -93,8 +90,7 @@
         foreach ( $newInfo as $fieldToUpdate => $newValue ) {
             if ( in_array( $fieldToUpdate, $videosSchema ) ) {
                 $videoQuery= $videoQuery.", $fieldToUpdate = \"$newValue\"";
-                     
-                
+                         
             } elseif ( $fieldToUpdate == 'removeGenre') {
                 $success= remGenreFromVideo( $newValue, $videoID );
             } elseif ( $fieldToUpdate == 'addGenre' ) {
@@ -103,17 +99,17 @@
             $videoQuery= $videoQuery." WHERE idVideos = $videoID";
             $result= $mysqli->query ( $videoQuery );
             if (!$result || !$success) {
-                echo "$mysqli->error<br>";
                 $mysqli->close();
-                return 0;
+                return "$mysqli->error<br>";
             }
-            $mysqli->close();
-            return 1;
+        }
+        $mysqli->close();
+        return  null;
     }
     
     /** Karl
       *@param videoID - target video
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting video should cascade deletes in GenresInVid and MembersInVid
       *@calling updateRelationship
       */
@@ -130,14 +126,13 @@
       *@param memberID - member to update
       *@param newInfo - associative array fieldToUpdate => newValue
                          fieldToUpdate can be in Members, MembersHistory or MemberContactInfo
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message otherwise
       */
     function updateMemInfo($memberID, $newInfo) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         //the fields from Members that can be updated through admin input
         $membersSchema= array( 'firstName', 'lastName', 'year', 'bio', 'pictureID' );
@@ -186,45 +181,41 @@
         $historyRes= $results->more_results();//null if there was no query
 
         if (!$memberRes || !$contactRes || !$historyID || !$historyRes) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }   
         $mysqli->close();
-        return 1;
+        return  null;
     }
     
     /** Karl
       *@param memberID - member whose picture we are changing
       *@param newPicID - valid picID from Pictures table 
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec assumes newPicID is already in Pictures table (else return 0)
       */
     function changeProfilePic($memberID, $newPicID) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         //check if newPicID is in database.
         $query= "SELECT * FROM Pictures WHERE idPictures = $newPicID;";
         $result= $mysqli->query ( $query );
         if ( ($result && $result->num_rows == 0) || !$result ) {
-            echo "Error: invalid picture id, or connection problem<br>";
             $mysqli->close();
-            return 0;
+            return "Error: invalid picture id, or connection problem<br>";
         }
         $query= "UPDATE Members SET pictureID = $newPicID 
                  WHERE idMembers = $memberID";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;
+        return null;
     }
         
     /** Karl
@@ -232,7 +223,7 @@
       *@param videoID - target video
       *@spec add a choreographing relationship between
                    target member and video
-      *@return 1 for success 0 otherwise
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */
     function addChoreographerOfVid($memberID,$videoID) {
@@ -245,7 +236,7 @@
      /** Karl
       *@param memberID - choreographer to unlink from video
       *@param videoID - video to unlink from choreographer
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec ChoreographersOfVid: removes relationship between given member and video
       *@calling updateRelationship
       */
@@ -259,7 +250,7 @@
     /** Karl
       *@param memberID - member to link to video
       *@param videoID - video to link to member
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec MembersInVid: adds relationship between given member and video
       *@calling updateRelationship
       */
@@ -273,7 +264,7 @@
     /** Karl
       *@param memberID - member to unlink from video
       *@param videoID - video to unlink from member
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec MembersInVid: removes relationship between given member and video
       *@calling updateRelationship
       */
@@ -286,7 +277,7 @@
     
     /** Karl
       *@param memberID - target member
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting member should cascade deletes in MemberContactInfo, 
              MemberHistory(?), MembersInVid
       *@calling updateRelationship
@@ -298,7 +289,7 @@
     
     /** Karl
       *@param historyID - target history
-      *@rerturn 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting history record does not cascade
       *@calling updateRelationship
       */
@@ -315,7 +306,7 @@
       *@param performanceID - target performance
       *@param newInfo - associative array fieldToUpdate => newValue
                           fieldToUpdate is in Performances
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */ 
     function updatePerfInfo($performanceID, $newInfo) {
@@ -330,7 +321,7 @@
     
     /** Karl
       *@param performanceID - target performance
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting performance does not cascade
       *@calling updateRelationship
       */
@@ -347,7 +338,7 @@
       *@param genreID - target genre
       *@param newInfo - associative array fieldToUpdate => newValue
                           fieldToUpdate is in Genres
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */ 
     function updateGenreInfo($genreID, $newInfo) {
@@ -360,7 +351,7 @@
     
     /** Karl
       *@param genreID - target genre
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting genre does ot cascade
       *@calling updateRelationship
       */
@@ -377,7 +368,7 @@
       *@param pictureID - target picture
       *@param newInfo - associative array fieldToUpdate => newValue
                           fieldToUpdate is actual field in Pictures
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */ 
     function updatePicInfo($pictureID, $newInfo) {
@@ -395,7 +386,7 @@
     
     /** Karl
       *@param pictureID
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec deleting picture record does not cascade 
              (should it permanently delete picture form diretory? right now, no)
       *@note To save space on host, make pictures just link to something like photobucket?
@@ -403,8 +394,14 @@
       */
     function deletePicture( $pictureID, $pathToFile ) {
         $query= "DELETE FROM Pictures WHERE idPictures = $pictureID";
-        success= updateRelationship( $query );
-        return (1 if success and unlink($pathToFile) else 0);    
+        $error= updateRelationship( $query );
+        if ( !$error and unlink($pathToFile) ) {
+            return null;
+        }
+        if ( $error ) {
+            return $error;  
+        }
+        return "Error: There was a problem deleting the picture from storage<br>"; 
     }
     
     /*   END PICTURE UPDATERS **********************************/
@@ -415,7 +412,7 @@
       *@param positionID - target position in Positions table
       *@param newInfo - associative array fieldToUpdate => newValue
                           only fieldToUpdate is 'position'
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */ 
     function updatePosition($positionID, $newInfo) {
@@ -424,14 +421,14 @@
         foreach ($newInfo as $fieldToUpdate => $newValue ) {
             $query= $query."$fieldToUpdate = \"$newValue\"";    
         }
-        $query=$query." WHERE idPositions = $positionID";
+        $query= $query." WHERE idPositions = $positionID";
         return updateRelationship( $query );
     }
     
     /** Karl
       *@param positonID - target position
       *@spec delete Positions entry matching positionID
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@calling updateRelationship
       */
     function deletePosition($positionID) {

@@ -27,8 +27,9 @@
     *@param typeList - array of references to entitiy sets with a unique ID field
     *                  e_g: "Members" in typeList refers to the Members table
     *@param mysqli - a mysqli object (open connection)
-    *@return associative array such that typeFromTypeList => maxID in corresponding table
-    *@caller addVideo, addMember, addPerformance, addGenre, addPicture(not written yet)
+    *@return associative array such that typeFromTypeList => maxID in corresponding table + null on success
+    *         On failure, returns null + error message
+    *@caller addVideo, addMember, addPerformance, addGenre, addPicture
     *@calling concatenate
     */
     function getMaxIDs( $typeList, $mysqli ) {
@@ -90,32 +91,31 @@
         }
         if ( $numResultsSeen < $numExpectedResults ) {
             //there was an error with the database
-            echo "Error: need to find out what could happen<br>";
-            return null;
+            return array( null, "Error: need to find out what could happen<br>" );
         }
-        return $ids; 
+        return array( $ids, null ); 
     }
           
     /******************** START VIDEO ADDERS ***/
     
     /** Karl
       *@param videoInfo - mapping: field2Insert => value2Insert
-      *@return 1 for success, 0 for failure
+      *@return null for success, error message on failure
       *@calling getMaxIDs
       */
     function addVideo($videoInfo) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         //get max idVideos from Videos table
-        $maxIDs= getMaxIDs( array("Videos"), $mysqli );
-        if ( !$maxIDs ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Videos"), $mysqli );
+        $maxIDS= $results[0];
+        $error= $results[1];
+        if ( $error ) {
             $mysqli->close();
-            return 0;
+            return $error;
         }
          
         $id= $maxIDs["maxVideoID"] + 1;
@@ -158,17 +158,16 @@
                 $numGenresSeen= $numGenresSeen + 1;
             }
             if ( $numGenresSeen < $numGenresInserted ) {
-                echo "Error adding one of the genres: $mysqli->error<br>";
                 $mysqli->close();
-                return 0;
+                return "Error adding one of the genres: $mysqli->error<br>";
             }
             //success
             $mysqli->close();
-            return 1;    
+            return null;    
         } else {
-            echo "Error adding video: $mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "Error adding video: $mysqli->error<br>";
+        }
     }
           
               /*  END VIDEO ADDERS **************************************/
@@ -177,7 +176,7 @@
     
     /** Karl TODO analyze the errors that could occur
       *@param memberInfo - mapping: field2Insert => Value2Insert
-      *@return 1 for success, 0 for failure
+      *@return null on success, error message on failure
       *@spec creates new history and contact records for this member
       *@spec position ID picked from a lst
       *calling getMaxIDs 
@@ -186,15 +185,15 @@
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
 
-        $maxIDs= getMaxIDs( array("Members","MembersHistory"), $mysqli );
-        if ( !$maxIDs ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Members","MembersHistory"), $mysqli );
+        $maxIDs= $result[0];
+        $error= $result[1];
+        if ( $error ) {
             $mysqli->close();
-            return 0;
+            return $error;
         }
         //get idMembers and idhistory for this new member  
         $id= $maxIDs["maxMemberID"] + 1;
@@ -243,12 +242,11 @@
         $historyInserted= $results->more_results();
         
         if ( !$memberInserted || !$contactInserted || !$historyInserted ) {
-            echo "Error: $mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "Error: $mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;
+        return null;
         
     }
     
@@ -258,22 +256,22 @@
     
     /** Karl
       *@param performanceInfo - mapping: [field2Insert] => [value2Insert]
-      *@return 1 for success, 0 otherwise
+      *@return null on success, error message on failure
       *@calling getMaxIDs
       */
     function addPerformance($performanceInfo) {
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         //get max idPerformances from Performances table
-        $maxID= getMaxIDs( array("Performances"), $mysqli );
-        if ( !$maxID ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Performances"), $mysqli );
+        $maxID= $result[0];
+        $error= $result[1];
+        if ( $error) {
             $mysqli->close();
-            return 0;
+            return $error;
         }
         $id= $maxID["maxPerformanceID"] + 1;
         $query= "INSERT INTO Performances VALUES idPerformances = $id";
@@ -282,12 +280,11 @@
         }
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;
+        return null;
         
     }
     
@@ -297,7 +294,7 @@
     
     /** Karl
       *@param genreInfo - single entry mapping: "genre" -> [genreName]
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message on failure
       *@adds one genre to the database, if not already there
       *@calling getMaxIDs
       */
@@ -305,41 +302,38 @@
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         $genreName= $genreInfo["genre"];
         
-        //if genreName is already in Genres table, do nothing, return 1
+        //if genreName is already in Genres table, do nothing, return null
         $query= "SELECT * FROM Genres WHERE genreName = $genreName";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0; 
+            return "$mysqli->error<br>"; 
         }
         if ( $res->num_rows == 1 ) {
-            echo "$genreName is already in the database<br>";
-            return 1;
+            return null;
         }
         //genreName must then be new. Insert it
-        $maxID= getMaxIDs( array("Genres"), $mysqli );
-        if ( !$maxID ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Genres"), $mysqli );
+        $maxID= $result[0];
+        $error= $result[1];
+        if ( $error ) {
             $mysqli->close();
-            return 0;
+            return $error;
         }   
         $id= $maxID["maxGenreID"] + 1;
         
         $query= "INSERT INTO Genres VALUES idGenres = $id, genreName = $genreName";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;
+        return null;
     }
     
     /*   END GENRE ADDERS  ***********************************/
@@ -348,7 +342,7 @@
     
     /** Karl
       *@param pictureInfo - single entry mapping: "urlP" -> [url]
-      *@return 1 for success, 0 otherwise
+      *@return null for success, error message otherwise
       *@spec adds one picture to the database
       *@calling getMaxIDs
       *@caller storePicture
@@ -358,15 +352,15 @@
         require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         //retrieve max idPictures from Pictures table
-        $maxID= getMaxIDs( array("Pictures"), $mysqli );
-        if ( !$maxID ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Pictures"), $mysqli );
+        $maxID= $result[0];
+        $error= $result[1];
+        if ( $error ) {
             $mysqli->close();
-            return 0;
+            return $error;
         }   
         $id= $maxID["maxPictureID"] + 1;
         
@@ -380,33 +374,30 @@
         }
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        echo "picture successfully uploaded<br>";
-        return 1;
+        return null;
     }
     
     /** Karl
       *@param tempLocation - the temporary path to the uploaded picture
       *@photoName - the title of the picture file uploaded
-      *@return 1 for success, 0  on failure
+      *@return null for success, error message  on failure
       *@spec move picture from temp storage to 'pictures' directory.
              if it does not exist, create it first
       *@calling addPicture
       *@note TODO: verify path logic
       */
-    function storePicture($tempLocation, $photoName, $pictureInfo){
-        if ( !file_exists ( "/pictures" ) {
+    function storePicture($tempLocation, $photoName, $pictureInfo) {
+        if ( !file_exists ( "/img" ) ) {
             //create folder
-            if ( !mkdir ( "/pictures" ) ) {
-                echo "Error creathing 'pictures' directory<br>";
-                return 0;
+            if ( !mkdir ( "/img" ) ) {
+                return "Error creating 'img' directory<br>";
             }
         }
-          move_uploaded_file( $tempLocation, "pictures/".$photoName );
+          move_uploaded_file( $tempLocation, "img/".$photoName );
           return addPicture( $pictureInfo );
     }
     
@@ -416,7 +407,7 @@
     
     /** Karl
       *@param positionInfo - single entry mapping: "title" -> [position]
-      *@return 1 for success or input titlt already existed, 0 otherwise
+      *@return null for success or input title already existed, error message otherwise
       *@adds one position to the database, if not already there
       *@calling getMaxIDs
       */
@@ -424,8 +415,7 @@
        require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
-            echo "Error: cannot connect to database. Try again later<br>.";
-            return 0;
+            return "Error: cannot connect to database. Try again later<br>";
         }
         $positionTitle= $positionInfo["title"];
         
@@ -433,32 +423,30 @@
         $query= "SELECT * FROM Positions WHERE position = $positionTitle";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0; 
+            return "$mysqli->error<br>"; 
         }
         if ( $res->num_rows == 1 ) {
-            echo "$positionTitle is already in the database<br>";
-            return 1;
+            return null;
         }
         //positionTitle must then be new. Insert it
-        $maxID= getMaxIDs( array("Positions"), $mysqli );
-        if ( !$maxID ) {
-            echo "$mysqli->error<br>";
+        $result= getMaxIDs( array("Positions"), $mysqli );
+        $maxID= $result[0];
+        $error= $result[1];
+        if ( $error ) {
             $mysqli->close();
-            return 0;
+            return $error;
         }   
         $id= $maxID["maxPositionID"] + 1;
         
         $query= "INSERT INTO Positions VALUES idPositions = $id, position = $positionTitle";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
-            echo "$mysqli->error<br>";
             $mysqli->close();
-            return 0;
+            return "$mysqli->error<br>";
         }
         $mysqli->close();
-        return 1;   
+        return null;   
     }
     
     /*   END POSITION ADDERS ***************************/
