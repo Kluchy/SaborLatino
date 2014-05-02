@@ -8,7 +8,7 @@
  * @param None
  * @return An array of associative arrays where each element is an associative array
  * associated with an eboard member
- * @caller displayMembers function - Uses this to diplay the eboard members first
+ * @caller displayMembers function - Uses this to dsiplay the eboard members first
  *  */
 function eboardMem() {
     $query = 'SELECT DISTINCT memberID FROM MembersHistory WHERE positionID = '/*positionID associated with eboard members */'';
@@ -19,7 +19,7 @@ function eboardMem() {
  * @param None
  * @return An array of associative arrays where each element is an associative array
  * associated with an head choreographer member
- * @caller displayMembers function - Uses this to diplay the eboard members first
+ * @caller displayMembers function - Uses this to display the eboard members first
  *  */
 function choreoMem() {
     $query = 'SELECT DISTINCT memberID FROM MembersHistory WHERE positionID = '/*positionID associated with head choreographer members */'';
@@ -30,7 +30,7 @@ function choreoMem() {
  * @param None
  * @return An array of associative arrays where each element is an associative array
  * associated with an non-eboard or non-choreogapher member
- * @caller displayMembers function - Uses this to diplay the eboard members first
+ * @caller displayMembers function - Uses this to display the eboard members first
  *  */
 function restMem() {
     $query = 'SELECT DISTINCT memberID FROM Members WHERE NOT EXISTS
