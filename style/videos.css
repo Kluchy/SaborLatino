@@ -1,0 +1,19 @@
+/* lorem ipsum styling */
+#vidbox img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 640px;
+	height: auto;
+}
+ul{
+	list-style-type: none;
+}
+#vidbox{
+	float: left;
+	padding: 10px;
+}
+#vidmenu{
+	float: left;
+	padding: 10px;
+}
