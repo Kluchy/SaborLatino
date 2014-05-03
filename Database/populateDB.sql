@@ -1,38 +1,80 @@
+-- Clear DB
+DELETE FROM `Genres` WHERE 1;
+DELETE FROM `GenresInVid` WHERE 1;
+DELETE FROM `MemberContactInfo` WHERE 1;
+DELETE FROM `Members` WHERE 1;
+DELETE FROM `MembersInVid` WHERE 1;
+DELETE FROM `MembersHistory` WHERE 1;
+DELETE FROM `Performances` WHERE 1;
+DELETE FROM `Pictures` WHERE 1;
+DELETE FROM `Positions` WHERE 1;
+DELETE FROM `Videos` WHERE 1;
+
 -- Insert Genres
-INSERT INTO Genres VALUES ( idGenres= 0, genreName= "mixed" );
-INSERT INTO Genres VALUES ( idGenres= 1, genreName= "salsa" );
-INSERT INTO Genres VALUES ( idGenres= 2, genreName= "bachata" );
-INSERT INTO Genres VALUES ( idGenres= 3, genreName= "merengue" );
-INSERT INTO Genres VALUES ( idGenres= 4, genreName= "cumbia" );
-INSERT INTO Genres VALUES ( idGenres= 5, genreName= "reggaeton" );
-INSERT INTO Genres VALUES ( idGenres= 6, genreName= "cha-cha-cha" );
-INSERT INTO Genres VALUES ( idGenres= 7, genreName= "banda" );
-INSERT INTO Genres VALUES ( idGenres= 8, genreName= "zouk" );
-INSERT INTO Genres VALUES ( idGenres= 9, genreName= "tango" );
-INSERT INTO Genres VALUES ( idGenres= 10, genreName= "modern" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 0, "mixed" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 1, "salsa" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 2, "bachata" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 3, "merengue" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 4, "cumbia" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 5, "reggaeton" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 6, "cha-cha-cha" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 7, "banda" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 8, "zouk" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 9, "tango" );
+INSERT INTO Genres (idGenres, genreName) VALUES ( 10, "modern" );
 
 -- Insert Positions
-INSERT INTO Positions VALUES ( idPositions= 0, position= "General Body Member" );
-INSERT INTO Positions VALUES ( idPositions= 1, position= "Head Choreographer" );
-INSERT INTO Positions VALUES ( idPositions= 2, position= "President" );
-INSERT INTO Positions VALUES ( idPositions= 3, position= "Vice-President" );
-INSERT INTO Positions VALUES ( idPositions= 4, position= "Treasurer" );
-INSERT INTO Positions VALUES ( idPositions= 5, position= "Social Chair" );
-INSERT INTO Positions VALUES ( idPositions= 6, position= "Secretary" );
-INSERT INTO Positions VALUES ( idPositions= 7, position= "Publicity Chair" );
+INSERT INTO Positions (idPositions, position) VALUES ( 0, "General Body Member" );
+INSERT INTO Positions (idPositions, position) VALUES ( 1, "Head Choreographer" );
+INSERT INTO Positions (idPositions, position) VALUES ( 2, "President" );
+INSERT INTO Positions (idPositions, position) VALUES ( 3, "Vice-President" );
+INSERT INTO Positions (idPositions, position) VALUES ( 4, "Treasurer" );
+INSERT INTO Positions (idPositions, position) VALUES ( 5, "Social Chair" );
+INSERT INTO Positions (idPositions, position) VALUES ( 6, "Secretary" );
+INSERT INTO Positions (idPositions, position) VALUES ( 7, "Publicity Chair" );
+
+-- Insert Pictures
+INSERT INTO Pictures (idPictures, urlP, captionP) VALUES (0, "http://info230.cs.cornell.edu/users/skemab/www/m3/img/defaultProfilePic.jpg", "generic pic");
 
 -- Insert Performances
-INSERT INTO Performances VALUES ( idPerformances= 1, performanceTitle= "Sabor Annual Concert: And the Latin Grammy Goes to...", performanceLocation= "Ithaca State Theatre", performanceDate= "2013-12-07" );
+INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 1, "Sabor Annual Concert: And the Latin Grammy Goes to...", "Ithaca State Theatre", "2013-12-07" );
+INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 2, "Sabor Annual Concert", "Ithaca State Theatre", "2012-12-07" );
 
 -- Insert Members
-INSERT INTO Members VALUES ( idMembers= 1, firstName= "Karl-Frederik", lastName= "Maurrasse", year= "Junior" );
-INSERT INTO Members VALUES ( idMembers= 2, firstName= "Narda", lastName= "Terrones", year= "Senior" );
-INSERT INTO Members VALUES ( idMembers= 3, firstName= "Emily", lastName= "Tavarez", year= "Sophomore" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 1, "Karl-Frederik", "Maurrasse", "Junior" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 2, "Narda", "Terrones", "Senior" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 3, "Emily", "Tavarez", "Sophomore" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 4, "Christine", "Akoh", "Graduate" );
 
 -- Insert MemberContactInfo
-INSERT INTO MemberContactInfo VALUES ( memberID= 1, email= "kfm53@cornell.edu", phone= 6073795844, country= "USA", state= "NY", city= "Ithaca" );
+INSERT INTO MemberContactInfo (memberID, email, phone, country, state, city) VALUES ( 1, "kfm53@cornell.edu", 6073795844, "USA", "NY", "Ithaca" );
+INSERT INTO MemberContactInfo (memberID, email, phone, country, state, city) VALUES ( 2, "njt36@cornell.edu", 9562258808, "USA", "NY", "Ithaca" );
 
 -- Insert MembersHistory
-INSERT INTO MembersHistory VALUES ( idHistory= 1, memberID= 1, positionID= 1, startDate= "Spring'14", endDate= "Spring'15" );
+INSERT INTO MembersHistory (idHistory, memberID, positionID, startDate, endDate) VALUES ( 1, 1, 1, "Spring'14", "Spring'15" );
+INSERT INTO MembersHistory (idHistory, memberID, positionID, startDate, endDate) VALUES ( 2, 2, 1, "Spring'13", "Spring'14" );
+INSERT INTO MembersHistory (idHistory, memberID, positionID, startDate, endDate) VALUES ( 3, 3, 2, "Spring'14", "Spring'15" );
 
+-- Insert Videos
+INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 1, "https://www.youtube.com/watch?v=wh3IlKOQ8KE", "Salsa Piece", 1 );
+INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 2, "https://www.youtube.com/watch?v=Q2oMLmcgWdY", "Banda Piece", 1 );
+INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 3, "https://www.youtube.com/watch?v=C5zYIeYfnYo", "Intro Piece", 1 );
+INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 4, "https://www.youtube.com/watch?v=69Ncj-J9Ii4", "2012 Mix", 2 );
 
+-- Insert Members into Videos
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 1, 3 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 2, 2 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 2, 1 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 2, 3 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 3, 3 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 4, 3 );
+
+-- Link Choreographers to Video
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 1 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 3 );
+
+-- Add Genres To Videos
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 1, 1);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 7, 2);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 0, 3);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 0, 4);
