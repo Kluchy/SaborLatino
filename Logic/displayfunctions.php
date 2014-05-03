@@ -48,7 +48,7 @@ function createHeader($title, $style = null){
 		<head>
 			<meta charset="utf-8">
 			<title><?php echo $title; ?></title>
-			<link href="http://fonts.googleapis.com/css?family=Gilda+Display|Oxygen:300" rel='stylesheet' type='text/css'>
+			<link href="http://fonts.googleapis.com/css?family=Gilda+Display|Oxygen:300|Kaushan+Script" rel='stylesheet' type='text/css'>
 			<link rel="stylesheet" type="text/css" href="style/style.css">
 			<?php
 				//use additional stylesheet if $style is set
