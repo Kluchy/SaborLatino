@@ -45,6 +45,41 @@ INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 1, "Karl-Fre
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 2, "Narda", "Terrones", "Senior" );
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 3, "Emily", "Tavarez", "Sophomore" );
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 4, "Christine", "Akoh", "Graduate" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 5, "Priscilla", "Ruilova", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 6, "Ivette", "Planell-Mendez", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 7, "Daniel", "Muniz", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 8, "Michelle", "Garcia", "Freshman");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 9, "Bonnie", "Acosta", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (10, "Laura", "Montoya", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (11, "Miguel", "Castellanos", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (12, "Jonathan", "Sanchez", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (13, "Michael", "Collaguazo", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (14, "Martina", "Azar", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (15, "Jazlin", "Gomez", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (16, "Yashna", "Gungadurdoss", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (17, "Eduardo", "Rosario", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (18, "Priscilla", "Ruillova", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (19, "Mariana", "Pinos", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (20, "Dri", "Watson", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (21, "Rubina", "Ogno", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (22, "Rebecca", "Jakubson", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (23, "Leonardo", "Peña", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (24, "Sahil", "Gupta", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (25, "Jeffrey", "Lee", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (26, "Deborah", "Cabrera", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (27, "Diana", "Glattly", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (28, "Isabel", "Soto", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (29, "Isabella", "Virginia", "Junior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (30, "Carmen", "Martinez", "Senior");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (31, "Nikki", "Kimura", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (32, "Nicole", "Cruz", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (33, "Reinaldo", "Hernandez", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (34, "Jonathan", "Pabon", "Freshman");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (35, "Sady", "Ramirez", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (36, "Taylor", "Famighetti", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (37, "Victor", "Riomana", "Freshman");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (38, "Isabel", "Bosque", "Sophomore");
+
 
 -- Insert MemberContactInfo
 INSERT INTO MemberContactInfo (memberID, email, phone, country, state, city) VALUES ( 1, "kfm53@cornell.edu", 6073795844, "USA", "NY", "Ithaca" );
