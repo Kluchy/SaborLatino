@@ -163,13 +163,18 @@ INSERT INTO MembersHistory (idHistory, memberID, positionID, startDate, endDate)
 
 
 -- Insert Videos
-INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 1, "https://www.youtube.com/watch?v=wh3IlKOQ8KE", "Salsa Piece", 1 );
-INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 2, "https://www.youtube.com/watch?v=Q2oMLmcgWdY", "Banda Piece", 1 );
-INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 3, "https://www.youtube.com/watch?v=C5zYIeYfnYo", "Intro Piece", 1 );
-INSERT INTO Videos (idvideos, urlV, captionV, performanceID) VALUES ( 4, "https://www.youtube.com/watch?v=69Ncj-J9Ii4", "2012 Mix", 2 );
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 1, "https://www.youtube.com/watch?v=wh3IlKOQ8KE", "Salsa Piece", 1 );
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 2, "https://www.youtube.com/watch?v=Q2oMLmcgWdY", "Banda Piece", 1 );
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 3, "https://www.youtube.com/watch?v=C5zYIeYfnYo", "Intro Piece", 1 );
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 4, "https://www.youtube.com/watch?v=69Ncj-J9Ii4", "2012 Mix", 2 );
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 5, "https://www.youtube.com/watch?v=bd09WZl1L9A", "Shakira Mashup", 1); 
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 6, "https://www.youtube.com/watch?v=t_jJ5e62ZVU", "Cumbia Piece", 1); 
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 7, "https://www.youtube.com/watch?v=VLRsTv06OfA", "All Female Cha-Cha", 2); 
+INSERT INTO Videos (idVideos, urlV, captionV, performanceID) VALUES ( 8, "https://www.youtube.com/watch?v=z_ldLa7BTuQ", "Merengue Piece", 1); 
 
 -- Insert Members into Videos
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 1, 3 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 1, 5 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 2, 2 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 7, 2 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 30, 2 );
@@ -211,14 +216,38 @@ INSERT INTO MembersInVid (memberID, videoID) VALUES ( 34, 3 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 35, 3 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 36, 3 );
 INSERT INTO MembersInVid (memberID, videoID) VALUES ( 37, 3 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 2, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 4, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 6, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 7, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 11, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 24, 6 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 15, 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 3 , 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 4, 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 5, 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 6, 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 23, 8 );
+INSERT INTO MembersInVid (memberID, videoID) VALUES ( 13, 8 );
+
+
 
 -- Link Choreographers to Video
 INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 1 );
 INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 3 );
-INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 7, 2 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 6 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 5 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 15, 5 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 2, 7 );
+INSERT INTO ChoreographersOfVid (memberID, videoID) VALUES ( 15, 8 );
+
 
 -- Add Genres To Videos
 INSERT INTO GenresInVid (genreID, videoID) VALUES ( 1, 1);
 INSERT INTO GenresInVid (genreID, videoID) VALUES ( 7, 2);
 INSERT INTO GenresInVid (genreID, videoID) VALUES ( 0, 3);
 INSERT INTO GenresInVid (genreID, videoID) VALUES ( 0, 4);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 0, 5);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 4, 6);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 6, 7);
+INSERT INTO GenresInVid (genreID, videoID) VALUES ( 3, 8);
