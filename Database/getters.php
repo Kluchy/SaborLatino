@@ -342,7 +342,8 @@
                        FROM Members INNER JOIN MemberContactInfo ON idMembers = MemberContactInfo.memberID
                                                    INNER JOIN ( SELECT * FROM MembersHistory
                                                                            WHERE startDate <= \"$currentDate\" AND endDate >= \"$currentDate\") History ON idMembers = History.memberID
-                                                   INNER JOIN Pictures ON pictureID = idPictures";
+                                                   INNER JOIN Pictures ON pictureID = idPictures
+                                                   INNER JOIN Positions ON positionID = idPositions";
         return retrieve( $query );     
     }
 
