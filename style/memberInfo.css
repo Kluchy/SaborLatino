@@ -12,6 +12,10 @@ h1{
 	color: #fc0;
 	margin-left: 20px;
 }
+a{
+color: #fc0;
+text-decoration: none;
+}
 /* content styling */
 .content{
 	background-color: #eee;

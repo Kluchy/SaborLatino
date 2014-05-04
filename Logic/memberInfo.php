@@ -4,6 +4,7 @@
 include_once "displayfunctions.php";
 include_once "../Database/getters.php";
 
+ $memberID= $_GET["memberID"];
  $name= $_GET["name"];
  $year= $_GET["year"];
  $position= $_GET["position"];
@@ -16,6 +17,8 @@ include_once "../Database/getters.php";
 $title= $name; 
 createHeader($title, "memberInfo.css");
  
+ echo "<h1> <a href=\"members.php\"> Members > </a> ";
+ echo " $name </h1>";
  echo "<ul id=\"member\">";
  echo "<li  id=\"member\">";
  echo "<img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
@@ -33,7 +36,8 @@ createHeader($title, "memberInfo.css");
  echo "</li>";
  echo "</ul>";
 
-
+ echo "<h1> Featured Videos </h1>";
+videos( $memberID );
 
 function getStatus( $year ) {
         $date= getdate();
@@ -51,4 +55,28 @@ function getStatus( $year ) {
     }
 }
 
+function videos( $id ) {
+    $result= getVideosFor( $id );
+    $myvids= $result[0];
+    $error= $result[1];
+    if ( $error ) {
+        echo "$error<br>";
+        return;
+    }
+    foreach( $myvids as $vid ) {
+        $url= $vid["urlV"];
+        //use an ifram for video? not working...
+        echo "<iframe width=\"420\" height=\"345\" ";    
+        echo "src=\"$url\">";
+        echo "</iframe>";
+        //embed tag does not work either...
+        echo "<embed width=\"420\" height=\"345\"
+src=\"$url\"
+type=\"application/x-shockwave-flash\">
+</embed>";
+    }
+}
+
+
+createFooter();
 ?>

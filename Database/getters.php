@@ -43,14 +43,14 @@
     /************ START VIDEO GETTERS */
     /** KARL
       *@param memberID - (valid?) member id
-      *@return the videos (videoIDs) associated with 'memberID' + null on success, null + error message on failure
+      *@return the videos records associated with 'memberID' + null on success, null + error message on failure
       *@spec if memberID is not in table, returns empty array
       *@calling retrieve
       */
     function getVideosFor($memberID) {
-        $query= "SELECT videoID
+        $query= "SELECT * FROM Videos WHERE idVideos IN (SELECT videoID
                  FROM MembersInVid
-                 WHERE memberID = \"$memberID\";";
+                 WHERE memberID = \"$memberID\");";
         return retrieve( $query );
     }
     

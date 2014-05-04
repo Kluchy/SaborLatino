@@ -74,10 +74,11 @@ function display($members) {
         $phone= $mem["phone"];
         $position= $mem["position"];
         $year= $mem["year"];
+        $memID= $mem["idMembers"];
         echo "<li id=\"member\"> ";
         echo "<div id=\"member\">";
         echo "$name<br>";
-        echo "<a href=\"memberInfo.php?name=$name&year=$year&bio=$bio&profilePic=$profilePic&email=$email&position=$position&phone=$phone\">";
+        echo "<a href=\"memberInfo.php?memberID=$memID&name=$name&year=$year&bio=$bio&profilePic=$profilePic&email=$email&position=$position&phone=$phone\">";
         echo "<img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
         echo "</a>";
         echo "</div>";
