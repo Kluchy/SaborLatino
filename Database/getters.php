@@ -334,7 +334,7 @@
     /** Karl
       *@return all active members and their info + null
       *@spec reutrns (null, error message) on error
-      *@calling retrieve
+      *@calling retrieve currentDate()
       */
     function getActiveMembers() {
         $currentDate= currentDate();

@@ -58,16 +58,23 @@ function displayMembers() {
 
 }
 
+/** Karl
+  *@param members - array whose entries are associative arrays containing member info from Members, MemberContactInfo and MembersHistory
+  *@spec displays full name and profile picture of each member onto the memebrs page
+  *@caller groupMembers
+  */
 function display($members) {
     foreach( $members as $mem ) {
         $firstName= $mem["firstName"];
         $lastName= $mem["lastName"];
         $name= $firstName." ".$lastName;
         $profilePic= $mem["urlP"];
-        echo "<div>";
+        echo "<li id=\"member\"> ";
+        echo "<div id=\"member\">";
         echo "$name<br>";
-        echo "<img src=\"$profilePic\" alt=\"Profile Picture\">";
+        echo "<img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
         echo "</div>";
+        echo "</li>";
     }
 }
    
@@ -101,16 +108,25 @@ function groupMembers() {
         }
     }
     //display E-board
-    echo "<div> Executive Board<br>";
+    echo "<div>";
+    echo "<h1> The Executive Board </h1>";
+    echo "<ul id=\"member\">";
     display( $eboard );
+    echo "</ul>";
     echo "</div>";
     //display choreos
-    echo "<div> Head Choreographers<br>";
+    echo "<div>";
+    echo "<h1> The Head Choreographers </h1>";
+    echo "<ul id=\"member\">";
     display( $choreographers );
+    echo "</ul>";
     echo "</div>";
     //display G-Body
-    echo "<div> General Body Members<br>";
+    echo "<div>";
+    echo "<h1> General Body Members </h1>";
+    echo "<ul id=\"member\">";
     display( $gbody );
+    echo "</ul>";
     echo "</div>";
 }
 
