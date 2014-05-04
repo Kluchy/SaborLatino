@@ -7,7 +7,7 @@
 	// load necessary function files
 	include_once "displayfunctions.php";
 	// include_once "getters.php";		will uncomment when file is repaired
-	// include_once "membersFunctions.php";		will uncomment when file is repaired
+	include_once "membersFunctions.php";		//will uncomment when file is repaired
 	
 	// include the page header
 	// load members.css
@@ -50,6 +50,7 @@
 			 * 
 			 * displayMembers();
 			 */
+			 groupMembers();
 		?>
 	</div>
 	<?php

@@ -100,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `info230_SP14_skemab`.`MembersHistory` (
   `startDate` DATE NULL,
   `endDate` DATE NULL,
   PRIMARY KEY (`idHistory`),
-  UNIQUE INDEX `memberID_UNIQUE` (`memberID` ASC),
   INDEX `hist2Position_idx` (`positionID` ASC),
   CONSTRAINT `hist2members`
     FOREIGN KEY (`memberID`)

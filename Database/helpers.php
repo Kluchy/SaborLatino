@@ -86,6 +86,15 @@
         return strtotime($date);
     }
     
+    function currentDate(){
+        $date= getdate();
+        $year= $date['year'];
+        $month= $date['mon'];
+        $day= $date['mday'];
+        $newDate= "$year-$month-$day";
+        return $newDate;
+    }
+    
     /** Karl
       *@param name - input username
       *@param password - input password

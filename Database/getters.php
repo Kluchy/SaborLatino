@@ -24,8 +24,9 @@
         
         $result= $mysqli->query( $query );
         if ( !$result ) {
+            $msg= $mysqli->error;
             $mysqli->close();
-            return array( null,"$mysqli->error<br>" ) ;
+            return array( null,"$msg<br>" ) ;
         }
         $records= array();//array of associative arrays
         $entry= $result->fetch_assoc();
@@ -200,7 +201,15 @@
         return retrieve( $query );
     }
     
-    
+    /** Karl
+      *@return video records + null
+      *@spec returns (null, error message) on error
+      *@calling retrieve
+      */ 
+    function getVideos() {
+        $query= "SELECT * FROM Videos";
+        return retrieve( $query );    
+    }
     
     /*  END VIDEO GETTERS **************************************/
     
@@ -321,6 +330,21 @@
         $query= "SELECT memberID FROM ChoreographersOfVid WHERE videoID = $videoID";
          return retrieve( $query );
     }
+    
+    /** Karl
+      *@return all active members and their info + null
+      *@spec reutrns (null, error message) on error
+      *@calling retrieve
+      */
+    function getActiveMembers() {
+        $currentDate= currentDate();
+        $query= "SELECT * 
+                       FROM Members INNER JOIN MemberContactInfo ON idMembers = MemberContactInfo.memberID
+                                                   INNER JOIN ( SELECT * FROM MembersHistory
+                                                                           WHERE startDate <= \"$currentDate\" AND endDate >= \"$currentDate\") History ON idMembers = History.memberID
+                                                   INNER JOIN Pictures ON pictureID = idPictures";
+        return retrieve( $query );     
+    }
 
     
     /*   END MEMBER GETTERS ***********************************/
@@ -399,6 +423,16 @@
         $query= "SELECT * FROM Pictures";
         return retrieve( $query ); 
     }
+    
+    /** Karl
+      *@param pictureID - target picture
+      *@return target picture record _ null
+      *@spec on error, (null, error message)
+      */
+    function getPicture( $pictureID ) {
+         $query= "SELECT * FROM Pictures WHERE idPictures = $pictureID";
+         return retrieve( $query );   
+    } 
     
     /** Karl
       *@param performanceID - target performance
