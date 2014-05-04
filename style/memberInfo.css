@@ -89,3 +89,23 @@ text-decoration: none;
 #menubar a#activepage{
 	border-bottom: solid 4px #fc0;
 }
+#vidbox img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 640px;
+	height: auto;
+}
+ul{
+	list-style-type: none;
+	color:gold;
+	text-align:center;
+}
+#vidbox{
+	float: left;
+	padding: 10px;
+}
+#vidmenu{
+	float: left;
+	padding: 10px;
+}

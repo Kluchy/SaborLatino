@@ -63,18 +63,26 @@ function videos( $id ) {
         echo "$error<br>";
         return;
     }
+    echo "<ul>";
     foreach( $myvids as $vid ) {
         $url= $vid["urlV"];
+        $caption= $vid["captionV"];
         //use an ifram for video? not working...
-        echo "<iframe width=\"420\" height=\"345\" ";    
+        echo "<li>";
+        echo "<div id=\"vidbox\">";
+        echo "<iframe id=\"vidbox\" width=\"100\" height=\"125\" ";    
         echo "src=\"$url\">";
         echo "</iframe>";
+        echo "<br>$caption";
+        echo "</div>";
+        echo "</li>";
         //embed tag does not work either...
-        echo "<embed width=\"420\" height=\"345\"
+        /**echo "<embed id=\"vidbox\"  width=\"420\" height=\"345\"
 src=\"$url\"
 type=\"application/x-shockwave-flash\">
-</embed>";
+</embed>";*/
     }
+    echo "</ul>";
 }
 
 
