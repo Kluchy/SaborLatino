@@ -49,12 +49,12 @@ function createHeader($title, $style = null){
 			<meta charset="utf-8">
 			<title><?php echo $title; ?></title>
 			<link href="http://fonts.googleapis.com/css?family=Gilda+Display|Oxygen:300|Kaushan+Script" rel='stylesheet' type='text/css'>
-			<link rel="stylesheet" type="text/css" href="../style/style.css">
+			<link rel="stylesheet" type="text/css" href="style/style.css">
 			<?php
 				//use additional stylesheet if $style is set
 				if (isset($style)){
 					?>
-					<link rel="stylesheet" type="text/css" <?php echo "href=\"../style/$style\""; ?>>
+					<link rel="stylesheet" type="text/css" <?php echo "href=\"style/$style\""; ?>>
 					<?php
 				}
 			?>
@@ -62,6 +62,7 @@ function createHeader($title, $style = null){
 		<body>
 	<?php
 }
+
 
 /* Allan
  * generates the footer for a page

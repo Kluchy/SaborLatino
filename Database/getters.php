@@ -1,5 +1,5 @@
 <?php
-    include "helpers.php";
+    include_once "helpers.php";
 ?>
 <?php
  
@@ -114,6 +114,10 @@
         $results= $mysqli->multi_query ( $query );
         $vidNPerformance= $mysqli->store_result();//get result of first query
         $genres= $mysqli->more_results();//get result fo second query
+        $mysqli->next_result();
+        $genreStore = $mysqli->store_result();
+
+
         
         if ( $vidNPerformance ) {
             //retrieve values from first query and store in 'vidsInfo'
@@ -125,13 +129,13 @@
             return array( null, "$mysqli->error<br>" );
         }
         if ( $genres ) {
-            $row= $genres->fetch_row();
+            $row= $genreStore->fetch_row();
             //only one element per row: genreName.
             $vidInfo["genres"]= array();
             //store genres in vidInfo["genres"]
             while ( $row ) {
                 $vidInfo["genres"][]= $row[0];
-                $row= $genres->fetch_row();    
+                $row= $genreStore->fetch_row();    
             }
                 
         } else {
