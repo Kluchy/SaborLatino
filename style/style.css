@@ -1,7 +1,7 @@
 body{
 	font-size: medium;
 	font-family: 'Oxygen', sans-serif;
-	background-color: #333;
+	background-color: #000;
 	margin: 0px;
 	margin-left: auto;
 	margin-right: auto;
@@ -9,7 +9,7 @@ body{
 }
 h1{
 	font-family: 'Kaushan Script', cursive;
-	color: #fc0;
+	color: #BF9837;
 	margin-left: 20px;
 }
 .content{
@@ -21,7 +21,7 @@ h1{
 /* menu bar styling */
 #menubar{
 	overflow: auto;
-	color: #fc0;
+	color: #BF9837;
 }
 #menubar h1{
 	display: none;
@@ -51,8 +51,8 @@ h1{
 	border-bottom: solid 4px #333;
 }
 #menubar a:hover{
-	border-color: #fc0;
+	border-color: #BF9837;
 }
 #menubar a#activepage{
-	border-bottom: solid 4px #fc0;
+	border-bottom: solid 4px #BF9837;
 }
