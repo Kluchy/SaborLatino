@@ -9,11 +9,11 @@ body{
 }
 h1{
 	font-family: 'Kaushan Script', cursive;
-	color: #fc0;
+	color: #CFB53B;
 	margin-left: 20px;
 }
 a{
-color: #fc0;
+color: #CFB53B;
 text-decoration: none;
 }
 /* content styling */
@@ -40,7 +40,7 @@ text-decoration: none;
 }
 #member div{
     text-align:center;
-    color:gold;
+    color:#CFB53B;
 }
 #member img{
     width:360px;
@@ -54,7 +54,7 @@ text-decoration: none;
 /* menu bar styling */
 #menubar{
 	overflow: auto;
-	color: #fc0;
+	color: #CFB53B;
 }
 #menubar h1{
 	display: none;
@@ -79,15 +79,15 @@ text-decoration: none;
 	text-transform: uppercase;
 	text-align: center;
 	font-size: medium;
-	color: #fc0;
+	color: #CFB53B;
 	font-weight: bold;
 	border-bottom: solid 4px #000;
 }
 #menubar a:hover{
-	border-color: #fc0;
+	border-color: #CFB53B;
 }
 #menubar a#activepage{
-	border-bottom: solid 4px #fc0;
+	border-bottom: solid 4px #CFB53B;
 }
 #vidbox img{
 	display: block;

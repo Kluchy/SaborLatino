@@ -3,6 +3,7 @@
 // load necessary function files
 include_once "displayfunctions.php";
 include_once "../Database/getters.php";
+include_once "videoSearch.php";
 
  $memberID= $_GET["memberID"];
  $name= $_GET["name"];
@@ -63,8 +64,9 @@ function videos( $id ) {
         echo "$error<br>";
         return;
     }
-    echo "<ul>";
-    foreach( $myvids as $vid ) {
+    echo displayThumbnails($myvids);
+    //echo "<ul>";
+    /**foreach( $myvids as $vid ) {
         $url= $vid["urlV"];
         $caption= $vid["captionV"];
         //use an ifram for video? not working...
@@ -76,13 +78,13 @@ function videos( $id ) {
         echo "<br>$caption";
         echo "</div>";
         echo "</li>";
-        //embed tag does not work either...
+        //embed tag does not work either... */
         /**echo "<embed id=\"vidbox\"  width=\"420\" height=\"345\"
 src=\"$url\"
 type=\"application/x-shockwave-flash\">
 </embed>";*/
-    }
-    echo "</ul>";
+    //}
+    //echo "</ul>";
 }
 
 
