@@ -1,7 +1,7 @@
 <?php
-    include_once "Database/helpers.php";
-    require_once('config.php');
-    include_once "Database/getters.php";
+    include_once "../Database/helpers.php";
+    require_once('../Database/config.php');
+    include_once "../Database/getters.php";
 
 /**Derek
  * @param None
@@ -66,10 +66,10 @@ function loadMainVid() {
         $video = $video[0];
 
         $vidID = getVideoID($video['urlV']);
-        $embedLink = '<iframe width = "560" height= "315" 
-            src = "//www.youtube.com/embed/'.$vidID.'"
-             frameborder = "0" allowfullscreen class = "mainVid">
-             </iframe>';
+        $embedLink = "<iframe width = \"560\" height= \"315\" 
+            src = //www.youtube.com/embed/".$vidID."
+             frameborder = \"0\" allowfullscreen class = \"mainVid\">
+             </iframe>";
         return $embedLink;
 
     }

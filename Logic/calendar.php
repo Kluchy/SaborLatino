@@ -1,6 +1,6 @@
 <?php
-    require_once('config.php');
-    include_once "Database/getters.php";
+    require_once('../Database/config.php');
+    include_once "../Database/getters.php";
 ?>
 <?php
     /**Derek

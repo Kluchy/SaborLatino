@@ -6,6 +6,7 @@
 	
 	// load necessary function files
 	include_once "displayfunctions.php";
+    include_once "calendar.php";
 	
 	// include the page header
 	// load events.css
@@ -23,6 +24,9 @@
 	?>
 		<div class="content">
 			<?php
+                $eventsString = displayCalendarEvents();
+                echo $eventsString;
+                
 				// generate calendar of events
 				// retrieve list of future and past events from database
 				// list performers from each event
@@ -31,6 +35,24 @@
 				// display list of performers under each event
 				// display link to videos associated with event
 			?>
+			<!-- begin filler
+			<h2>Upcoming Events</h2>
+			<ul>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+			</ul>
+			<h2>Past Events</h2>
+			<ul>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+				<li>Date - Showcase</li>
+			</ul>
+			end filler -->
 		</div>
 		
 	<?php

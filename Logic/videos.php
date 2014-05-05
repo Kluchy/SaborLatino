@@ -5,7 +5,9 @@
 	$title = "Videos - Sabor Latino";
 	
 	// load necessary function files
-	include_once "displayfunctions.php";
+	//include_once "/users/djc425sp14/www/p4/Logic/displayfunctions.php";
+    include_once "displayfunctions.php";
+    include_once "videoSearch.php";
 	// include_once "videoSearch.php";		// will uncomment once file is debugged
 	
 	// include the page header
@@ -31,14 +33,33 @@
 					// video selected from choice in vidmenu
 					// display performance info underneath video
 					
+					
 				?>
+				<!-- begin filler -->
+				<h2>Now watching!</h2>
+<?php
+    $mainVid = loadMainVid();
+    echo $mainVid;
+?> 
+				<!-- end filler -->
 			</div>
 			<div id="vidmenu">
 				<?php
 					// load clickable thumbnails as described in videoSearch.php
 					// search bar will allow searching of videos by performance, etc.
 					// more information found in videoSearch.php
+                    $displayHTML = loadVideos(); 
+                    echo $displayHTML;
 				?>
+                <!-- 
+				<ul>
+					<li><img src="img/vid_thumb.png" alt="Video Thumbnail"></li>
+					<li><img src="img/vid_thumb.png" alt="Video Thumbnail"></li>
+					<li><img src="img/vid_thumb.png" alt="Video Thumbnail"></li>
+					<li><img src="img/vid_thumb.png" alt="Video Thumbnail"></li>
+					<li><img src="img/vid_thumb.png" alt="Video Thumbnail"></li>
+                </ul>
+                -->
 			</div>
 		</div>
 	<?php

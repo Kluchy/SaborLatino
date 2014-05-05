@@ -36,49 +36,51 @@ INSERT INTO Positions (idPositions, position) VALUES ( 7, "Publicity Chair" );
 -- Insert Pictures
 INSERT INTO Pictures (idPictures, urlP, captionP) VALUES (0, "http://info230.cs.cornell.edu/users/skemab/www/m3/img/defaultProfilePic.jpg", "generic pic");
 
+
 -- Insert Performances
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 1, "Sabor Annual Concert: And the Latin Grammy Goes to...", "Ithaca State Theatre", "2013-12-07" );
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 2, "Sabor Annual Concert", "Ithaca State Theatre", "2012-12-07" );
+INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 3, "Sabor Annual Concert: World Cup", "Ithaca State Theatre", "2014-12-07" );
 
 -- Insert Members
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 1, "Karl-Frederik", "Maurrasse", "Junior" );
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 2, "Narda", "Terrones", "Senior" );
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 3, "Emily", "Tavarez", "Sophomore" );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 1, "Karl-Frederik", "Maurrasse", 2015 );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 2, "Narda", "Terrones", 2014 );
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 3, "Emily", "Tavarez", 2016 );
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 4, "Christine", "Akoh", "Graduate" );
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 5, "Priscilla", "Ruilova", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 6, "Ivette", "Planell-Mendez", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 7, "Daniel", "Muniz", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 8, "Michelle", "Garcia", "Freshman");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 9, "Bonnie", "Acosta", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (10, "Laura", "Montoya", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (11, "Miguel", "Castellanos", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (12, "Jonathan", "Sanchez", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (13, "Michael", "Collaguazo", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (14, "Martina", "Azar", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (15, "Jazlin", "Gomez", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (16, "Yashna", "Gungadurdoss", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (17, "Eduardo", "Rosario", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (18, "Diego", "Arenas", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (19, "Mariana", "Pinos", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (20, "Dri", "Watson", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (21, "Rubina", "Ogno", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (22, "Rebecca", "Jakubson", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (23, "Leonardo", "Peña", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (24, "Sahil", "Gupta", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (25, "Jeffrey", "Ly", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (26, "Deborah", "Cabrera", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (27, "Diana", "Glattly", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (28, "Isabel", "Soto", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (29, "Isabella", "Virginia", "Junior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (30, "Carmen", "Martinez", "Senior");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (31, "Nikki", "Kimura", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (32, "Nicole", "Cruz", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (33, "Reinaldo", "Hernandez", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (34, "Jonathan", "Pabon", "Freshman");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (35, "Sady", "Ramirez", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (36, "Taylor", "Famighetti", "Sophomore");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (37, "Victor", "Riomana", "Freshman");
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (38, "Isabel", "Bosque", "Sophomore");
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 5, "Priscilla", "Ruilova", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 6, "Ivette", "Planell-Mendez", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 7, "Daniel", "Muniz", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 8, "Michelle", "Garcia", 2017);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES ( 9, "Bonnie", "Acosta", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (10, "Laura", "Montoya", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (11, "Miguel", "Castellanos", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (12, "Jonathan", "Sanchez", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (13, "Michael", "Collaguazo", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (14, "Martina", "Azar", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (15, "Jazlin", "Gomez", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (16, "Yashna", "Gungadurdoss", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (17, "Eduardo", "Rosario", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (18, "Diego", "Arenas", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (19, "Mariana", "Pinos", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (20, "Dri", "Watson", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (21, "Rubina", "Ogno", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (22, "Rebecca", "Jakubson", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (23, "Leonardo", "Peña", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (24, "Sahil", "Gupta", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (25, "Jeffrey", "Ly", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (26, "Deborah", "Cabrera", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (27, "Diana", "Glattly", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (28, "Isabel", "Soto", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (29, "Isabella", "Virginia", 2015);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (30, "Carmen", "Martinez", 2014);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (31, "Nikki", "Kimura", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (32, "Nicole", "Cruz", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (33, "Reinaldo", "Hernandez", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (34, "Jonathan", "Pabon", 2017);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (35, "Sady", "Ramirez", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (36, "Taylor", "Famighetti", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (37, "Victor", "Riomana", 2017);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (38, "Isabel", "Bosque", 2016);
 
 
 
