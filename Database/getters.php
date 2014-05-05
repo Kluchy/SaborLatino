@@ -43,14 +43,14 @@
     /************ START VIDEO GETTERS */
     /** KARL
       *@param memberID - (valid?) member id
-      *@return the videos (videoIDs) associated with 'memberID' + null on success, null + error message on failure
+      *@return the videos records associated with 'memberID' + null on success, null + error message on failure
       *@spec if memberID is not in table, returns empty array
       *@calling retrieve
       */
     function getVideosFor($memberID) {
-        $query= "SELECT videoID
+        $query= "SELECT * FROM Videos WHERE idVideos IN (SELECT videoID
                  FROM MembersInVid
-                 WHERE memberID = \"$memberID\";";
+                 WHERE memberID = \"$memberID\");";
         return retrieve( $query );
     }
     
@@ -338,7 +338,7 @@
     /** Karl
       *@return all active members and their info + null
       *@spec reutrns (null, error message) on error
-      *@calling retrieve
+      *@calling retrieve currentDate()
       */
     function getActiveMembers() {
         $currentDate= currentDate();
@@ -346,7 +346,8 @@
                        FROM Members INNER JOIN MemberContactInfo ON idMembers = MemberContactInfo.memberID
                                                    INNER JOIN ( SELECT * FROM MembersHistory
                                                                            WHERE startDate <= \"$currentDate\" AND endDate >= \"$currentDate\") History ON idMembers = History.memberID
-                                                   INNER JOIN Pictures ON pictureID = idPictures";
+                                                   INNER JOIN Pictures ON pictureID = idPictures
+                                                   INNER JOIN Positions ON positionID = idPositions";
         return retrieve( $query );     
     }
 
