@@ -89,7 +89,7 @@ text-decoration: none;
 #menubar a#activepage{
 	border-bottom: solid 4px #CFB53B;
 }
-#vidbox img{
+#vid img{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -98,12 +98,13 @@ text-decoration: none;
 }
 ul{
 	list-style-type: none;
-	color:gold;
+	color:#CFB53B;
 	text-align:center;
 }
-#vidbox{
-	float: left;
-	padding: 10px;
+li{
+    float:left;
+    margin-right:20px;
+    padding: 10px;
 }
 #vidmenu{
 	float: left;

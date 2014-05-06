@@ -86,7 +86,12 @@ function loadMainVid() {
 function loadVideos() {
     /**Subject to change if we decide to store information from other tables (such as the 
         performance table) for when the thumbnail is clicked */
-    $assocVideoArray = getVideos(); //Associative array with video information to be stored in thumbnails.
+    $results = getVideos(); //Associative array with video information to be stored in thumbnails.
+    $assocVideoArray= $results[0];
+    $error= $results[1];
+    if ( $error ) {
+        return;
+    }
     $displayHTML = displayThumbnails($assocVideoArray); //displayThumbnails will be a function that handles the HTML logic of displaying the thumbnails.
     return $displayHTML;
 }
@@ -101,23 +106,21 @@ function loadVideos() {
 function displayThumbnails($assocArray) {
 
     $htmlFull = '<ul>';
-    foreach($assocArray as $valOuter) {
-        if(is_array($valOuter)) {
-            foreach($valOuter as $val) {
+    foreach($assocArray as $val) {
             $videoID = getVideoID($val['urlV']);
             $idVideo = $val['idVideos'];
             $title = getVidTitle($videoID);
             $thumbnail = 'http://img.youtube.com/vi/'.$videoID.'/1.jpg';
             $html = 
                 '<li>
+                <div> 
                 <form action = "videos.php" method = "post">
                 <input type = "image" src = "'.$thumbnail.'" name = "thumbnails" />
                 <input type = "hidden" value = "'.$idVideo.'" name = "vidID" />
                 </form>
+                </div>
                 <h4>'.$title.'</h4></li>';
             $htmlFull = $htmlFull. $html;
-            }
-        }
     }
 
         $htmlFull = $htmlFull. '</ul>';

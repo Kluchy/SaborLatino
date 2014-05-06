@@ -3,43 +3,84 @@
 // load necessary function files
 include_once "displayfunctions.php";
 include_once "../Database/getters.php";
+include_once "../Database/helpers.php";
 include_once "videoSearch.php";
 
- $memberID= $_GET["memberID"];
- $name= $_GET["name"];
- $year= $_GET["year"];
- $position= $_GET["position"];
- $profilePic= $_GET["profilePic"];
- $bio= $_GET["bio"];
- $email= $_GET["email"];
- $phone= $_GET["phone"];
+/**validate and retrieve GET variables*/
+if ( isset( $_GET["memberID"] ) && validateID(  $_GET["memberID"] ) ) {
+    $memberID= $_GET["memberID"];
+} else {
+    $memberID= "";
+}
+ if ( isset( $_GET["name"] ) && validateText( $_GET["name"] ) ) {
+    $name= $_GET["name"];
+} else {
+    $name= "";
+}
+if ( isset( $_GET["year"] ) && validateDate( $_GET["year"] ) ) {
+    $year= $_GET["year"];
+} else {
+    $year= "";
+}
+if (  isset( $_GET["position"] ) && validateText( $_GET["position"] ) ) {
+    $position= $_GET["position"];
+} else {
+    $position= "";
+}
+if (  isset( $_GET["profilePic"] ) && validateText( $_GET["profilePic"] ) ) {   
+    $profilePic= $_GET["profilePic"];
+} else {
+    $profilePic= "http://info230.cs.cornell.edu/users/skemab/www/Sabor/SaborLatino/img/defaultProfilePic.jpg";
+}
+if (  isset( $_GET["bio"] ) && validateText( $_GET["bio"] ) ) {
+    $bio= $_GET["bio"];
+} else {
+    $bio="";
+}
+if (  isset( $_GET["email"] ) && validateText( $_GET["email"] ) ) {
+    $email= $_GET["email"];
+} else {
+    $email="";
+}
+if (  isset( $_GET["phone"] ) && validatePhone( $_GET["phone"] ) ) {
+    $phone= $_GET["phone"];
+} else {
+    $phone= "";
+}
+/** End validate GET varibales */
  $status= getStatus($year);
  
 $title= $name; 
 createHeader($title, "memberInfo.css");
  
- echo "<h1> <a href=\"members.php\"> Members > </a> ";
- echo " $name </h1>";
- echo "<ul id=\"member\">";
- echo "<li  id=\"member\">";
- echo "<img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
- echo "</li>";
- echo "<li  id=\"member\">";
- echo "<div id=\"member\">";
- echo "Name: $name<br>";
- echo "Status: $status<br>";
- echo "position: $position<br>";
- echo "E-Mail: $email<br>";
- echo "#tel: $phone<br>";
- echo "<br><br><br>";
- echo "$bio<br>";
- echo "</div>";
- echo "</li>";
- echo "</ul>";
+ echo "<h1> <a href=\"members.php\"> Members > </a> $name </h1>
+            <ul id=\"member\">
+              <li  id=\"member\">
+                <img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">
+              </li>
+              <li  id=\"member\">
+                <div id=\"member\">
+                    Name: $name<br>
+                    Status: $status<br>
+                    Position: $position<br>
+                    E-Mail: $email<br>
+                    #tel: $phone<br>
+                    $bio<br>
+                </div>
+            </li>
+          </ul>";
+          
+ displayVideos( $memberID );
+ createFooter();
+?>
 
- echo "<h1> Featured Videos </h1>";
-videos( $memberID );
 
+<?php  /*HELPERS*/
+
+/** Karl
+  *@param year - e.g: 2014
+  *@return corresponding school status as a string
+  */
 function getStatus( $year ) {
         $date= getdate();
         $currentYear= $date['year'];
@@ -56,7 +97,12 @@ function getStatus( $year ) {
     }
 }
 
-function videos( $id ) {
+/** Karl
+  *@param id - target member
+  *@spec prints videos in whih target appears
+  */
+function displayVideos( $id ) {
+    echo "<h1> Featured Videos </h1>";
     $result= getVideosFor( $id );
     $myvids= $result[0];
     $error= $result[1];
@@ -65,28 +111,7 @@ function videos( $id ) {
         return;
     }
     echo displayThumbnails($myvids);
-    //echo "<ul>";
-    /**foreach( $myvids as $vid ) {
-        $url= $vid["urlV"];
-        $caption= $vid["captionV"];
-        //use an ifram for video? not working...
-        echo "<li>";
-        echo "<div id=\"vidbox\">";
-        echo "<iframe id=\"vidbox\" width=\"100\" height=\"125\" ";    
-        echo "src=\"$url\">";
-        echo "</iframe>";
-        echo "<br>$caption";
-        echo "</div>";
-        echo "</li>";
-        //embed tag does not work either... */
-        /**echo "<embed id=\"vidbox\"  width=\"420\" height=\"345\"
-src=\"$url\"
-type=\"application/x-shockwave-flash\">
-</embed>";*/
-    //}
-    //echo "</ul>";
 }
 
 
-createFooter();
 ?>

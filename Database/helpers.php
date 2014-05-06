@@ -86,6 +86,20 @@
         return strtotime($date);
     }
     
+   /** Karl
+     *@param phone - phone user input
+     *@return true if phone is a 10-13 digit-number
+     */
+   function validatePhone($phone) {
+       $temp= str_replace( "(", "", $phone );
+       $temp= str_replace( ")", "", $temp );
+       $temp= str_replace( "-", "", $temp );
+       $temp= str_replace( " ", "", $temp );
+        if (preg_match("/^[0-9]{10,13}$/",$temp)){
+            return true;
+        }
+   }  
+    
     function currentDate(){
         $date= getdate();
         $year= $date['year'];

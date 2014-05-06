@@ -10,8 +10,8 @@ ul{
 	list-style-type: none;
 }
 #vidbox{
-	float: left;
-	padding: 10px;
+    float: left;
+    padding: 10px;
 }
 #vidmenu{
 	float: left;
