@@ -115,7 +115,7 @@ function displayThumbnails($assocArray) {
                 '<li>
                 <div> 
                 <form action = "videos.php" method = "post">
-                <input type = "image" src = "'.$thumbnail.'" name = "thumbnails" />
+                <input  id="vidThumbnail" type = "image" src = "'.$thumbnail.'" name = "thumbnails" />
                 <input type = "hidden" value = "'.$idVideo.'" name = "vidID" />
                 </form>
                 </div>

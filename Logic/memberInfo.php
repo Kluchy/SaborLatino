@@ -54,21 +54,17 @@ $title= $name;
 createHeader($title, "memberInfo.css");
  
  echo "<h1> <a href=\"members.php\"> Members > </a> $name </h1>
-            <ul id=\"member\">
-              <li  id=\"member\">
+              <div id=\"memberPic\">
                 <img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">
-              </li>
-              <li  id=\"member\">
-                <div id=\"member\">
+              </div>
+              <div id=\"memberInfo\">
                     Name: $name<br>
                     Status: $status<br>
                     Position: $position<br>
                     E-Mail: $email<br>
                     #tel: $phone<br>
                     $bio<br>
-                </div>
-            </li>
-          </ul>";
+              </div>";
           
  displayVideos( $memberID );
  createFooter();
