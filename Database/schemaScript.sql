@@ -8,6 +8,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE SCHEMA IF NOT EXISTS `info230_SP14_skemab` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `info230_SP14_skemab` ;
 
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS ChoreographersOfVid;
+DROP TABLE IF EXISTS MembersInVid;
+DROP TABLE IF EXISTS GenresInVid;
+DROP TABLE IF EXISTS Videos;
+DROP TABLE IF EXISTS MemberContactInfo;
+DROP TABLE IF EXISTS MembersHistory;
+DROP TABLE IF EXISTS Positions;
+DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS Pictures;
+DROP TABLE IF EXISTS Performances;
+DROP TABLE IF EXISTS Genres;
+
+
 -- -----------------------------------------------------
 -- Table `info230_SP14_skemab`.`Performances`
 -- -----------------------------------------------------
@@ -120,7 +134,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `info230_SP14_skemab`.`MemberContactInfo` (
   `memberID` INT NOT NULL,
   `email` VARCHAR(45) NULL,
-  `phone` INT NULL,
+  `phone` VARCHAR(16) NULL,
   `country` VARCHAR(45) NULL DEFAULT 'USA',
   `state` VARCHAR(45) NULL DEFAULT 'NY',
   `city` VARCHAR(45) NULL DEFAULT 'Ithaca',
