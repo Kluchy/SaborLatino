@@ -84,11 +84,9 @@ function loadMainVid() {
  * @spec returns null on error. 
  * @caller Video gallery page */
 function loadVideos() {
-
-    $query = 'SELECT * FROM Videos'; /**Subject to change if we decide to store information from other tables (such as the 
-        performance table) for when the thumbnail is clicked */ 
-    
-    $assocVideoArray = retrieve($query); //Associative array with video information to be stored in thumbnails.
+    /**Subject to change if we decide to store information from other tables (such as the 
+        performance table) for when the thumbnail is clicked */
+    $assocVideoArray = getVideos(); //Associative array with video information to be stored in thumbnails.
     $displayHTML = displayThumbnails($assocVideoArray); //displayThumbnails will be a function that handles the HTML logic of displaying the thumbnails.
     return $displayHTML;
 }
