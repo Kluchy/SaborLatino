@@ -41,6 +41,41 @@
  
  
     /************ START VIDEO GETTERS */
+    
+    /** Karl
+      *@param searchCriteria - associative array of field=>value mappings.
+      *@spec field can be any column in Videos, and Performances. To search for a genre, pass in "genreName"=>inputted genre name
+      *@spec searchCriteria should not contain IDs because the user should have no notion of IDs
+      *@return all Videos records joined with their matching entry in Performances and GenresInVid
+      *@return on success: (records, null) -- On failure: (null, error message)
+      *@caller retrieve
+      */
+    function searchVideos( $searchCriteria ) {
+        $videosSchema= array ( "urlV", "captionV", "performanceID" );
+        $genresSchema= array ( "genres" );
+        $performancesSchema= array( "performanceTitle","performanceLocation","performanceDate" );
+        //build query to DB
+        $query= "";
+        $genreCheck= "";
+        foreach( $searchCriteria as $field => $value ) {
+            if ( in_array( $field, $genresSchema ) ) {
+                $genreCheck= "SELECT * 
+                                          FROM Genres INNER JOIN GenresInVid ON genreID = idGenres
+                                          WHERE $field = \"$value\"";
+            } else {
+                if ( $query == "" ) {
+                    $query= "SELECT * FROM Videos INNER JOIN Performances ON performanceID = idPerformances WHERE  $field = \"$value\"";
+                } else {
+                    $query= $query." AND $field = \"$value\"";    
+                }
+            }    
+        }
+        //aggregate query
+        $query= $query." AND EXISTS( ".$genreCheck." AND Videos.idVideos = videoID );";
+        //submit query and return results
+        return retrieve( $query );
+    }
+    
     /** KARL
       *@param memberID - (valid?) member id
       *@return the videos records associated with 'memberID' + null on success, null + error message on failure
