@@ -385,7 +385,71 @@
                                                    INNER JOIN Positions ON positionID = idPositions";
         return retrieve( $query );     
     }
-
+    
+    /** Karl
+      *@return all inactive members and their info + null
+      *@spec reutrns (null, error message) on error
+      *@calling retrieve currentDate()
+      */
+    function getInactiveMembers() {
+        $currentDate= currentDate();
+        $query= "SELECT * 
+                       FROM Members INNER JOIN MemberContactInfo ON idMembers = MemberContactInfo.memberID
+                                                   INNER JOIN ( SELECT * FROM MembersHistory
+                                                                           WHERE  endDate < \"$currentDate\") History ON idMembers = History.memberID
+                                                   INNER JOIN Pictures ON pictureID = idPictures
+                                                   INNER JOIN Positions ON positionID = idPositions";
+        return retrieve( $query );     
+    }
+    
+    /** Karl
+      *@param searchCriteria - associative array of field => value mappings
+                      where field is any non ID column in Members, MemberContactInfo and MembersHistory
+                      special 'field'=>'value pairs:
+                          --'joinedAfter' => [date]{yyyy-mm-dd, yyyy-mm, yyyy}
+                          --'joinedBefore' => [date]{yyyy-mm-dd, yyyy-mm, yyyy}
+      *@return all member records joined with MembercontactInfo and MembersHistory
+      *@return on success: (records, null) - on failure: (null, error message)
+      *@calling retrieve
+      */
+    function searchMembers( $searchCriteria ) {
+            /**$memberSchema= array("firstName", "lastName", "bio", "year", "bio");
+            $contactSchema= array("email","phone","country","state","city");
+            $historySchema= array("positionID", "startDate", "endDate");*/
+            $numeric= array("positionID", "year", "phone");
+            $special= array("joinedAfter","joinedBefore");
+            
+            $query= "";
+            foreach( $searchCriteria as $field => $value ) {
+                    if ( $query == "" ) {
+                        if ( in_array( $field, $numeric ) ) {
+                            $query= "SELECT * FROM Members INNER JOIN MemberContactInfo ON idMembers = memberID
+                                                                        INNER JOIN MembersHistory ON idMembers = memberID WHERE $field = $value";
+                        } elseif ( $field == "joinedAfter" ) {
+                            $query= "SELECT * FROM Members INNER JOIN MemberContactInfo ON idMembers = memberID
+                                                                        INNER JOIN MembersHistory ON idMembers = memberID WHERE startDate > \"$value\"";
+                        } elseif ( $field == "joinedBefore" ) {
+                            $query= "SELECT * FROM Members INNER JOIN MemberContactInfo ON idMembers = memberID
+                                                                        INNER JOIN MembersHistory ON idMembers = memberID WHERE startDate < \"$value\"";
+                        }else {
+                            $query= "SELECT * FROM Members INNER JOIN MemberContactInfo ON idMembers = memberID
+                                                                        INNER JOIN MembersHistory ON idMembers = memberID WHERE $field LIKE '%$value%' ";
+                        }
+                    } else {
+                        if ( in_array( $field, $numeric ) ) {
+                            $query= $query." AND $field = $value";
+                        } elseif ( $field == "joinedAfter" ) {
+                            $query= $query."AND startDate > \"$value\"";
+                        } elseif ( $field == "joinedBefore" ) {
+                            $query= $query." startDate < \"$value\"";
+                        } else {
+                            $query= $query." AND $field LIKE '%$value%' ";
+                        }
+                    }
+            }
+            
+            return retrieve( $query );
+    }
     
     /*   END MEMBER GETTERS ***********************************/
     
