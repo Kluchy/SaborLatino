@@ -1,5 +1,5 @@
 <?php
-    include "helpers.php";
+    include_once "helpers.php";
 ?>
 <?php
  
@@ -72,22 +72,29 @@
             }
         }
         $results= $mysqli->multi_query ( $multiQuery );
+        /**if (!$results ) {
+            return array( null,  "$mysqli->error<br>" );
+        }*/
         //process results and return them as an associative array.
         $ids= array();
-        $firstResult= $results->store_result();//get result of first query
-        
+        $firstResult= $mysqli->store_result();//get result of first query
+        //print_r ($firstResult);
         // initialize 'ids' with the results of the first query
         $ids= $firstResult->fetch_assoc();
+        $firstResult->free();
         $numExpectedResults= count( $typeList );//number of results expected based on input
         
-        $nextResult= $results->more_results();//get result of second query (or null if there is not one)
+        //$nextResult= ;//get result of second query (or null if there is not one)
         $numResultsSeen= 1;// 1 for the first result
-        while ( $nextResult ) {
-            
-            //for each successful query, append its results to 'ids' array
-            array_merge( $ids, $nextResult->fetch_assoc() );
-            $numResultsSeen= $numResultsSeen + 1;
-            $nextResult= $results->more_results();    
+        while ( $mysqli->more_results() && $mysqli->next_result() ) {
+            if ( $nextResult= $mysqli->store_result() ) {
+                //for each successful query, append its results to 'ids' array
+                $ids= array_merge( $ids, $nextResult->fetch_assoc() );
+                //echo "ids are: ";
+                //print_r($ids);
+                $numResultsSeen= $numResultsSeen + 1;
+                $nextResult->free();
+            }  
         }
         if ( $numResultsSeen < $numExpectedResults ) {
             //there was an error with the database
@@ -111,8 +118,8 @@
         }
         //get max idVideos from Videos table
         $result= getMaxIDs( array("Videos"), $mysqli );
-        $maxIDS= $results[0];
-        $error= $results[1];
+        $maxIDs= $result[0];
+        $error= $result[1];
         if ( $error ) {
             $mysqli->close();
             return $error;
@@ -120,53 +127,47 @@
          
         $id= $maxIDs["maxVideoID"] + 1;
         $videosSchema= array ( "urlV", "captionV", "performanceID" );
-        $genresSchema= array ( "genres" );
+        $genresSchema= array ( "genreID" );
         
-        $videoQuery= "INSERT INTO Videos VALUES idVideos= $id";
-        $genreQueries= ""; 
+        $videoQueryP1= "INSERT INTO Videos(idVideos";
+        $videoQueryP2= "VALUES( $id";
+        $genreQuery= ""; 
         //extend videoQuery and genreQueries with corresponding field => value pairs
         foreach ( $videoInfo as $field => $value ) {
             //for Videos, extend the one record we are inserting with the pair
             if ( in_array ( $field, $videosSchema ) ) {
+                $videoQueryP1= $videoQueryP1.", $field";
                 // value is a number if field is 'performanceID so no escape quotes needed.
                 if ( $field == "performanceID" ) {
-                    $videoQuery= $videoQuery.", $field = $value";
+                    $videoQueryP2= $videoQueryP2.", $value";
                 } else {
-                    $videoQuery= $videoQuery.", $field = \"$value\"";
+                    $videoQueryP2= $videoQueryP2.", \"$value\"";
                 }
                 
             } elseif ( in_array ( $field, $genresSchema ) ) {
-                //for GenresInVid, we need to add a record for each genre we
-                //are linking to this video
-                $numGenresInserted= count( $value );
-                //here, value is an array of genreIDs
-                foreach ( $value as $genreID ) {
-                    $genreQueries= $genreQueries."INSERT INTO GenresInVid VALUES genreID = $genreID, videoID = $videoID;";           
-                }  
+                    $genreQuery= "INSERT INTO GenresInVid( genreID, videoID ) VALUES ($value, $id)";           
             }
+        }
+        if ( $genreQuery == "" ) {
+            //default genre to "mix" genre
+            $genreQuery= "INSERT INTO GenresInVid( genreID, videoID ) VALUES (0, $videoID)";
         }
         //append queries for genres to the query for the video
         //because we need to insert the video before linking genres to it
-        $multiQuery= $videoQuery.$genreQuery;
+        $videoQuery= $videoQueryP1.") ".$videoQueryP2." )";
+        $multiQuery= $videoQuery.";".$genreQuery.";";
         $results= $mysqli->multi_query ( $multiQuery );
-        $videoInserted= $results->store_result();//get the result for the video query
-        $genresInserted= $results->more_results();//get the result for the first genre query (if there is one)
-        if ( $videoInserted && $numGenresInserted ) {
-            $numGenresSeen= 0;
-            while ( $genresInserted ) {
-                $genresInserted= $results->more_results();
-                $numGenresSeen= $numGenresSeen + 1;
-            }
-            if ( $numGenresSeen < $numGenresInserted ) {
-                $mysqli->close();
-                return "Error adding one of the genres: $mysqli->error<br>";
-            }
+        
+        $videoInserted= $mysqli->store_result();//get the result for the video query
+        $genreInserted= $mysqli->store_result();//get the result for the genre query 
+        if ( $videoInserted && $genreInserted ) {
             //success
             $mysqli->close();
             return null;    
         } else {
+            $msg= "Error adding video: $mysqli->error<br>";
             $mysqli->close();
-            return "Error adding video: $mysqli->error<br>";
+            return $msg;
         }
     }
           
@@ -198,52 +199,71 @@
         //get idMembers and idhistory for this new member  
         $id= $maxIDs["maxMemberID"] + 1;
         $hID= $maxIDs["maxHistoryID"] + 1;
-        $membersSchema= array ( "firstName", "lastName", "year", "bio" );
+        $memberSchema= array ( "firstName", "lastName", "year", "bio" );
         $contactSchema= array ( "email", "phone", "country", "state", "city" );
         $historySchema= array ( "positionID", "startDate", "endDate" );
         
-        $memberQuery= "INSERT INTO Members VALUES idMembers= $id";
-        $contactQuery= "INSERT INTO MemberContactInfo VALUES memberID= $id";
-        $historyQuery= "INSERT INTO MembersHistory VALUES idHistory= $hID, memberID= $id"; 
+        $memberQueryP1= "INSERT INTO Members( idMembers";
+        $contactQueryP1= "INSERT INTO MemberContactInfo( memberID";
+        $historyQueryP1= "INSERT INTO MembersHistory( idHistory, memberID";
+        
+        $memberQueryP2= "VALUES( $id";
+        $contactQueryP2= "VALUES( $id";
+        $historyQueryP2= "VALUES( $hID,  $id"; 
         
         //build queries by adding field and value to appropriate table
         foreach ( $memberInfo as $field => $value ) {
             if ( in_array ( $field, $memberSchema ) ) {
                 // 'year': in database it is an int, so we can't have escaped quotes
-                if ( $field == "year" ) {
-                    $memberQuery= $memberQuery.", $field = $value";
+                $memberQueryP1= $memberQueryP1.", $field";
+                if ( $field == "year" ) {            
+                    $memberQueryP2= $memberQueryP2.", $value";
                 } else {    
-                    $memberQuery= $memberQuery.", $field = \"$value\"";
+                    $memberQueryP2= $memberQueryP2.", \"$value\"";
                 }
                 
             } elseif ( in_array ( $field, $contactSchema ) ) {
-                $contactQuery= $contactQuery.", $field = \"$value\"";
+                $contactQueryP1= $contactQueryP1.", $field";
+                if ( $field == "phone" ) {
+                    $contactQueryP2= $contactQueryP2.", $value";
+                } else {
+                    $contactQueryP2= $contactQueryP2.", \"$value\"";
+                }
                 
             } elseif ( in_array ( $field, $historySchema ) ) {
+                $historyQueryP1= $historyQueryP1.", $field";
                 if ( $field == "positionID" ) {
-                    $historyQuery= $historyQuery.", $field = $value";
+                    $historyQueryP2= $historyQueryP2.", $value";
                 } else {
-                    $historyQuery= $historyQuery.", $field = \"$value\"";
+                    $historyQueryP2= $historyQueryP2.", \"$value\"";
                 }
             }   
         }
         //concatenate all queries. Should we make this a transaction 
         // in order to roll back if one of them fails???
+        $memberQuery= $memberQueryP1.") ".$memberQueryP2.")";
+        $contactQuery= $contactQueryP1.") ".$contactQueryP2.")";
+        $historyQuery= $historyQueryP1.") ".$historyQueryP2.")";
         $multiQuery= $memberQuery.";".$contactQuery.";".$historyQuery.";";
+        echo "Query is: $multiQuery<br>";
         $results= $mysqli->multi_query ( $multiQuery );
         
         //TODO analyze the errors that could occur in this triple query.
+        //TODO fix the calls to store_result below. Code thins there is an error when there is not
         
         //get result of insert into Members table.
-        $memberInserted= $results->store_result();
+        $memberInserted= $mysqli->store_result();
         //get result of insert into MemberContactInfo table.
-        $contactInserted= $results->more_results();
+        $contactInserted= $mysqli->store_result();
         //get result of insert into MembersHistory table.
-        $historyInserted= $results->more_results();
-        
+        $historyInserted= $mysqli->store_result();
+        //print_r($memberInserted);
+        //print_r($contactInserted);
+        //print_r($historyInserted);
         if ( !$memberInserted || !$contactInserted || !$historyInserted ) {
+            $msg= "Error adding to Members: $mysqli->error<br>";
             $mysqli->close();
-            return "Error: $mysqli->error<br>";
+            return "$msg";
         }
         $mysqli->close();
         return null;

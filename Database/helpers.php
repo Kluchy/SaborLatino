@@ -109,6 +109,16 @@
         return $newDate;
     }
     
+    function defaultEndDate()  {
+        $date= getdate();
+        $year= $date['year'];
+        $year= $year + 1;
+        $month= $date['mon'];
+        $day= $date['mday'];
+        $newDate= "$year-$month-$day";
+        return $newDate;
+    }
+    
     /** Karl
       *@param name - input username
       *@param password - input password
