@@ -24,7 +24,7 @@ h1{
 	color: #CFB53B;
 }
 #menubar h1{
-	display: none;
+	display: block;
 }
 #menubar ul{
 	list-style-type: none;
