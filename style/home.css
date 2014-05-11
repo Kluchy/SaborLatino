@@ -12,6 +12,7 @@ body{
 	padding: 0;
 	position: absolute;
 	bottom: 48px;
+    opacity: 0.8;
 }
 #menubar h1{
 	display: block;
