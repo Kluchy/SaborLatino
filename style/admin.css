@@ -9,7 +9,7 @@ body{
 }
 h1{
 	font-family: 'Kaushan Script', cursive;
-	color: #CFB53B;
+	color: #fc0;
 	margin-left: 20px;
 }
 .content{
@@ -21,7 +21,7 @@ h1{
 /* menu bar styling */
 #menubar{
 	overflow: auto;
-	color: #CFB53B;
+	color: #fc0;
 }
 #menubar h1{
 	display: none;
@@ -46,13 +46,13 @@ h1{
 	text-transform: uppercase;
 	text-align: center;
 	font-size: medium;
-	color: #CFB53B;
+	color: #fc0;
 	font-weight: bold;
 	border-bottom: solid 4px #000;
 }
 #menubar a:hover{
-	border-color: #CFB53B;
+	border-color: #fc0;
 }
 #menubar a#activepage{
-	border-bottom: solid 4px #CFB53B;
+	border-bottom: solid 4px #fc0;
 }
