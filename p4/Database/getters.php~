@@ -169,6 +169,7 @@
         }
         $query = $query. ";";
         //submit query and return results
+        echo $query;
         return retrieve( $query );
     }
     
@@ -496,16 +497,6 @@
                                                    INNER JOIN Pictures ON pictureID = idPictures
                                                    INNER JOIN Positions ON positionID = idPositions";
         return retrieve( $query );     
-    }
-    
-    /** Karl
-      *@return all records in Members table + null
-      *@spec returns (null, error message) on error
-      *@calling retrieve
-      */
-    function getMemberRecords() {
-        $query= "SELECT * FROM Members";
-        return retrieve( $query );    
     }
     
     /** Karl

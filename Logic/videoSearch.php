@@ -11,45 +11,37 @@
  * @caller Search results page
  * @USE: Use the returned associative array in another PHP page to display matched video results.
  */
-/*function searchVideos() {
+function searchVideosReturn() {
 
    $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
    if (!$mysqli) {
        echo "Error: cannot connect to database. Try again later<br>.";
        return null;
    }
+    $searchArray = array();
 
-   $anySearch = false; //Set to true only if some search field is used, otherwise all videos are returned.
+    if($_POST['yearPerformed'] && trim(htmlentities($_POST['yearPerformed'])) != "") {
+        $searchArray["year"] =  trim(htmlentities($_POST['yearPerformed']));
+    }    
+    if($_POST['genre'] && trim(htmlentities($_POST['genre'])) != "") {
+        $searchArray["genreName"] = trim(htmlentities($_POST['genre']));
+    }    
+    if($_POST['performers'] && trim(htmlentities($_POST['performers'])) != "") {
+        $searchArray["firstName"] = trim(htmlentities($_POST['performers']));
+        $searchArray["lastName"] = trim(htmlentities($_POST['performers']));
+    }    
+    if($_POST['choreographers'] && trim(htmlentities($_POST['choreographers'])) != "") {
+        $searchArray["cFirstName"] = trim(htmlentities($_POST['choreographers']));
+        $searchArray["cLastName"] = trim(htmlentities($_POST['choreographers']));
+    }    
+    if($_POST['performanceTitle'] && trim(htmlentities($_POST['performanceTitle'])) != "") {
+        $searchArray["performanceTitle"] = trim(htmlentities($_POST['performanceTitle']));
+    }    
 
-    if(isset($_POST[/*Search field 1 -> Associated html search element )) {
-        $query[1] = /*Search field 1  ' REGEXP '. trim($_POST[/*Search field 1 -> Associated html search elemnt ]); 
-        $anySearch = true;
-    }
-    if(isset($_POST[/*Search field 2 -> Associated html search element )) {
-        $query[1] = /*Search field 2  ' REGEXP '. trim($_POST[/*Search field 2 -> Associated html search elemnt ]); 
-        $anySearch = true;
-    }
-    /**Repeat above chunk of code(the if-statement) for all qualifying search fields 
-
-    if($anySearch) {
-        $query[0] = 'SELECT idVideos FROM VIDEOS WHERE ';
-    }
-    else {
-        $query[0] = 'SELECT idVideos FROM VIDEOS';
-    }
-
-    /**Above cases and code may be modified if we decide to search based on fields in other tables, in which case we will need to change some
-     * of the query code. 
-
-
-
-    $finalQuery = implode(' AND ', $query);
+    $results = searchVideos($searchArray); 
+    return $results;
 
 
-    /**Then, query database to get videoID's and url's for each matched video from the search. 
-    /**Return results of query using fetch_assoc to generate the associative array.
-
-    /**This function will be called upon by the html/php page that deals with displaying the search results. 
 } 
 
 /**
@@ -86,11 +78,24 @@ function loadMainVid() {
 function loadVideos() {
     /**Subject to change if we decide to store information from other tables (such as the 
         performance table) for when the thumbnail is clicked */
-    $results = getVideos(); //Associative array with video information to be stored in thumbnails.
-    $assocVideoArray= $results[0];
-    $error= $results[1];
-    if ( $error ) {
-        return;
+    $assocVideoArray = array(); 
+
+    if(isset($_POST['submit'])) {
+        $results = searchVideosReturn();
+        $error = $results[1];
+        if ( $error ) {
+            return;
+        }
+        $results = $results[0];
+        $assocVideoArray = $results;
+    }
+    else {
+        $results = getVideos(); //Associative array with video information to be stored in thumbnails.
+        $assocVideoArray= $results[0];
+        $error= $results[1];
+        if ( $error ) {
+            return;
+        }
     }
     $displayHTML = displayThumbnails($assocVideoArray); //displayThumbnails will be a function that handles the HTML logic of displaying the thumbnails.
     return $displayHTML;
@@ -115,7 +120,7 @@ function displayThumbnails($assocArray) {
                 '<li>
                 <div> 
                 <form action = "videos.php" method = "post">
-                <input  id="vidThumbnail" type = "image" src = "'.$thumbnail.'" name = "thumbnails" />
+                <input  id="vidThumbnail" type = "image" src = "'.$thumbnail.'" name = "thumbnails" alt = "No image" />
                 <input type = "hidden" value = "'.$idVideo.'" name = "vidID" />
                 </form>
                 </div>
@@ -191,5 +196,59 @@ function getVidTitle($videoID) {
     $title = (string)$xmlData->title; 
     return $title;
 }
-        
+
+/**
+ *Derek
+ *Display search forms in videos
+ *@param None
+ *@return None
+ *@caller Videos page
+ * */
+function displayVideoSearch() {
+
+    $genres = getGenres();
+    $genreString = "";
+    $error = $genres[1];
+    if($error) {
+        return;
+    }
+    $genres = $genres[0];
+    foreach($genres as $genre) {
+        $genreString = $genreString. '<option value = "'.$genre["genreName"].'">'.$genre["genreName"].'</option>';
+    }
+
+    $dates = retrieve("SELECT Year(performanceDate) as year FROM Performances ORDER BY performanceDate");
+    $pString = "";
+    $error = $dates[1];
+    if($error) {
+        return;
+    }
+    $dates = $dates[0];
+    foreach($dates as $date) {
+        $pString = $pString. '<option value = "'.$date["year"].'">'.$date["year"].'</option>';
+    }
+
+    echo '
+        <form action = "videos.php" method = "post" id = "vidSearch">
+            <label for = "yearPerformed">Year performed</label>
+            <select id = "yearPerformed" name = "yearPerformed">';
+    echo $pString; 
+    echo '
+            </select>
+            <label for = "genre">Genre</label>
+            <select id = "genre" name = "genre">';
+    echo $genreString;
+    echo '
+            </select>
+            <label for = "performers">Performer names</label>
+            <input type = "text" id = "performers" name = "performers" />
+            <label for = "choreographers">Choreographer names</label>
+            <input type = "text" id = "choreographers" name = "choreographers" />
+            <label for = "performanceTitle">Performance title</label>
+            <input type = "text" id = "performanceTitle" name = "performanceTitle" />
+            <input type = "submit" id = "submit" name = "submit" value = "Submit search" />
+        </form>
+        ';
+
+}
 ?>

@@ -22,6 +22,8 @@
 	createMenubar($ACTIVEPAGE);
 	
 	?>
+    <script src = "JavaScript/jquery-1.11.1.min.js"></script>
+
 	<div class="content">
 		<?php
 			/* create list of officers and members
