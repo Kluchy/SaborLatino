@@ -1,18 +1,53 @@
 <?php
-    require_once('config.php');
-    include_once "Database/getters.php";
+    require_once('../Database/config.php');
+    include_once "../Database/getters.php";
+    require_once 'Zend/Loader.php';
+    Zend_Loader::loadClass('Zend_Gdata');
+    Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+    Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+    Zend_Loader::loadClass('Zend_Gdata_Calendar');
+
 ?>
 <?php
+    
+    /**Derek
+     * @param None
+     * @does: Prints a HTML string that displays the embedded calendar
+     * @Caller Events page
+     * */
+    function displayGoogleCalendar() {
+        echo '<iframe src="https://www.google.com/calendar/embed?src=saborlatinoeventscal%40gmail.com&ctz=America/New_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+    }
+
     /**Derek
      * @param $eventInfo - Array of information to be added to the performances table to signify an added new event.
      * @return Whether or not the addition was successful
      * @Caller Admin page
      * */
-    function addNewCalendarEvent($eventInfo) {
-        //First, split up the array $eventInfo into a query string that will add the event
-        //to the database.
+    function addNewCalendarEvent($eventInfo, $client) {
+
+        $gdataCal = new Zend_Gdata_Calendar($client);
+        $newEvent = $gdataCal->newEventEntry();
+
+        if(isset($eventInfo["performancetitle"])) {
+            $title = $eventInfo["performancetitle"];
+            $newEvent->title = gdataCal->newTitle($title);
+        }
+        if(isset($eventInfo["performanceLocation"])) {
+            $location = $eventInfo["performanceLocation"];
+            $newEvent->where = array($gdataCal->newWhere($location));
+        }
+        if(isset($eventInfo["performanceDate"])) {
+            $when = $gdataCal->newWhen();
+            $date = $eventInfo["performanceDate"];
+            $when->startTime = "{$date}";
+            $when->endTime = "{$date}";
+            $newEvent->when = array($when);
+        }
+
+        $gdataCal->insertEvent($newEvent);
+
         
-        //Runs SQL query to add calendar event to database.
     }
 
     /**Derek
@@ -84,7 +119,6 @@
      * @Caller function displayCalendarEvents */ 
     function generateEventString($events) {
         $eventString = "";
-        print_r($events);
         foreach($events as $event) {
             $eventString = $eventString. '<li>Date: '.$event['performanceDate'].'<br/> Title: '.$event['performanceTitle'].' <br/>
                 Location: '.$event['performanceLocation'].'</li>';
