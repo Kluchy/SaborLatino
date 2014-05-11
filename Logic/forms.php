@@ -113,6 +113,20 @@
         <?php    
     }
     
+    function addGenreForm() {
+        ?>
+        <form action="add.php" method="post">
+         Use the following section to add a new Dance Genre.
+         <br>
+         New Genre <input type="text" name="genreName">
+         <br>
+         <input type="submit" name="addGenre" value="Add Genre">
+         
+         <br><br><br>
+        </form>
+        <?php
+    }
+    
     function addPictureForm() {
         ?>
         <form action="add.php" method="post" enctype="multipart/form-data">
@@ -135,6 +149,24 @@
         <?php
     }
     
+    function addPerformanceForm() {
+        ?>
+        <form action="add.php" method="post">
+         Use the following section to add a new Performance Event.
+         <br>
+         Name of Event <input type="text" name="performanceTitle">
+         <br>
+         Location of Event <input type="text" name="performanceLocation">
+         <br>
+         Date of Event <input type="text" name="performanceDate">
+         <br>
+         <input type="submit" name="addPerformance" value="Add Performance">
+         
+         <br><br><br>
+        </form>
+        <?php
+    }
+
     
     /** Karl
       * displays a basic contact form requesting email, object of message,

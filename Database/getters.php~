@@ -169,6 +169,7 @@
         }
         $query = $query. ";";
         //submit query and return results
+        echo $query;
         return retrieve( $query );
     }
     
