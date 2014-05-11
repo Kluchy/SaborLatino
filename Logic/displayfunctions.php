@@ -17,12 +17,11 @@ function createMenubar($ACTIVEPAGE){
 		<!--The menubar-->
 		<ul>
 			<li><a href='index.php' <?php if ($ACTIVEPAGE == 'home'){echo "id='activepage'";} ?>>Home</a></li>
+			<li><a href='admin.php' <?php if ($ACTIVEPAGE == 'about'){echo " id='activepage'";} ?>>About</a></li>
 			<li><a href='events.php' <?php if ($ACTIVEPAGE == 'events'){echo "id='activepage'";} ?>>Events</a></li>
 			<li><a href='members.php' <?php if ($ACTIVEPAGE == 'members'){echo "id='activepage'";} ?>>Members</a></li>
 			<li><a href='videos.php' <?php if ($ACTIVEPAGE == 'videos'){echo "id='activepage'";} ?>>Videos</a></li>
 			<li><a href='contact.php' <?php if ($ACTIVEPAGE == 'contact'){echo "id='activepage'";} ?>>Contact</a></li>
-			<!-- Add functionality only show the following link when logged in as administrator -->
-			<li><a href='admin.php' <?php if ($ACTIVEPAGE == 'admin'){echo " id='activepage'";} ?>>Admin</a></li>
 			
 			<!-- Add a simple login form for administration
 			<li>
