@@ -372,7 +372,7 @@
       *@spec adds one picture to the database
       *@calling getMaxIDs
       *@caller storePicture
-      *@note helper: Call storePicture instead
+      *@note helper: Call storePicture with haslink=0 instead
       */
     function addPicture($pictureInfo) {
         require_once "config.php";
@@ -380,6 +380,18 @@
         if (!$mysqli) {
             return "Error: cannot connect to database. Try again later<br>";
         }
+        //check if picture already in DB
+        $urlP= $pictureInfo["urlP"];
+        $result= $mysqli->query("SELECT * FROM Pictures WHERE urlP = \"$urlP\"");
+        if ( !$result ) {
+            $msg= "$mysqli->error<br>";
+            $mysqli->close();
+            return $msg;
+        }
+        if ($result->num_rows == 1) {
+            return null;
+        }
+        
         //retrieve max idPictures from Pictures table
         $result= getMaxIDs( array("Pictures"), $mysqli );
         $maxID= $result[0];
@@ -390,18 +402,86 @@
         }   
         $id= $maxID["maxPictureID"] + 1;
         
-        $query= "INSERT INTO Pictures VALUES idPictures = $id";
+        $queryP1= "INSERT INTO Pictures( idPictures";
+        $queryP2= "VALUES ($id";
         foreach ( $pictureInfo as $field => $value ) {
+            $queryP1= $queryP1.", $field";
             if ( $field == "performanceID" ) {
-                $query= $query.", $field = $value";
+                $queryP2= $queryP2.", $value";
             } else {
-                $query= $query.", $field = \"$value\"";
+                $queryP2= $queryP2.", \"$value\"";
             }    
         }
+        $query= $queryP1.") ".$queryP2.")";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
+        }
+        $mysqli->close();
+        return null;
+    }
+    
+    /** Karl
+      *@param pictureInfo - single entry mapping: "urlP" -> [url]
+      *@return null for success, error message otherwise
+      *@spec adds one picture to the database + links picture to memberId in pictureInfo
+      *@calling getMaxIDs
+      *@caller storePicture
+      *@note helper: Call storePicture with last arg= 1 instead
+      */
+    function addPictureWithLink($pictureInfo) {
+        require_once "config.php";
+        $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+        if (!$mysqli) {
+            return "Error: cannot connect to database. Try again later<br>";
+        }
+        //check if picture already in DB
+        $urlP= $pictureInfo["urlP"];
+        $result= $mysqli->query("SELECT * FROM Pictures WHERE urlP = \"$urlP\"");
+        if ( !$result ) {
+            $msg= "$mysqli->error<br>";
+            $mysqli->close();
+            return $msg;
+        }
+        if ($result->num_rows == 1) {
+            return null;
+        }
+        
+        //retrieve max idPictures from Pictures table
+        $result= getMaxIDs( array("Pictures"), $mysqli );
+        $maxID= $result[0];
+        $error= $result[1];
+        if ( $error ) {
+            $mysqli->close();
+            return $error;
+        }   
+        $id= $maxID["maxPictureID"] + 1;
+        $memberID= -1;
+        
+        $queryP1= "INSERT INTO Pictures( idPictures";
+        $queryP2= "VALUES ($id";
+        foreach ( $pictureInfo as $field => $value ) {
+            if ( $field == "memberID" ) {
+                $memberID= $value;
+            } else {
+                $queryP1= $queryP1.", $field";
+                if ( $field == "performanceID" ) {
+                    $queryP2= $queryP2.", $value";
+                } else {
+                    $queryP2= $queryP2.", \"$value\"";
+                }
+            }    
+        }
+        $query= $queryP1.") ".$queryP2.")";
+        $query= $query."; UPDATE Members SET pictureID = $id 
+                                        WHERE idMembers = $memberID;";
+        $result= $mysqli->multi_query ( $query );
+        if ( !$result ) {
+            $msg= "$mysqli->error<br>";
+            $mysqli->close();
+            return $msg;
         }
         $mysqli->close();
         return null;
@@ -413,18 +493,22 @@
       *@return null for success, error message  on failure
       *@spec move picture from temp storage to 'pictures' directory.
              if it does not exist, create it first
-      *@calling addPicture
+      *@calling addPicture, addPictureWithLink
       *@note TODO: verify path logic
       */
-    function storePicture($tempLocation, $photoName, $pictureInfo) {
-        if ( !file_exists ( "/img" ) ) {
+    function storePicture($tempLocation, $photoName, $pictureInfo, $hasLink) {
+        if ( !file_exists ( "../img" ) ) {
             //create folder
-            if ( !mkdir ( "/img" ) ) {
+            if ( !mkdir ( "../img" ) ) {
                 return "Error creating 'img' directory<br>";
             }
         }
-          move_uploaded_file( $tempLocation, "img/".$photoName );
-          return addPicture( $pictureInfo );
+          move_uploaded_file( $tempLocation, "../img/".$photoName );
+          if ( $hasLink ) {
+            return addPictureWithLink( $pictureInfo );
+          } else {
+            return addPicture( $pictureInfo );
+          }
     }
     
     /*   END PICTURE ADDERS **********************************/
