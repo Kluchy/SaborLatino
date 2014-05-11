@@ -294,14 +294,18 @@
             return $error;
         }
         $id= $maxID["maxPerformanceID"] + 1;
-        $query= "INSERT INTO Performances VALUES idPerformances = $id";
+        $queryP1= "INSERT INTO Performances( idPerformances";
+        $queryP2= "VALUES( $id";
         foreach ( $performanceInfo as $field => $value ) {
-            $query= $query.", $field = \"$value\"";    
+            $queryP1= $queryP1.", $field";   
+            $queryP2= $queryP2.", \"$value\"";     
         }
+        $query= $queryP1.") ".$queryP2." )";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "Error adding Performance: $mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }
         $mysqli->close();
         return null;
@@ -324,14 +328,15 @@
         if (!$mysqli) {
             return "Error: cannot connect to database. Try again later<br>";
         }
-        $genreName= $genreInfo["genre"];
+        $genreName= $genreInfo["genreName"];
         
         //if genreName is already in Genres table, do nothing, return null
         $query= "SELECT * FROM Genres WHERE genreName = $genreName";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>"; 
+            return  $msg;
         }
         if ( $res->num_rows == 1 ) {
             return null;
@@ -346,11 +351,12 @@
         }   
         $id= $maxID["maxGenreID"] + 1;
         
-        $query= "INSERT INTO Genres VALUES idGenres = $id, genreName = $genreName";
+        $query= "INSERT INTO Genres (idGenres, genreName) VALUES ($id, $genreName)";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }
         $mysqli->close();
         return null;
@@ -443,8 +449,9 @@
         $query= "SELECT * FROM Positions WHERE position = $positionTitle";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
+            $msg= "$mysqli->error<br>"; 
             $mysqli->close();
-            return "$mysqli->error<br>"; 
+            return $msg;
         }
         if ( $res->num_rows == 1 ) {
             return null;
@@ -459,11 +466,12 @@
         }   
         $id= $maxID["maxPositionID"] + 1;
         
-        $query= "INSERT INTO Positions VALUES idPositions = $id, position = $positionTitle";
+        $query= "INSERT INTO Positions( idPositions, position ) VALUES ($id, $positionTitle)";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "$mysqli->error<br>"; 
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }
         $mysqli->close();
         return null;   
