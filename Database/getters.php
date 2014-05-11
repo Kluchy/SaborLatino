@@ -499,6 +499,16 @@
     }
     
     /** Karl
+      *@return all records in Members table + null
+      *@spec returns (null, error message) on error
+      *@calling retrieve
+      */
+    function getMemberRecords() {
+        $query= "SELECT * FROM Members";
+        return retrieve( $query );    
+    }
+    
+    /** Karl
       *@param searchCriteria - associative array of field => value mappings
                       where field is any non ID column in Members, MemberContactInfo and MembersHistory
                       special 'field'=>'value pairs:

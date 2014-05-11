@@ -36,8 +36,8 @@ INSERT INTO Positions (idPositions, position) VALUES ( 7, "Publicity Chair" );
 -- Insert Pictures
 INSERT INTO Pictures (idPictures, urlP, captionP) VALUES (0, "http://info230.cs.cornell.edu/users/skemab/www/m3/img/defaultProfilePic.jpg", "generic pic");
 
-
 -- Insert Performances
+INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 0, "Miscallaeneous", "Ithaca State Theatre", "2013-12-07" );
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 1, "Sabor Annual Concert: And the Latin Grammy Goes to...", "Ithaca State Theatre", "2013-12-07" );
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 2, "Sabor Annual Concert", "Ithaca State Theatre", "2012-12-07" );
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 3, "Sabor Annual Concert: World Cup", "Ithaca State Theatre", "2014-12-07" );
