@@ -87,8 +87,52 @@
                     echo "Succesfully added new video<br>";
                 }
              }
+             //process addPerformance
+             elseif ( isset( $_POST["addPerformance"] ) ) {
+                 //format input
+                 $performanceInfo= formatPerformanceInput();
+                 //make DB call
+                 $error= addPerformance( $performanceInfo );
+                 //check for error
+                if ( $error ) {
+                    echo "$error";
+                } else {
+                    echo "Successfully added new performance<br>";
+                }
+             }
+             //process addGenre
+             elseif ( isset( $_POST["addGenre"] ) ) {
+                 //format input
+                 $genreInfo= formatGenreInput();
+                 //make a DB call
+                 $error= addGenre( $genreInfo );
+                 //check for error
+                 if ( $error ) {
+                     echo "$error";
+                 } else {
+                     echo "Successfully added new genre<br>";
+                 }
+            }
+            //process addPosition
+            elseif ( isset( $_POST["addPosition"] ) ) {
+                //format input
+                $positionInfo= formatPositionInput();
+                //make DB call
+                $error= addPosition( $positionInfo );
+                //check for error
+                if ( $error ) {
+                    echo "$error";
+                } else {
+                    echo "Successfully added a new position<br>";
+                }
+            }
+            //process addPicture (TODO)
+            //display  add forms
              addMemberForm();
              addVideoForm();
+             addPerformanceForm();
+             addGenreForm();
+             addPositionForm();
 		?>
 	</div>
 	<?php
@@ -299,5 +343,91 @@
 	   $videoInfo["genreID"]= $_POST["genreID"];
 	   $videoInfo["performanceID"]= $_POST["performanceID"];
 	   return $videoInfo;
+    }
+    
+    /** Karl
+      *@spec displays the 'addPerformance' section of the Admin Page
+      */
+    function addPerformanceForm() {
+        ?>
+        <form action="admin.php" method="post">
+         <h1>Add a new Performance</h1>
+         <br>
+         Name of Event <input type="text" name="performanceTitle">
+         <br>
+         Location of Event <input type="text" name="performanceLocation">
+         <br>
+         Date of Event <input type="text" name="performanceDate">
+         <br>
+         <input type="submit" name="addPerformance" value="Add Performance">
+         
+         <br><br><br>
+        </form>
+        <?php
+    }
+    
+    /** Karl
+      *@spec process, validate and format user input
+      *@return associative array of values in proper format for DB submission
+      *@caller currentDate
+      */
+    function formatPerformanceInput() {
+        $performanceInfo= array();
+        if ( $_POST["performanceTitle"] ) {
+            $performanceInfo["performancetitle"]= $_POST["performanceTitle"];
+        }
+        if ( $_POST["performanceLocation"] ) {
+            $performanceInfo["performanceLocation"]= $_POST["performanceLocation"];
+        } 
+         if ( $_POST["performanceDate"] ) {
+            $performanceInfo["performanceDate"]= $_POST["performanceDate"];
+        } else {
+            $performanceInfo["performanceDate"]= currentDate();
+        }
+        return $performanceInfo; 
+    }
+    
+    function addGenreForm() {
+        ?>
+        <form action="add.php" method="post">
+         <h1>Add a new Dance Genre</h1>
+         <br>
+         New Genre <input type="text" name="genreName">
+         <br>
+         <input type="submit" name="addGenre" value="Add Genre">
+         
+         <br><br><br>
+        </form>
+        <?php
+    }
+    
+    function formatGenreInput() {
+        $genreInfo= array();
+        if ( $_POST["genreName"] ) {
+            $genreInfo["genreName"]= $_POST["genreName"];
+        }
+        return $genreInfo; 
+    }
+    
+        function addPositionForm() {
+        ?>
+        <form action="add.php" method="post">
+         <h1>Add a new Position</h1>
+         <br>
+         New Position <input type="text" name="position">
+         <br>
+         <input type="submit" name="addPosition" value="Add Position">
+         
+         <br><br><br>
+        </form>
+        <?php
+    }
+    
+        function formatPositionInput() {
+        $positionInfo= array();
+        if ( $_POST["position"] ) {
+            $positionInfo["position"]= $_POST["position"];
+        }
+        return $positionInfo; 
     }
 ?>
