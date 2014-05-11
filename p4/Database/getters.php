@@ -87,10 +87,10 @@
       */
     function searchVideos( $searchCriteria ) {
         $videosSchema= array ( "urlV", "captionV", "performanceID" );
-        $genresSchema= array ( "genres" );
+        $genresSchema= array ( "genreName" );
         $performancesSchema= array( "performanceTitle","performanceLocation","performanceDate", "year" );
-        $memberSchema = array("firstName, lastName");
-        $choreoSchema = array("cFirstName, cLastName");
+        $memberSchema = array("firstName", "lastName");
+        $choreoSchema = array("cFirstName", "cLastName");
 
         //build query to DB
         $query= "";
@@ -110,24 +110,25 @@
                                           FROM Genres INNER JOIN GenresInVid ON genreID = idGenres
                                           WHERE $field = \"$value\"";
             } 
-            elseif(in_array($field, $memberSchema) ) {
-                $choreoBool = true;
-                if ( $choreoCheck == "" ) {
-                    $choreoCheck = "SELECT * FROM Videos V, Members M, ChoreographersOfVid CV WHERE V.idMembers
-                        = CV.memberID AND CV.videoID = V.idVideos AND M.$field REGEXP \"$value\"";
-                }
-                else {
-                    $memberCheck = $memberCheck. " OR M.$field REGEXP \"$value\"";
-                } 
-            }
             elseif(in_array($field, $choreoSchema) ) {
-                $memberBool = true;
+                echo "HELLOWORLD";
+                $choreoBool = true;
                 if($field == "cFirstName") {
                     $field = "firstName";
                 }
                 else {
                     $field = "lastName";
                 }
+                if ( $choreoCheck == "" ) {
+                    $choreoCheck = "SELECT * FROM Videos V, Members M, ChoreographersOfVid CV WHERE V.idMembers
+                        = CV.memberID AND CV.videoID = V.idVideos AND M.$field REGEXP \"$value\"";
+                }
+                else {
+                    $choreoCheck = $choreoCheck. " OR M.$field REGEXP \"$value\"";
+                } 
+            }
+            elseif(in_array($field, $memberSchema) ) {
+                $memberBool = true;
                 if ( $memberCheck == "" ) {
                     $memberCheck = "SELECT * FROM Videos V, Members M, MembersInVid MV WHERE V.idMembers
                         = MV.memberID AND MV.videoID = V.idVideos AND M.$field REGEXP \"$value\"";
@@ -137,33 +138,33 @@
                 } 
             }
             else {
-                perfBool = true;
+                $perfBool = true;
                 if( $query == "" && $field == "year") {
                     $query = "SELECT * FROM Videos VS INNER JOIN Performances ON performanceID = idPerformances WHERE Year(performanceDate) = \"$value\"";
                 }
                 elseif ( $query == "" ) {
-                    $query= "SELECT * FROM Videos VS INNER JOIN Performances ON performanceID = idPerformances WHERE  $field = \"$value\"";
+                    $query= "SELECT * FROM Videos VS INNER JOIN Performances ON performanceID = idPerformances WHERE  $field REGEXP \"$value\"";
                 }
                 elseif($field == "year") {
                     $query = $query." AND Year(performanceDate) = \"$value\"";
                 }
                 else {
-                    $query= $query." AND $field = \"$value\"";    
+                    $query= $query." AND $field REGEXP \"$value\"";    
                 }
             }    
         }
         //aggregate query
 
-        if (!perfBool) {
+        if (!$perfBool) {
             $query = "SELECT * FROM Videos VS";
         }
-        if (genreBool) {
+        if ($genreBool) {
             $query= $query." AND EXISTS( ".$genreCheck." AND VS.idVideos = videoID )";
         }
-        if (memberBool) {
+        if ($memberBool) {
             $query = $query. "AND EXISTS( ".$memberCheck." AND VS.idVideos = V.idVideos )";
         }
-        if (choreoBool) {
+        if ($choreoBool) {
             $query = $query. "AND EXISTS( ".$choreoCheck." AND VS.idVideos = V.idVideos )";
         }
         $query = $query. ";";
