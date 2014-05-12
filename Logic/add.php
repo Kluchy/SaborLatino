@@ -10,6 +10,7 @@
 	include_once "loginCode.php";
 	include_once "addForms.php";
 	include_once "checkinput.php";
+    include_once "calendar.php";
 	// include_once calendar.php;		will uncomment when file is repaired
 	include_once "../Database/adders.php";
 	include_once "../Database/getters.php";
@@ -44,6 +45,7 @@
 	?>
 	<div class="content">
 		<?php
+
 			/* generate administration form
 			 * create form that has options to add/delete/modify members,
 			 * events, and videos
@@ -99,6 +101,14 @@
                 if ( $error ) {
                     echo "$error";
                 } else {
+                    //Allows you to access Google Calendar API.
+                    $user = 'saborlatinoeventscal@gmail.com';
+                    $pass = 'skemabsabor';
+                    $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME; // predefined service name for calendar
+
+                    $client = Zend_Gdata_ClientLogin::getHttpClient($user,$pass,$service);
+                    addNewCalendarEvent($performanceInfo, $client);
+
                     echo "Successfully added new performance<br>";
                 }
              }

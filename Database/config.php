@@ -3,11 +3,11 @@
     define('DB_HOST','localhost');
 
     //database name
-    define('DB_NAME','info230_SP14_skemab');
+    define('DB_NAME','info230_SP14_djc425sp14');
 
     //MySQL username
-    define('DB_USER','skemab');
+    define('DB_USER','djc425sp14');
 
     //...and password
-    define('DB_PASSWORD', 'skemab');
+    define('DB_PASSWORD', 'pwnies104');
 ?>

@@ -294,19 +294,25 @@
             return $error;
         }
         $id= $maxID["maxPerformanceID"] + 1;
+        $query1 = "INSERT INTO Performances (idPerformances";
+        $query2 = "VALUES($id";
         $query= "INSERT INTO Performances VALUES idPerformances = $id";
         foreach ( $performanceInfo as $field => $value ) {
-            $query= $query.", $field = \"$value\"";    
+            $query1 = $query1.", $field";    
+            $query2 = $query2.", \"$value\"";
         }
+        $query = $query1. ") ". $query2.")";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $err = $mysqli->error;
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return "$err<br>";
         }
         $mysqli->close();
         return null;
         
     }
+
     
     /*   END PERFORMANCE ADDERS ******************************/
     

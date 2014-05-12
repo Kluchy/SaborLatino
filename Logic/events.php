@@ -26,6 +26,7 @@
 			<?php
                 $eventsString = displayCalendarEvents();
                 echo $eventsString;
+                displayGoogleCalendar();
                 
 				// generate calendar of events
 				// retrieve list of future and past events from database
