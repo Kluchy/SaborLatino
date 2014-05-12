@@ -1,4 +1,5 @@
 <?php
+        session_start();
 	// declare 'members' as the active page
 	$ACTIVEPAGE = 'members';
 	// set the title of the page
@@ -52,6 +53,15 @@
 			 * 
 			 * displayMembers();
 			 */
+			 if ( isset( $_GET["remove"] ) && $_GET["remove"] == 1 && validateID( $_GET["memberID"]) ) {
+			     //delete chosen member
+			     $error= deleteMember($_GET["memberID"]);
+			     if ( $error ) {
+			         echo "$error";
+			     } else {
+			         echo "Successfully deleted member<br>";
+			     }
+			 }
 			 groupMembers();
 		?>
 	</div>

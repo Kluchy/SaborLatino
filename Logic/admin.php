@@ -64,7 +64,7 @@
              ?>
              <a href="add.php"> Add to Database </a>
              <br>
-             <a href="modify.php"> Update Database (TODO) </a>
+             <a href="update.php"> Update Database </a>
 	</div>
 	<?php
 	

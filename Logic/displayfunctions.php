@@ -69,6 +69,109 @@ function createHeader($title, $style = null){
 	<?php
 }
 
+/** Karl
+  *@spec displays a select input for Members to the screen
+  *@spec displays error message and stops rendering on error
+  *@caller updateMemberForm
+  *@calling getMemberRecords
+  */
+function displayMemberSelect() {
+        //same thing as in addPictureForm. Extract as helper in another file? adminhelpers.php
+           $res= getMemberRecords();
+           $members= $res[0];
+           $error= $res[1];
+           $options= "Member <select name=\"memberID\">";
+           if ( $error ) {
+               echo "$error";
+               exit();
+           }
+           foreach( $members as $mem ) {
+            $id= $mem["idMembers"];
+            $firstName= $mem["firstName"];
+            $lastName= $mem["lastName"]; 
+            $options= $options."<option value=$id> $firstName $lastName </option>";   
+           }
+           $options= $options."</select>";
+           print($options); 
+}
+
+/** Karl
+  *@calling getPerformances
+  *@caller addPictureform, addVideoForm
+  *@spec displays select input for Performances to the screen
+  *@spec on error, displays message and stops rendering
+  */
+function displayPerformanceSelect() {
+    $res= getPerformances();
+    $performances= $res[0];
+    $error= $res[1];
+    $options="Performance <select name=\"performanceID\">";
+    if ( $error ) {
+        echo "$error";
+        exit();
+    }
+    foreach( $performances as $performance ) {
+        $id= $performance["idPerformances"];
+        $title= $performance["performanceTitle"];
+        $location= $performance["performanceLocation"];
+        $date= $performance["performanceDate"];
+        $options= $options."<option value=$id> $title - $location - $date </option>";
+     }
+     $options= $options."</select>";
+    print($options);    
+}
+
+/** Karl
+  *@spec displays select input for Genres to screen
+  *@spec displays error and stops rendering otherwise
+  *@calling getGenres
+  *@caller addVideoForm
+  */
+function displayGenreSelect() {   
+        $res= getGenres();
+         $genres= $res[0];
+         $error= $res[1];
+         $options= "Genre <select name=\"genreID\">";
+         if ( $error ) {
+             echo "$error";
+             exit();
+         }
+         foreach ( $genres as $genre ) {
+             $id= $genre["idGenres"];
+             $name= $genre["genreName"];    
+             $options= $options."<option value=$id> $name </option>"; 
+         }
+         $options= $options."</select>";
+         print($options);
+}
+
+/** Karl
+  *@spec displays a select input for Positions to the screen
+  *@spec displays error and stoprs rendering otherwise
+  *@calling getPositions
+  *@caller addMemberForm
+  */
+function displayPositionSelect($default) {
+            $res= getPositions();
+            $positions= $res[0];
+            $error= $res[1];
+            $options= "Position <select name=\"positionID\">";
+            if ( $error ) {
+                echo "$error";
+                exit();
+            }
+            foreach( $positions as $record ) {
+                $id= $record["idPositions"];
+                $name= $record["position"];
+                if ( $name == $default ) {
+                    $options= $options."<option selected=\"selected\" value=$id> $name </option>";
+                } else {
+                    $options= $options."<option value=$id> $name </option>";
+                }
+            }
+            $options= $options."</select>";
+            print($options);    
+}
 
 /* Allan
  * generates the footer for a page

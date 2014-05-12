@@ -37,14 +37,23 @@ h1{
 #member div{
     text-align:center;
 }
-#member img{
+.member {
     width:160px;
     height:200px;
     margin-top:20px;
     margin-bottom:10px;
-    margin-right:20px;
+    margin-right:0px;
     margin-left:20px;
     box-shadow: 0px 0px 10px #CFB53B;
+}
+.icon {
+    width:20px;
+    height:20px;
+    margin-top:0px;
+    margin-bottom:195px;
+    margin-right:0px;
+    margin-left:0px;
+    
 }
 /* menu bar styling */
 #menubar{

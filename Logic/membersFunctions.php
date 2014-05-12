@@ -73,14 +73,27 @@ function display($members) {
         $email= $mem["email"];
         $phone= $mem["phone"];
         $position= $mem["position"];
+        $positionID= $mem["positionID"];
+        $historyID= $mem["idHistory"];
+        $startDate= $mem["startDate"];
+        $endDate= $mem["endDate"];
         $year= $mem["year"];
         $memID= $mem["idMembers"];
+        $customUrl= "memberInfo.php?memberID=$memID&firstName=$firstName&lastName=$lastName&year=$year&bio=$bio&profilePic=$profilePic&email=$email&historyID=$historyID&positionID=$positionID&position=$position&startDate=$startDate&endDate=$endDate&phone=$phone";
         echo "<li id=\"member\"> ";
         echo "<div id=\"member\">";
         echo "$name<br>";
-        echo "<a href=\"memberInfo.php?memberID=$memID&name=$name&year=$year&bio=$bio&profilePic=$profilePic&email=$email&position=$position&phone=$phone\">";
-        echo "<img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
+        echo "<a href=\"$customUrl\">";
+           echo "<img class=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
         echo "</a>";
+        if ( isset( $_SESSION['saborAdmin'] ) ) {
+            echo "<a href=\"$customUrl&edit=1\">";
+                echo "<img class=\"icon\" src=\"../img/icons/editIcon.png\" alt=\"edit\">";
+            echo "</a>";
+            echo "<a href=\"members.php?remove=1&memberID=$memID\">";
+                echo "<img class=\"icon\" src=\"../img/icons/DeleteRed.png\" alt=\"delete\">";
+            echo "</a>";
+        } 
         echo "</div>";
         echo "</li>";
     }

@@ -1,5 +1,5 @@
 <?php
-    include "helpers.php";
+    include_once "helpers.php";
 ?>
 <?php
  
@@ -143,13 +143,13 @@
         
         $memberQuery= "UPDATE Members SET idMembers = $memberID";
         $contactQuery= "UPDATE MemberContactInfo SET memberID = $memberID";
-        $historyquery= "";
-        if ( $newInfo["idHistory"] ) {
+        $historyQuery= "";
+        if ( isset( $newInfo["idHistory"] ) ) {
             //flag for history update set: proceed with query.
             //if not, updates to hisotry cannot be made
             $historySchema= array( 'positionID', 'startDate', 'endDate' );
             $historyID= $newInfo["idHistory"];
-            $historyquery= "UPDATE MembersHistory 
+            $historyQuery= "UPDATE MembersHistory 
                             SET idHistory = $historyID, memberID = $memberID";
         }
         //for each entry to add to the database, determine the appropriate
@@ -171,18 +171,20 @@
         $memberQuery= $memberQuery." WHERE idMembers = $memberID";
         $contactQuery= $contactQuery." WHERE memberID = $memberID";
         if ($historyQuery != "") {
-            $historyQuery= $historyQuery." WHERE idHistory = $historyID";
+            $historyQuery= $historyQuery." WHERE idHistory = $historyID;";
         }
         $multiQuery= $memberQuery.";".$contactQuery.";".$historyQuery;
+        //echo "MultiQuery is: $multiQuery<br>";
                      
         $results= $mysqli->multi_query ( $multiQuery );
-        $memberRes= $results->store_result();
-        $contactRes= $results->more_results();
-        $historyRes= $results->more_results();//null if there was no query
+        $memberRes= $mysqli->store_result();
+        $contactRes= $mysqli->more_results();
+        $historyRes= $mysqli->more_results();//null if there was no query
 
         if (!$memberRes || !$contactRes || !$historyID || !$historyRes) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }   
         $mysqli->close();
         return  null;

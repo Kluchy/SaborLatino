@@ -8,12 +8,12 @@
 	// load necessary function files
 	include_once "displayfunctions.php";
 	include_once "loginCode.php";
-	include_once "addForms.php";
+	include_once "updateForms.php";
 	include_once "checkinput.php";
 	// include_once calendar.php;		will uncomment when file is repaired
 	include_once "../Database/adders.php";
 	include_once "../Database/getters.php";
-	//include_once "modifiers.php"; 	will uncomment when file is repaired
+	include_once "../Database/modifiers.php";
 	
 	// if a request was sent via form below
 	// 		validate request inputs
@@ -27,7 +27,7 @@
 	
 	// add title
 	?>
-	<h1> <a href="admin.php"> Admin > </a> Add </h1>
+	<h1> <a href="admin.php"> Admin > </a> Update </h1>
 	<?php
 	
 	// include the menubar
@@ -154,12 +154,12 @@
                 }   
             }
             //display  add forms
-             addMemberForm();
-             addVideoForm();
-             addPerformanceForm();
-             addGenreForm();
-             addPositionForm();
-             addPictureForm();
+             updateMemberForm();
+             updateVideoForm();
+             //updatePerformanceForm();
+             //updateGenreForm();
+            // updatePositionForm();
+             //updatePictureForm();
 		?>
 	</div>
 	<?php

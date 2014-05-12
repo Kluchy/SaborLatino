@@ -1,30 +1,7 @@
 <?php
 include_once "../Database/adders.php";
 include_once "../Database/getters.php";
-
-/** Karl
-  *@calling getPerformances
-  *@caller addPictureform, addVideoForm
-  *@return html for content of a select input box
-  */
-  function getPerformancesOptions() {
-    $res= getPerformances();
-    $performances= $res[0];
-    $error= $res[1];
-    $options="";
-    if ( $error ) {
-        echo "$error";
-        exit();
-    }
-    foreach( $performances as $performance ) {
-        $id= $performance["idPerformances"];
-        $title= $performance["performanceTitle"];
-        $location= $performance["performanceLocation"];
-        $date= $performance["performanceDate"];
-        $options= $options."<option value=$id> $title - $location - $date </option>";
-     }
-     return $options;    
-  }
+include_once "displayfunctions.php";
 
 
 /** Karl
@@ -63,24 +40,9 @@ include_once "../Database/getters.php";
         others by using the Update Form.
           
           <br>
-          Position <select name="positionID">
         <?php
-            $res= getPositions();
-            $positions= $res[0];
-            $error= $res[1];
-            $options= "";
-            if ( $error ) {
-                echo "$error";
-                exit();
-            }
-            foreach( $positions as $record ) {
-                $id= $record["idPositions"];
-                $name= $record["position"];
-                $options= $options."<option value=$id> $name </option>";
-            }
-            print($options);
+            displayPositionSelect();
         ?>
-        </select>
           <br>
           Start Date <input type="text" name="startDate"> (yyy-mm-dd)
           <br>
@@ -97,7 +59,7 @@ include_once "../Database/getters.php";
     }
     
     /** Karl
-      *@calling getGenres, getPerformances
+      *@calling displayGenreSelect, displayPerformanceSelect
       *@spec displays the "addVideo" section of the Add Page
       *@spec stops rendering page + displays error if occurrs
       */
@@ -114,33 +76,15 @@ include_once "../Database/getters.php";
          <br>
          Dance genre depicted in video:
          <br>
-         <select name="genreID">
          <?php
-         $res= getGenres();
-         $genres= $res[0];
-         $error= $res[1];
-         $options= "";
-         if ( $error ) {
-             echo "$error";
-             exit();
-         }
-         foreach ( $genres as $genre ) {
-             $id= $genre["idGenres"];
-             $name= $genre["genreName"];    
-             $options= $options."<option value=$id> $name </option>"; 
-         }
-         print($options);
+         displayGenreSelect();
          ?>
-         </select>
          <br>
          Link this video to a Sabor performance:
          <br>
-         <select name="performanceID">
          <?php
-         $options= getPerformancesOptions();
-         print($options);
+            displayPerformanceSelect();
          ?>
-         </select>
          <br>
          <input type="submit" name="addVideo" value="Add Video">
          
@@ -207,7 +151,7 @@ include_once "../Database/getters.php";
     /** Karl
       *@spec displays the "add Picture" section of the add page
       *@spec stops rendering page + displays error if occurrs
-      *@calling getPerformancesOptions, getMemberRecords
+      *@calling displayPerformanceSelect, displayMemberSelect
       */
     function addPictureForm() {
         ?>
@@ -222,32 +166,15 @@ include_once "../Database/getters.php";
          <br>
          <select name="performanceID">
          <?php
-          $options= getPerformancesOptions();
-          print($options);
+            displayPerformanceSelect();
          ?>
          </select>
          <br>
          Set this image as a member's profile picture:
          <br>
-         <select name="memberID">
          <?php
-           $res= getMemberRecords();
-           $members= $res[0];
-           $error= $res[1];
-           $options= "";
-           if ( $error ) {
-               echo "$error";
-               exit();
-           }
-           foreach( $members as $mem ) {
-            $id= $mem["idMembers"];
-            $firstName= $mem["firstName"];
-            $lastName= $mem["lastName"]; 
-            $options= $options."<option value=$id> $firstName $lastName </option>";   
-           }
-           print($options); 
+           displayMemberSelect();
          ?>
-         </select>
          <br>
          <input type="submit" id="addPicture" name="addPicture" value="Add Picture">
          
