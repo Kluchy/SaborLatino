@@ -27,7 +27,6 @@
 	<!-- Add contact form box-->
 	<div class='content'>
 		<h2>Contact Sabor Latino</h2>
-			// insert contact form
             <form method="post" action="contactForm.php">
                 <label>To:</label><select name="to"> 
                     <option value="1" selected>Sabor Latino General</option> 
