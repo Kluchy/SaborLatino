@@ -34,9 +34,8 @@
                     <option value="performance">Request a Performance</option> 
                     <option value="other">Other</option> 
                     </select> <br><br>
-                <label for"sender">From: </label><input type="text" id="from" name="from" placeholder="Enter Your Full Name"><br><br>
-                <label for="subject">Subject: </label><input type="text" id="subject" name="subject" placeholder="Your Specific Inquiry"><br><br>
-                <label for="message">Message: </label><br>
+               <input type="text" id="from" name="from" placeholder="Enter Your Full Name"><br><br>
+               <input type="text" id="subject" name="subject" placeholder="Your Specific Inquiry"><br><br>
                 <textarea id="message" name="message" rows="10" cols="30" placeholder="Type Message Here"></textarea><br><br>
             <input id="send" name="send" type="submit" value="Send"><input type="reset" value="Clear">
             </form>
