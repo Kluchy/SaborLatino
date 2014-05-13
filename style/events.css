@@ -56,3 +56,7 @@ h1{
 #menubar a#activepage{
 	border-bottom: solid 4px #fc0;
 }
+#calendar {
+    text-align:center;
+    width: 100%;
+}
