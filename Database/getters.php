@@ -16,7 +16,7 @@
       *@caller EVERY OTHER FUNCTION IN HERE
       */
     function retrieve( $query ) {
-        require_once "../database/config.php";
+        require_once "config.php";
         $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         if (!$mysqli) {
             return array( null, "Error: cannot connect to database. Try again later<br>" );
