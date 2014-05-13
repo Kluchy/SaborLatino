@@ -21,7 +21,7 @@ include_once "displayfunctions.php";
           <br>
           Class Year <input type="text" name="year"> (yyyy)
           <br>
-          Bio <textarea name="bio"> Enter a short biography here </textarea>
+          Short Bio <textarea name="bio"></textarea>
           <br>
         
           E-Mail <input type="text" name="email">
@@ -41,7 +41,7 @@ include_once "displayfunctions.php";
           
           <br>
         <?php
-            displayPositionSelect();
+            displayPositionSelect(0);
         ?>
           <br>
           Start Date <input type="text" name="startDate"> (yyyy-mm-dd)
@@ -110,7 +110,6 @@ include_once "displayfunctions.php";
          Start time <select id = "startHour" name = "startHour">
 <?php
         $time = timeHelper();
-        print_r($time);
         echo $time[0].'</select>';
         echo '<select id = "startMinutes" name = "startMinutes">';
         echo $time[1].'</select><select id = "startampm" name = "startampm">'.$time[2].'</select><br>';
@@ -134,7 +133,12 @@ include_once "displayfunctions.php";
         $time[0] = "";
         $time[1] = "";
         for($i = 1; $i <= 12; $i++) {
-            $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+            if($i <= 10) {
+                $time[0] = $time[0]. '<option value = "0'.$i.'">0'.$i.'</option>';
+            }
+            else {
+                $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+            }
         }
         for($i = 0; $i <= 59; $i++) {
             if($i <= 9) {

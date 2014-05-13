@@ -133,7 +133,12 @@ include_once "displayfunctions.php";
         $time[0] = "";
         $time[1] = "";
         for($i = 1; $i <= 12; $i++) {
-            $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+            if($i <= 9) {
+                $time[0] = $time[0]. '<option value = "0'.$i.'">0'.$i.'</option>';
+            }
+            else {
+                $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+            }
         }
         for($i = 0; $i <= 59; $i++) {
             if($i <= 9) {

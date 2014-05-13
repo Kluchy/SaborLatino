@@ -88,9 +88,6 @@ include_once "../Database/helpers.php";
         if ( validateText( $_POST["performanceLocation"] ) ) {
             $performanceInfo["performanceLocation"]= $_POST["performanceLocation"];
         } 
-        else {
-            $performanceInfo["performanceLocation"] = "Unknown";
-        }
          if ( validateDate( $_POST["performanceDate"] ) ) {
             $performanceInfo["performanceDate"]= $_POST["performanceDate"];
         } else {

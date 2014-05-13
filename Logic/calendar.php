@@ -40,8 +40,12 @@
         if(isset($eventInfo["performanceDate"])) {
             $when = $gdataCal->newWhen();
             $date = $eventInfo["performanceDate"];
-            $when->startTime = "{$date}";
-            $when->endTime = "{$date}";
+            $startTime = $eventInfo["startTime"];
+            $endTime = $eventInfo["endTime"];
+            echo $startTime.'<br>';
+            echo $endTime;
+            $when->startTime = "{$date}T{$startTime}:00";
+            $when->endTime = "{$date}T{$endTime}:00";
             $newEvent->when = array($when);
         }
 
