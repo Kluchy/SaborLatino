@@ -185,6 +185,14 @@ function displayPositionSelect($default) {
  */
 function createFooter(){
 	?>
+	<div id="footer">
+		<div id="copyright">
+			&copy; Sabor Latino Dance Ensemble
+		</div>
+		<div id="adminlink">
+			<a href="admin.php">Admin Controls</a>
+		</div>
+	</div>
 	</body>
 	</html>
 	<?php
