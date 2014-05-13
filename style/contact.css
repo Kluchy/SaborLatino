@@ -56,3 +56,6 @@ h1{
 #menubar a#activepage{
 	border-bottom: solid 4px #fc0;
 }
+#contact{
+    width: 40%;   
+}  
