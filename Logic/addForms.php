@@ -44,7 +44,7 @@ include_once "displayfunctions.php";
             displayPositionSelect();
         ?>
           <br>
-          Start Date <input type="text" name="startDate"> (yyy-mm-dd)
+          Start Date <input type="text" name="startDate"> (yyyy-mm-dd)
           <br>
           If this is not a role currently undertaken by this person, enter
           an end date below:
@@ -105,13 +105,47 @@ include_once "displayfunctions.php";
          <br>
          Location of Event <input type="text" name="performanceLocation">
          <br>
-         Date of Event <input type="text" name="performanceDate">
+         Date of Event <input type="text" name="performanceDate">(yyyy-mm-dd)
          <br>
+         Start time <select id = "startHour" name = "startHour">
+<?php
+        $time = timeHelper();
+        echo $time[0].'</select>';
+        echo '<select id = "startMinutes" name = "startMinutes">';
+        echo $time[1].'</select><select id = "startampm" name = "startampm">'.$time[2].'</select><br>';
+        echo 'End time <select id = "endHour" name = "endHour">';
+        echo $time[0].'</select>';
+        echo '<select id = "endMinutes" name = "endMinutes">';
+        echo $time[1].'</select><select id = "endampm" name = "endampm">'.$time[2].'</select><br>';
+?>
          <input type="submit" name="addPerformance" value="Add Performance">
          
          <br><br><br>
         </form>
         <?php
+    }
+
+    //Time helper function that returns an array. Array[0] returns a HTML
+    //string that populates the hour select box and Array[1] returns a HTML     
+    //string that populates the minute select box.
+    //Array[2] returns HTML string for AM/PM select box.
+    function timeHelper() {
+        $time[0] = "";
+        $time[1] = "";
+        for($i = 1; $i <= 12; $i++) {
+            $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+        }
+        for($i = 0; $i <= 59; $i++) {
+            if($i <= 9) {
+                $time[1] = $time[1]. '<option value = "0'.$i.'">0'.$i.'</option>';
+            }
+            else {
+                $time[1] = $time[1]. '<option value = "'.$i.'">'.$i.'</option>';
+            }
+        }
+        $time[2] = '<option value = "AM">AM</option><option value = "PM">PM</option>';
+
+        return $time;
     }
     
     /** Karl
