@@ -79,7 +79,8 @@ function displayMemberSelect() {
            $res= getMemberRecords();
            $members= $res[0];
            $error= $res[1];
-           $options= "Member <select name=\"memberID\">";
+           $options= "Member <select name=\"memberID\">
+                               <option value=\"none\"> \"None\" </option>";
            if ( $error ) {
                echo "$error";
                exit();
@@ -104,7 +105,8 @@ function displayPerformanceSelect() {
     $res= getPerformances();
     $performances= $res[0];
     $error= $res[1];
-    $options="Performance <select name=\"performanceID\">";
+    $options="Performance <select name=\"performanceID\">
+                       <option value=\"none\"> \"None\" </option> ";
     if ( $error ) {
         echo "$error";
         exit();
@@ -121,12 +123,13 @@ function displayPerformanceSelect() {
 }
 
 /** Karl
+  *@param default- ID to be selected by default
   *@spec displays select input for Genres to screen
   *@spec displays error and stops rendering otherwise
   *@calling getGenres
   *@caller addVideoForm
   */
-function displayGenreSelect() {   
+function displayGenreSelect($default) {   
         $res= getGenres();
          $genres= $res[0];
          $error= $res[1];
@@ -137,14 +140,19 @@ function displayGenreSelect() {
          }
          foreach ( $genres as $genre ) {
              $id= $genre["idGenres"];
-             $name= $genre["genreName"];    
-             $options= $options."<option value=$id> $name </option>"; 
+             $name= $genre["genreName"];
+             if (  $id == $default ) {  
+                $options= $options."<option selected=\"selected\" value=$id> $name </option>"; 
+             } else {
+                 $options= $options."<option value=$id> $name </option>"; 
+            }
          }
          $options= $options."</select>";
          print($options);
 }
 
 /** Karl
+  *@param default- ID to be selected by default
   *@spec displays a select input for Positions to the screen
   *@spec displays error and stoprs rendering otherwise
   *@calling getPositions
@@ -177,6 +185,14 @@ function displayPositionSelect($default) {
  */
 function createFooter(){
 	?>
+	<div id="footer">
+		<div id="copyright">
+			&copy; Sabor Latino Dance Ensemble
+		</div>
+		<div id="adminlink">
+			<a href="admin.php">Admin Controls</a>
+		</div>
+	</div>
 	</body>
 	</html>
 	<?php

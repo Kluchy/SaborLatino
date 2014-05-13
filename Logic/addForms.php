@@ -77,7 +77,8 @@ include_once "displayfunctions.php";
          Dance genre depicted in video:
          <br>
          <?php
-         displayGenreSelect();
+         //default genre should be "mixed"
+         displayGenreSelect(0);
          ?>
          <br>
          Link this video to a Sabor performance:
@@ -203,11 +204,9 @@ include_once "displayfunctions.php";
          <br>
          Link this picture to a performance:
          <br>
-         <select name="performanceID">
          <?php
             displayPerformanceSelect();
          ?>
-         </select>
          <br>
          Set this image as a member's profile picture:
          <br>

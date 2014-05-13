@@ -26,19 +26,21 @@
 	?>
 	<!-- Add contact form box-->
 	<div class='content'>
+        <div id="contact">
 		<h2>Contact Sabor Latino</h2>
             <form method="post" action="contactForm.php">
-                <label>To:</label><select name="to"> 
-                    <option value="1" selected>Sabor Latino General</option> 
-                    <option value="2">Choregrapher</option> 
-                    <option value="3">Scheduling Team</option> 
-                    </select> <br>
-                <label>From:</label><input name="from" placeholder="First and Last Name"><br>
-                <label>Subject:</label><input name="subject" placeholder="Type of Inquiry Here"><br>
-                <label>Message:</label><br>
-                <textarea name="message" rows="10" cols="100" placeholder="Type Message Here"></textarea><br><br>
-            <input id="send" name="send" type="submit" value="Send"><input type="reset" value="Clear">
-        </form>
+                <label for="category">What is this concerning?</label><div id="dropdown"><select id="category" name="category"> 
+                    <option value="general" selected>General</option> 
+                    <option value="performance">Request a Performance</option> 
+                    <option value="other">Other</option> 
+                    </select> </div><br>
+               <input type="text" id="from" name="from" placeholder="Enter Your Full Name"><br><br>
+               <input type="text" id="subject" name="subject" placeholder="Your Specific Inquiry"><br><br>
+                <textarea id="message" name="message" rows="10" cols="30" placeholder="Type Message Here"></textarea><br><br>
+            <input id="send" name="send" type="submit" value="Send"><br>
+                <input id="reset" type="reset" value="Clear">
+            </form>
+        </div>
 	</div>
 	<?php
 	//include the page footer

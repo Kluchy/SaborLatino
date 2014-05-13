@@ -9,7 +9,7 @@ body{
 }
 h1{
 	font-family: 'Kaushan Script', cursive;
-	color: #fc0;
+	color: #CFB53B;
 	margin-left: 20px;
 }
 .content{
@@ -21,7 +21,7 @@ h1{
 /* menu bar styling */
 #menubar{
 	overflow: auto;
-	color: #fc0;
+	color: #CFB53B;
 }
 #menubar h1{
 	display: none;
@@ -46,13 +46,17 @@ h1{
 	text-transform: uppercase;
 	text-align: center;
 	font-size: medium;
-	color: #fc0;
+	color: #CFB53B;
 	font-weight: bold;
 	border-bottom: solid 4px #000;
 }
 #menubar a:hover{
-	border-color: #fc0;
+	border-color: #CFB53B;
 }
 #menubar a#activepage{
-	border-bottom: solid 4px #fc0;
+	border-bottom: solid 4px #CFB53B;
+}
+#calendar {
+    text-align:center;
+    width: 100%;
 }

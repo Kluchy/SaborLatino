@@ -330,14 +330,15 @@
         if (!$mysqli) {
             return "Error: cannot connect to database. Try again later<br>";
         }
-        $genreName= $genreInfo["genre"];
+        $genreName= $genreInfo["genreName"];
         
         //if genreName is already in Genres table, do nothing, return null
-        $query= "SELECT * FROM Genres WHERE genreName = $genreName";
+        $query= "SELECT * FROM Genres WHERE genreName = \"$genreName\" ";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
+            $msg= "$mysqli->error<br>"; 
             $mysqli->close();
-            return "$mysqli->error<br>"; 
+            return $msg;
         }
         if ( $res->num_rows == 1 ) {
             return null;
@@ -352,11 +353,12 @@
         }   
         $id= $maxID["maxGenreID"] + 1;
         
-        $query= "INSERT INTO Genres VALUES idGenres = $id, genreName = $genreName";
+        $query= "INSERT INTO Genres(idGenres, genreName) VALUES ($id, \"$genreName\") ";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }
         $mysqli->close();
         return null;
@@ -489,7 +491,9 @@
     
     /** Karl
       *@param tempLocation - the temporary path to the uploaded picture
-      *@photoName - the title of the picture file uploaded
+      *@param photoName - the title of the picture file uploaded
+      *@param pictureInfo - associative array with metadata for picture
+      *@param 
       *@return null for success, error message  on failure
       *@spec move picture from temp storage to 'pictures' directory.
              if it does not exist, create it first
@@ -527,14 +531,15 @@
         if (!$mysqli) {
             return "Error: cannot connect to database. Try again later<br>";
         }
-        $positionTitle= $positionInfo["title"];
+        $positionTitle= $positionInfo["position"];
         
         //if positionTitle is already in Positions table, do nothing, return 1
-        $query= "SELECT * FROM Positions WHERE position = $positionTitle";
+        $query= "SELECT * FROM Positions WHERE position = \"$positionTitle\" ";
         $res= $mysqli->query ( $query );
         if ( !$res ) {
+            $msg= "$mysqli->error<br>"; 
             $mysqli->close();
-            return "$mysqli->error<br>"; 
+            return $msg;
         }
         if ( $res->num_rows == 1 ) {
             return null;
@@ -549,11 +554,12 @@
         }   
         $id= $maxID["maxPositionID"] + 1;
         
-        $query= "INSERT INTO Positions VALUES idPositions = $id, position = $positionTitle";
+        $query= "INSERT INTO Positions( idPositions, position ) VALUES( $id, \"$positionTitle\" )";
         $result= $mysqli->query ( $query );
         if ( !$result ) {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return "$mysqli->error<br>";
+            return $msg;
         }
         $mysqli->close();
         return null;   
