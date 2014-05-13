@@ -57,6 +57,7 @@ function updatePerformanceForm() {
     $performances = getPerformances();
     $error = $performances[1];
     $performances = $performances[0];
+    print_r($performances);
     if ( $error ) {
         echo "$error";
         exit();

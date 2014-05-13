@@ -156,7 +156,7 @@
             //display  add forms
              updateMemberForm();
              updateVideoForm();
-             updatePerformanceForm();
+             //updatePerformanceForm();
              //updateGenreForm();
             // updatePositionForm();
              //updatePictureForm();
