@@ -33,7 +33,7 @@
                     <option value="2">Choregrapher</option> 
                     <option value="3">Scheduling Team</option> 
                     </select> <br>
-                <label>From:</label><input name="from" placeholder="Insert First and Last Name Here"><br>
+                <label>From:</label><input name="from" placeholder="First and Last Name"><br>
                 <label>Subject:</label><input name="subject" placeholder="Type of Inquiry Here"><br>
                 <label>Message:</label><br>
                 <textarea name="message" rows="10" cols="100" placeholder="Type Message Here"></textarea><br><br>
