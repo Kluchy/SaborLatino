@@ -130,9 +130,8 @@ include_once "../Database/helpers.php";
       */
     function formatPictureInput($photoName) { 
         $pictureInfo= array();
-        $dir= "http://info230.cs.cornell.edu/users/skemab/www/Sabor/SaborLatino/img/";
 
-        $pictureInfo["urlP"]= $dir.$photoName;
+        $pictureInfo["urlP"]= "../img/".$photoName;
         if ( validateText( $_POST["captionP"] ) ) {
             $pictureInfo["captionP"]= $_POST["captionP"];
         }
