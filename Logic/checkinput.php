@@ -78,6 +78,7 @@ include_once "../Database/helpers.php";
       *@spec process, validate and format user input
       *@return associative array of values in proper format for DB submission
       *@calling currentDate, validateText, validateDate
+      *@note incorporated validation BUT Derek's google calendar code is pushing a Fatal Error
       */
     function formatPerformanceInput() {
         $performanceInfo= array();
@@ -98,10 +99,11 @@ include_once "../Database/helpers.php";
     /** Karl
       *@spec process, validate and format user input
       *@return associative array  of values in proper format for DB submission
+      *@note incorporated validation + tested field
       */
     function formatGenreInput() {
         $genreInfo= array();
-        if ( $_POST["genreName"] ) {
+        if ( validateText( $_POST["genreName"] ) ) {
             $genreInfo["genreName"]= $_POST["genreName"];
         }
         return $genreInfo; 
@@ -110,10 +112,11 @@ include_once "../Database/helpers.php";
     /** Karl
       *@spec process, validate and format user input
       *@return associative array  of values in proper format for DB submission
+      *@note incorporated validation + tested field
       */
     function formatPositionInput() {
         $positionInfo= array();
-        if ( $_POST["position"] ) {
+        if ( validateText( $_POST["position"] ) ) {
             $positionInfo["position"]= $_POST["position"];
         }
         return $positionInfo; 
@@ -122,19 +125,21 @@ include_once "../Database/helpers.php";
     /** Karl
       *@spec process, validate and format user input
       *@return associative array  of values in proper format for DB submission
+      *@calling validateText, validateID
+      *@note incorporated validation
       */
     function formatPictureInput($photoName) { 
         $pictureInfo= array();
         $dir= "http://info230.cs.cornell.edu/users/skemab/www/Sabor/SaborLatino/img/";
 
         $pictureInfo["urlP"]= $dir.$photoName;
-        if ( $_POST["captionP"] ) {
+        if ( validateText( $_POST["captionP"] ) ) {
             $pictureInfo["captionP"]= $_POST["captionP"];
         }
-        if ( $_POST["performanceID"] ) {
+        if ( validateID( $_POST["performanceID"] ) ) {
             $pictureInfo["performanceID"]=  $_POST["performanceID"];
         }
-        if ( $_POST["memberID"] ) {
+        if ( validateID( $_POST["memberID"] ) ) {
             $pictureInfo["memberID"]= $_POST["memberID"];
         }
         return $pictureInfo;

@@ -127,7 +127,11 @@
                  //format input
                  $genreInfo= formatGenreInput();
                  //make a DB call
-                 $error= addGenre( $genreInfo );
+                 if ( isset( $genreInfo["genreName"] ) ) {
+                    $error= addGenre( $genreInfo );
+                 } else {
+                     $error= "Please specify a new genre<br>";
+                 }
                  //check for error
                  if ( $error ) {
                      echo "$error";
@@ -140,7 +144,11 @@
                 //format input
                 $positionInfo= formatPositionInput();
                 //make DB call
-                $error= addPosition( $positionInfo );
+                if ( isset( $positionInfo["position"] ) ) {
+                    $error= addPosition( $positionInfo );
+                } else {
+                    $error= "Please specify a new position title<br>";
+                }
                 //check for error
                 if ( $error ) {
                     echo "$error";
@@ -153,15 +161,14 @@
                 //format input
                 if ($_FILES["file"]["error"] > 0) {
                     $error= $_FILES["file"]["error"] ;
-                    echo "$error<br>";
-                    exit();
+                    echo "Error uploading picture: $error<br>";
                 } else {
                     $photoName= $_FILES["file"]["name"];
                     $tempLocation= $_FILES["file"]["tmp_name"];
                     //echo "$photoName<br>";
                     //echo "$tempLocation<br>";'
                     $pictureInfo= formatPictureInput($photoName);
-                    if ($_POST["memberID"]) {
+                    if ( isset( $pictureInfo["memberID"] ) ) {
                         $error= storePicture( $tempLocation, $photoName, $pictureInfo, 1 );
                     } else {
                         $error= storePicture( $tempLocation, $photoName, $pictureInfo, 0 );
