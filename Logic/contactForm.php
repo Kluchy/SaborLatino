@@ -14,8 +14,9 @@
 function collectInputs() {
 
     $to = SABOR_EMAIL; //SABOR_EMAIL will be a defined constant in another file.
-    $subject = "";
-    $message = "";
+    $from = $_POST["from"];
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
 //	Allan: Commenting all of this out because currently generates an error
 //    if(isset($_POST[/*Input field for contact 1 */])) {
 //        /*Sets the subject or adds something to message depending on what the input field this is referring to. */ 
