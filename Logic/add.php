@@ -70,7 +70,13 @@
                     //format input
                    $memberInfo= formatMemberInput();
                     //make DB call
-                    $error= addMember($memberInfo);
+                    if ( count($memberInfo) > 3 ) {
+                        //user added to fields other than positionID, startDate, endDate
+                        $error= addMember($memberInfo);
+                    } else {
+                        //user did not input anything, print out error
+                        $error= "Please specify at least a name<br>";
+                    }
                     //check for error
                     if ( $error ) {
                         echo "$error";
@@ -83,7 +89,11 @@
                  //format input
                  $videoInfo= formatVideoInput();
                  //make DB call
-                 $error= addVideo($videoInfo);
+                 if ( isset( $videoInfo["urlV"] ) ) {
+                    $error= addVideo($videoInfo);
+                 } else {
+                     $error= "Please specify a valid Youtube url<br>";
+                 }
                  //check for error
                  if ( $error ) {
                      echo "$error";

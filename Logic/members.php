@@ -9,6 +9,7 @@
 	include_once "displayfunctions.php";
 	// include_once "getters.php";		will uncomment when file is repaired
 	include_once "membersFunctions.php";		//will uncomment when file is repaired
+	include_once "../Database/modifiers.php";
 	
 	// include the page header
 	// load members.css

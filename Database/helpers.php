@@ -57,30 +57,35 @@
     
     /** Karl
       *true if user '$input' string meets our requirements
+      *@caller formatMeberInput, formatVideoInput
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)){
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)) {
             return true;
         }
         
     }
     
     /** Karl
-      * true if input is of a valid email format
+      *@retrun true if input is of a valid email format, false otherwise
+      *@caller formatMemberInput
       */
     function validateEmail($input) {
-       return preg_match("^/[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
+       return preg_match("/^[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
     }
     
     /** Karl
-      *true if id is a number
+      *@return true if id is a number, false otherwise
+      *@caller
       */
     function validateID($id) {
         return ( is_numeric ( $id ) );
     }
     
     /** Karl
-      *true if strtotime returns some valid date format
+      *@param date - input date
+      *@return true if strtotime returns some valid date format
+      *@caller formatMemberInput
       */
     function validateDate($date) {
         return strtotime($date);
@@ -89,6 +94,7 @@
    /** Karl
      *@param phone - phone user input
      *@return true if phone is a 10-13 digit-number
+     *@caller formatMemberInput
      */
    function validatePhone($phone) {
        $temp= str_replace( "(", "", $phone );
@@ -98,8 +104,21 @@
         if (preg_match("/^[0-9]{10,13}$/",$temp)){
             return true;
         }
-   }  
+   }
+   
+   /** Karl
+     *@return true for urls like: https://www.youtube.com/watch?v=sEw_b7N0PVg
+     *@return false for urls like: https://www.youtube.com/watch?v=thTd14ptEqU&list=TLcV6SChuBvdhv-OZM0mVZQKZiCjD8bQK2
+     *@caller formatVideoInput
+     */
+    function validateUrl($link) {
+        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);        
+    }  
     
+    /** Karl
+      *@return the current date as yyyy-mm-dd
+      *@caller formatMemberInput
+      */
     function currentDate(){
         $date= getdate();
         $year= $date['year'];
@@ -109,6 +128,10 @@
         return $newDate;
     }
     
+    /** Karl
+      *@return date one year away from current date
+      *@caller formetMemberInput
+      */
     function defaultEndDate()  {
         $date= getdate();
         $year= $date['year'];
