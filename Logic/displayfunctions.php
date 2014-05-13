@@ -162,7 +162,7 @@ function displayPositionSelect($default) {
             foreach( $positions as $record ) {
                 $id= $record["idPositions"];
                 $name= $record["position"];
-                if ( $name == $default ) {
+                if ( $id == $default ) {
                     $options= $options."<option selected=\"selected\" value=$id> $name </option>";
                 } else {
                     $options= $options."<option value=$id> $name </option>";

@@ -1,49 +1,50 @@
 <?php
+include_once "../Database/helpers.php";
 /** Karl
-	  *@calling currentDate, defaultEndDate
-	  *@spec retrieves and validates admin input
+	  *@calling currentDate, defaultEndDate, validateText, validateDate, validatePhone
+	  *@spec retrieves and validates admin input. If input missing, skips over it
 	  *@spec prepares input for DB submission
 	  *@return associative array of values to insert to DB
-	  *TODO behavior/logic when an input is missing
+	  *@note validate incorporated + tested each field individually (except state/country etc because same as firstName)
 	  */
 	function formatMemberInput() {
 	    $memberInfo= array();
-	    if ( isset( $_POST["firstName"] ) ) {
+	    if ( validateText( $_POST["firstName"] ) ) {
                 $memberInfo["firstName"]= $_POST["firstName"];//cannot be null DB will complain
             }
-            if ( isset( $_POST["lastName"] ) ) {
+            if ( validateText( $_POST["lastName"] ) ) {
                 $memberInfo["lastName"]= $_POST["lastName"];//cannot be null DB will complain
             }
-            if ( isset( $_POST["year"] ) ) {
+            if ( validateDate( $_POST["year"] ) ) {
                 $memberInfo["year"]= $_POST["year"];
             }
-            if ( isset( $_POST["bio"] ) ) {
+            if ( validateText( $_POST["bio"] ) ) {
                 $memberInfo["bio"]= $_POST["bio"];
             }
-            if ( isset( $_POST["email"] )  ) {
+            if ( validateEmail( $_POST["email"] )  ) {
                 $memberInfo["email"]= $_POST["email"];
             }
-            if ( isset( $_POST["phone"] ) ) {
+            if ( validatePhone( $_POST["phone"] ) ) {
                 $memberInfo["phone"]= $_POST["phone"];
             }
-            if ( isset( $_POST["state"] ) ) {
+            if ( validateText( $_POST["state"] ) ) {
                 $memberInfo["state"]= $_POST["state"];
             }
-            if ( isset( $_POST["country"] ) ) {
+            if ( validateText( $_POST["country"] ) ) {
                 $memberInfo["country"]= $_POST["country"];
             }
-            if ( isset( $_POST["city"] ) ) {
+            if ( validateText( $_POST["city"] ) ) {
                 $memberInfo["city"]= $_POST["city"];
             }
             //will never be null [positonID]
             $memberInfo["positionID"]= $_POST["positionID"];
             
-            if ( isset( $_POST["startDate"] ) ) {
+            if ( validateDate( $_POST["startDate"] ) ) {
                 $memberInfo["startDate"]= $_POST["startDate"];
             } else {
                 $memberInfo["startDate"]= currentDate();
             }
-            if ( isset( $_POST["endDate"] ) ) {
+            if ( validateDate( $_POST["endDate"] ) ) {
                 $memberInfo["endDate"]= $_POST["endDate"];
             } else {
                 //default end date is a year from current date.
@@ -56,13 +57,15 @@
       *@spec processes/validates user input
       *@spec prepares data for DB submission
       *@return associative array of values to insert
+      *@calling validateUrl, validateText
+      *@note validation incorporated + tested each individual field
       */
     function formatVideoInput() {
 	    $videoInfo= array();
-	    if (  $_POST["urlV"] ) {
+	    if (  validateUrl( $_POST["urlV"] ) ) {
 	       $videoInfo["urlV"]= $_POST["urlV"];
 	   }
-	   if (  $_POST["captionV"] ) {
+	   if (  validateText( $_POST["captionV"] ) ) {
 	       $videoInfo["captionV"]= $_POST["captionV"];
 	   }
 	   //will never be null
@@ -74,17 +77,17 @@
     /** Karl
       *@spec process, validate and format user input
       *@return associative array of values in proper format for DB submission
-      *@caller currentDate
+      *@calling currentDate, validateText, validateDate
       */
     function formatPerformanceInput() {
         $performanceInfo= array();
-        if ( $_POST["performanceTitle"] ) {
+        if ( validateText( $_POST["performanceTitle"] ) ) {
             $performanceInfo["performancetitle"]= $_POST["performanceTitle"];
         }
-        if ( $_POST["performanceLocation"] ) {
+        if ( validateText( $_POST["performanceLocation"] ) ) {
             $performanceInfo["performanceLocation"]= $_POST["performanceLocation"];
         } 
-         if ( $_POST["performanceDate"] ) {
+         if ( validateDate( $_POST["performanceDate"] ) ) {
             $performanceInfo["performanceDate"]= $_POST["performanceDate"];
         } else {
             $performanceInfo["performanceDate"]= currentDate();

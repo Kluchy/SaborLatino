@@ -21,7 +21,7 @@ include_once "displayfunctions.php";
           <br>
           Class Year <input type="text" name="year"> (yyyy)
           <br>
-          Bio <textarea name="bio"> Enter a short biography here </textarea>
+          Short Bio <textarea name="bio"></textarea>
           <br>
         
           E-Mail <input type="text" name="email">
@@ -41,7 +41,7 @@ include_once "displayfunctions.php";
           
           <br>
         <?php
-            displayPositionSelect();
+            displayPositionSelect(0);
         ?>
           <br>
           Start Date <input type="text" name="startDate"> (yyy-mm-dd)

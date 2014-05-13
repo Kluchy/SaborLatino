@@ -104,7 +104,7 @@ createHeader($title, "memberInfo.css");
                                 First Name: <input type=\"text\" name=\"firstName\" value=\"$firstName\"> <br>
                                 Last Name: <input type=\"text\" name=\"lastName\" value=\"$lastName\"> <br>
                                 Status: <input type=\"text\" name=\"year\" value=\"$year\"> <br>";
-                  displayPositionSelect($position);     
+                  displayPositionSelect($positionID);     
                   echo "  <br>
                                 Start Date: <input type=\"text\"name=\"startDate\" value=\"$startDate\"> <br>
                                 End Date: <input type=\"text\"name=\"endDate\" value=\"$endDate\"> <br>
