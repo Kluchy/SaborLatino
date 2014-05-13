@@ -61,9 +61,44 @@ h1{
     margin-right:auto;
     margin-left:auto;
     width: 350px;
+    border: #fc0, solid, 3px;
+    border-radius: 10px;
+    background-color: #C9C9C9;
+    padding: 20px;
+    padding-left: 70px;
 }  
 input {
-    width: 200px;
+    width: 290px;
     height:35px;
-    font size: 25px;
+    font-size:15px;
+}
+textarea {
+    font-size:15px;
+}
+#send, #reset {
+    background-color: #fc0;
+    border-radius: 5px;   
+}
+#category {
+    font-size: 15px;
+    width: 100px;
+    height: 35px;
+}
+#dropdown {
+    width: 295px;
+    height: 34px;
+    overflow: hidden;
+    background: url(../img/icons/down_arrow.jpg) no-repeat right #ddd;
+    border: 1px solid #ccc;
+}
+#dropdown select {
+    background: transparent;
+    width: 295px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
 }
