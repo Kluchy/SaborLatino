@@ -10,6 +10,9 @@
 	include_once "loginCode.php";
 	include_once "updateForms.php";
 	include_once "checkinput.php";
+    include_once "checkDeletes.php";
+    include_once "updateDB.php";
+
 	// include_once calendar.php;		will uncomment when file is repaired
 	include_once "../Database/adders.php";
 	include_once "../Database/getters.php";
@@ -153,13 +156,94 @@
                     }
                 }   
             }
+
+             if ( isset( $_POST["updatePerformance"] ) ) {
+                 //format input
+                 $performanceInfo= formatPerformanceInput();
+                 $dbInfo = $performanceInfo[0];
+                 $id = $_POST['hidden'];
+
+                 if (isset($dbInfo["performancetitle"])) {
+                     //make DB call
+                     $error= updatePerfInfo($id,$dbInfo );
+                 }
+                 //check for error
+                if ( $error ) {
+                    echo "$error";
+                } else {
+                    //Allows you to access Google Calendar API.
+                    $user = 'saborlatinoeventscal@gmail.com';
+                    $pass = 'skemabsabor';
+                    $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME; // predefined service name for calendar
+                    $id = $_POST['hidden'];
+
+                    $client = Zend_Gdata_ClientLogin::getHttpClient($user,$pass,$service);
+                    //modifyCalendarEvent($performanceInfo[1], $client, $id);
+
+                    echo "Successfully modified performance<br>";
+                }
+             }
+             elseif(isset($_POST['updateGenre'])) {
+                    $genreInfo = formatGenreInput();
+                    $id = $_POST['hidden'];
+                    if(isset($genreInfo["genreName"])) {
+                        $error = updateGenreInfo($id, $genreInfo);
+
+                    }
+                    if ( $error ) {
+                        echo "$error";
+                    } else {
+                        echo "Successfully modified genre";
+                }
+            elseif(isset($_POST['updatePosition'])) {
+                    $positionInfo = formatPositionInput();
+                    $id = $_POST['hidden'];
+                    if(isset($positionInfo["position"])) {
+                        $error = updatePosition($id, $positionInfo);
+
+                    }
+                    if ( $error ) {
+                        echo "$error";
+                    } else {
+                        echo "Successfully modified position";
+                }
+            }
+            elseif(isset($_POST['updatePicture'])) {
+                //format input
+                if ($_FILES["file"]["error"] > 0) {
+                    $error= $_FILES["file"]["error"] ;
+                    echo "Error uploading picture: $error<br>";
+                } else {
+                    $photoName= $_FILES["file"]["name"];
+                    $tempLocation= $_FILES["file"]["tmp_name"];
+                    //echo "$photoName<br>";
+                    //echo "$tempLocation<br>";'
+                    $pictureInfo= formatPictureInput($photoName);
+                    if ( isset( $pictureInfo["memberID"] ) ) {
+                        $error= storePictureUpdate( $tempLocation, $photoName, $pictureInfo, 1 );
+                    } else {
+                        $error= storePictureUpdate( $tempLocation, $photoName, $pictureInfo, 0 );
+                    }
+                    if ( $error ) {
+                        echo "$error";
+                    } else {
+                        echo "Successfully modified picture<br>";
+                    }
+
+            }
+
+            //Check deletes
+            checkDeletes();        
+            //Checks DB updates
+            updateDB();
+
             //display  add forms
-             updateMemberForm();
-             updateVideoForm();
+             //updateMemberForm();
+             //updateVideoForm();
              updatePerformanceForm();
-             //updateGenreForm();
-            // updatePositionForm();
-             //updatePictureForm();
+             updateGenreForm();
+             updatePositionForm();
+             updatePictureForm();
 		?>
 	</div>
 	<?php

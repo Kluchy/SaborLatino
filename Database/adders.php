@@ -306,10 +306,11 @@
         if ( !$result ) {
             $err = $mysqli->error;
             $mysqli->close();
-            return "$err<br>";
+            return array("$err<br>",null);
         }
+        $eventID = $mysqli->insert_id;
         $mysqli->close();
-        return null;
+        return array(null, $eventID);
         
     }
 
@@ -513,6 +514,18 @@
           } else {
             return addPicture( $pictureInfo );
           }
+    }
+    
+    //Same as above, but for updating photo.
+    function storePictureUpdate($tempLocation, $photoName, $pictureInfo, $hasLink) {
+        if ( !file_exists ( "../img" ) ) {
+            //create folder
+            if ( !mkdir ( "../img" ) ) {
+                return "Error creating 'img' directory<br>";
+            }
+        }
+          move_uploaded_file( $tempLocation, "../img/".$photoName );
+            return updatePicInfo($pictureInfo);
     }
     
     /*   END PICTURE ADDERS **********************************/

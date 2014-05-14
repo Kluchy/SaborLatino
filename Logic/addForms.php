@@ -1,6 +1,7 @@
 <?php
 include_once "../Database/adders.php";
 include_once "../Database/getters.php";
+include_once "../Database/helpers.php";
 include_once "displayfunctions.php";
 
 
@@ -126,33 +127,6 @@ include_once "displayfunctions.php";
         <?php
     }
 
-    //Time helper function that returns an array. Array[0] returns a HTML
-    //string that populates the hour select box and Array[1] returns a HTML     
-    //string that populates the minute select box.
-    //Array[2] returns HTML string for AM/PM select box.
-    function timeHelper() {
-        $time[0] = "";
-        $time[1] = "";
-        for($i = 1; $i <= 12; $i++) {
-            if($i <= 9) {
-                $time[0] = $time[0]. '<option value = "0'.$i.'">0'.$i.'</option>';
-            }
-            else {
-                $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
-            }
-        }
-        for($i = 0; $i <= 59; $i++) {
-            if($i <= 9) {
-                $time[1] = $time[1]. '<option value = "0'.$i.'">0'.$i.'</option>';
-            }
-            else {
-                $time[1] = $time[1]. '<option value = "'.$i.'">'.$i.'</option>';
-            }
-        }
-        $time[2] = '<option value = "AM">AM</option><option value = "PM">PM</option>';
-
-        return $time;
-    }
     
     /** Karl
       *@spec displays the "add Genre" section of the add page 

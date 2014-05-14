@@ -105,10 +105,12 @@
              elseif ( isset( $_POST["addPerformance"] ) ) {
                  //format input
                  $performanceInfo= formatPerformanceInput();
+                 $dbInfo = $performanceInfo[0];
 
-                 if isset($_POST["performanceTitle"]) {
+                 if (isset($dbInfo["performancetitle"])) {
                      //make DB call
-                     $error= addPerformance( $performanceInfo[0] );
+                     $addRes = addPerformance($dbInfo);
+                     $error= $addRes[0];
                  }
                  else {
                      $error = "Please specify a performance title";
@@ -123,7 +125,7 @@
                     $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME; // predefined service name for calendar
 
                     $client = Zend_Gdata_ClientLogin::getHttpClient($user,$pass,$service);
-                    addNewCalendarEvent($performanceInfo[1], $client);
+                    addNewCalendarEvent($performanceInfo[1], $client, $addRes[1]);
 
                     echo "Successfully added new performance<br>";
                 }

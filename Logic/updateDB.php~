@@ -67,9 +67,6 @@
              elseif(isset($_POST["updatePos"])) {
                  updatePositionActionForm($_POST["positionSelect"]);
              }
-             elseif(isset($_POST["updatePic"])) {
-                 updatePictureActionForm($_POST["pictureSelect"]);
-             }
                    
             
         }

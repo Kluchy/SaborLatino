@@ -1,6 +1,7 @@
 <?php
     require_once('../Database/config.php');
     include_once "../Database/getters.php";
+    include_once "Zend/eventHelper.php";
     require_once 'Zend/Loader.php';
     Zend_Loader::loadClass('Zend_Gdata');
     Zend_Loader::loadClass('Zend_Gdata_AuthSub');
@@ -20,11 +21,11 @@
     }
 
     /**Derek
-     * @param $eventInfo - Array of information to be added to the performances table to signify an added new event.
+     * @param $eventInfo - Array of information to be added to the performances table to signify an added new event. $client -> Gdata client. $id -> performance ID to be added.
      * @return Whether or not the addition was successful
      * @Caller Admin page
      * */
-    function addNewCalendarEvent($eventInfo, $client) {
+    function addNewCalendarEvent($eventInfo, $client, $id) {
 
         $gdataCal = new Zend_Gdata_Calendar($client);
         $newEvent = $gdataCal->newEventEntry();
@@ -32,6 +33,8 @@
         if(isset($eventInfo["performancetitle"])) {
             $title = $eventInfo["performancetitle"];
             $newEvent->title = $gdataCal->newTitle($title);
+            $id = $id."0000";
+            $newEvent->id = $gdataCal->newId($id);
         }
         if(isset($eventInfo["performanceLocation"])) {
             $location = $eventInfo["performanceLocation"];
@@ -42,8 +45,6 @@
             $date = $eventInfo["performanceDate"];
             $startTime = $eventInfo["startTime"];
             $endTime = $eventInfo["endTime"];
-            echo $startTime.'<br>';
-            echo $endTime;
             $when->startTime = "{$date}T{$startTime}:00";
             $when->endTime = "{$date}T{$endTime}:00";
             $newEvent->when = array($when);
@@ -55,21 +56,56 @@
     }
 
     /**Derek
-     * @param $event - The event to change. This will be equal to an idPerformances.
+     * @param $id - The event to delete. This will be equal to an idPerformances.
      * @return Whether or not the delete was successful
      * @Caller Admin page
      * */
-    function deleteCalendarEvent($event) {
-        //Runs SQL query to delete calendar event to database.
+    function deleteCalendarEvent($client, $id) {
+        $gdataCal = new Zend_Gdata_Calendar($client);
+        $id = $id."0000";
+        //$eventFeed = $gdataCal->getCalendarEventFeed();
+        //getEvent($client, $id);
+        /*if($event = getEvent($client, $id)) {
+            $event->delete;
+        }*/
     }
 
     /**Derek
-     * @param $event - The event to change. This will be equal to an idPerformances., $field - the field to change, $newValue - The new value
+     * @param $eventInfo - The event to change. This will be equal an array with key as the field to change and value as the new value. $client -> The Gdata client. $id -> The performance id.
      * @return Whether or not the modification was successful
      * @Caller Admin page
      * */
-    function modifyCalendarEvent($event, $field, $newValue) {
-        //Runs SQL query to modify the event in the database.
+    function modifyCalendarEvent($eventInfo, $client, $id) {
+        $gdataCal = new Zend_Gdata_Calendar($client);
+        $id = $id."0000";
+        if($event = getEvent($client, $id)) {
+            if(isset($eventInfo["performancetitle"])) {
+                $title = $eventInfo["performancetitle"];
+                $event->title = $gdataCal->newTitle($title);
+            }
+            if(isset($eventInfo["performanceLocation"])) {
+                $location = $eventInfo["performanceLocation"];
+                $event->where = array($gdataCal->newWhere($location));
+            }
+            if(isset($eventInfo["performanceDate"])) {
+                $when = $gdataCal->newWhen();
+                $date = $eventInfo["performanceDate"];
+                $startTime = $eventInfo["startTime"];
+                $endTime = $eventInfo["endTime"];
+                $when->startTime = "{$date}T{$startTime}:00";
+                $when->endTime = "{$date}T{$endTime}:00";
+                $event->when = array($when);
+            }
+            try {
+                $event->save();
+            }
+            catch (Zend_Gdata_App_Exception $e) {
+                var_dump($e);
+            }
+
+        }
+
+        
     }
 
     /**

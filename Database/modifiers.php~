@@ -318,6 +318,7 @@
                 $query= $query.", $fieldToUpdate = \"$newValue\"";
         }
         $query= $query." WHERE idPerformances = $performanceID";
+        echo $query;
         return updateRelationship( $query );
         
     }

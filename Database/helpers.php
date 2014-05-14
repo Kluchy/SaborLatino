@@ -57,85 +57,38 @@
     
     /** Karl
       *true if user '$input' string meets our requirements
-      *@caller formatMeberInput, formatVideoInput
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)) {
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)){
             return true;
         }
         
     }
     
     /** Karl
-      *@retrun true if input is of a valid email format, false otherwise
-      *@caller formatMemberInput
+      * true if input is of a valid email format
       */
     function validateEmail($input) {
-       return preg_match("/^[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
+       return preg_match("^/[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
     }
     
     /** Karl
-      *@return true if id is a number, false otherwise
-      *@caller
+      *true if id is a number
       */
     function validateID($id) {
         return ( is_numeric ( $id ) );
     }
     
     /** Karl
-      *@param date - input date
-      *@return true if strtotime returns some valid date format
-      *@caller formatMemberInput
+      *true if strtotime returns some valid date format
       */
     function validateDate($date) {
         return strtotime($date);
     }
     
-   /** Karl
-     *@param phone - phone user input
-     *@return true if phone is a 10-13 digit-number
-     *@caller formatMemberInput
-     */
-   function validatePhone($phone) {
-       $temp= str_replace( "(", "", $phone );
-       $temp= str_replace( ")", "", $temp );
-       $temp= str_replace( "-", "", $temp );
-       $temp= str_replace( " ", "", $temp );
-        if (preg_match("/^[0-9]{10,13}$/",$temp)){
-            return true;
-        }
-   }
-   
-   /** Karl
-     *@return true for urls like: https://www.youtube.com/watch?v=sEw_b7N0PVg
-     *@return false for urls like: https://www.youtube.com/watch?v=thTd14ptEqU&list=TLcV6SChuBvdhv-OZM0mVZQKZiCjD8bQK2
-     *@caller formatVideoInput
-     */
-    function validateUrl($link) {
-        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);        
-    }  
-    
-    /** Karl
-      *@return the current date as yyyy-mm-dd
-      *@caller formatMemberInput
-      */
     function currentDate(){
         $date= getdate();
         $year= $date['year'];
-        $month= $date['mon'];
-        $day= $date['mday'];
-        $newDate= "$year-$month-$day";
-        return $newDate;
-    }
-    
-    /** Karl
-      *@return date one year away from current date
-      *@caller formetMemberInput
-      */
-    function defaultEndDate()  {
-        $date= getdate();
-        $year= $date['year'];
-        $year= $year + 1;
         $month= $date['mon'];
         $day= $date['mday'];
         $newDate= "$year-$month-$day";
@@ -181,6 +134,35 @@
             echo "Nice to see you again, $saborAdmin :)<br>";
         }
     }
+
+    //Time helper function that returns an array. Array[0] returns a HTML
+    //string that populates the hour select box and Array[1] returns a HTML     
+    //string that populates the minute select box.
+    //Array[2] returns HTML string for AM/PM select box.
+    function timeHelper() {
+        $time[0] = "";
+        $time[1] = "";
+        for($i = 1; $i <= 12; $i++) {
+            if($i <= 9) {
+                $time[0] = $time[0]. '<option value = "0'.$i.'">0'.$i.'</option>';
+            }
+            else {
+                $time[0] = $time[0]. '<option value = "'.$i.'">'.$i.'</option>';
+            }
+        }
+        for($i = 0; $i <= 59; $i++) {
+            if($i <= 9) {
+                $time[1] = $time[1]. '<option value = "0'.$i.'">0'.$i.'</option>';
+            }
+            else {
+                $time[1] = $time[1]. '<option value = "'.$i.'">'.$i.'</option>';
+            }
+        }
+        $time[2] = '<option value = "AM">AM</option><option value = "PM">PM</option>';
+
+        return $time;
+    }
+
     
 
     

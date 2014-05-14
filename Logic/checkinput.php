@@ -123,7 +123,6 @@ include_once "../Database/helpers.php";
         elseif($endAMPM == "AM" && $endHour == "12") {
             $endHour = "00";
         }
-        echo $startHour;
         $calInfo["startTime"] = $startHour.":".$startMin;
         $calInfo["endTime"] = $endHour.":".$endMin;
         $perfInfo[1] = $calInfo;

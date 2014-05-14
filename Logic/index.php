@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
 	// declare 'home' as the active page
 	$ACTIVEPAGE = 'home';
 	// set the title of the page
