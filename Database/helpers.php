@@ -4,7 +4,7 @@
     /*All functions that are being used in more than one file */
     /*GENERAL POLICY: in your method header (aka specs), add a comment
        starting with "@callers" followed by a list of functions that call
-       this function 
+       this function
        
        Below is a guideline for writing functions specs. We should ALL follow
        this policy to make code sharing as painless as possible. BELIEVE me,
@@ -24,8 +24,6 @@
                 special behavior, anything noteworthy not mentioned above
          *
        function example1(s, t) {
-           //some code here    
-       } 
        
        @param (assume no parameters so empty)
        @caller (assume no one calls this function so empty)
@@ -33,7 +31,7 @@
        function example22() {
          //some code
          
-           x= example1()  
+           x= example1()
         }
         */
     
@@ -41,11 +39,11 @@
       *convert common special latin characters in $input to their entity code
       */
     function fixEntities($input){
-        $specialLetters= array("&" => "&amp;","à" => "a&#768;", "â" => "a&#770;",
-        "ã" => "a&#771;", "á" => "a&#769;", "ì" => "i&#768;", "î" => "i&#770;",
-        "í" => "i&#769;", "ù" => "u&#768;", "û" => "u&#770;", "ũ" => "u&#771;",
-        "ú" => "u&#769;", "è" => "e&#768;", "ê" => "e&#770;", "é" => "e&#769;",
-        "ò" => "o&#768;", "ô" => "o&#770;", "õ" => "o&#771;", "ó" => "o&#769;");
+        $specialLetters= array("&" => "&amp;","�" => "a&#768;", "�" => "a&#770;",
+        "a~" => "a&#771;", "�" => "a&#769;", "�" => "i&#768;", "�" => "i&#770;",
+        "�" => "i&#769;", "�" => "u&#768;", "�" => "u&#770;", "u~" => "u&#771;",
+        "�" => "u&#769;", "�" => "e&#768;", "�" => "e&#770;", "�" => "e&#769;",
+        "�" => "o&#768;", "�" => "o&#770;", "�" => "o&#771;", "�" => "o&#769;");
         
         foreach ( $specialLetters as $special => $entity ){
             if (strpos($input,$special) !== false)
@@ -59,7 +57,7 @@
       *true if user '$input' string meets our requirements
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)){
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& ������������������]{1,255}$/",$input)){
             return true;
         }
         
@@ -69,7 +67,7 @@
       * true if input is of a valid email format
       */
     function validateEmail($input) {
-       return preg_match("^/[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
+       return preg_match("/^[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
     }
     
     /** Karl
@@ -86,9 +84,33 @@
         return strtotime($date);
     }
     
+   /** Karl
+     *@param phone - phone user input
+     *@return true if phone is a 10-13 digit-number
+     */
+   function validatePhone($phone) {
+       $temp= str_replace( "(", "", $phone );
+       $temp= str_replace( ")", "", $temp );
+       $temp= str_replace( "-", "", $temp );
+       $temp= str_replace( " ", "", $temp );
+        if (preg_match("/^[0-9]{10,13}$/",$temp)){
+            return true;
+        }
+   }
+    
     function currentDate(){
         $date= getdate();
         $year= $date['year'];
+        $month= $date['mon'];
+        $day= $date['mday'];
+        $newDate= "$year-$month-$day";
+        return $newDate;
+    }
+    
+    function defaultEndDate() {
+        $date= getdate();
+        $year= $date['year'];
+        $year= $year + 1;
         $month= $date['mon'];
         $day= $date['mday'];
         $newDate= "$year-$month-$day";
@@ -99,9 +121,9 @@
       *@param name - input username
       *@param password - input password
       *@spec sets the SESSION variable if name and password are in the Admin table
-      *      echoes a message if login attempt unsuccessful
-      *      Caller should validate arguments
-      * 
+      * echoes a message if login attempt unsuccessful
+      * Caller should validate arguments
+      *
       */
     function attemptLogin($name,$password) {
         require_once "config.php";
@@ -111,13 +133,17 @@
             return false;
         }
         $inputPassword= hash( 'sha256', $password );
+        echo $name;
+        echo $inputPassword;
         $query= "SELECT *
                  FROM Admin
                  WHERE username = \"$name\" AND password = \"$inputPassword\";";
         $result= $mysqli->query ( $query );
+        $arr = $result->fetch_row();
+        print_r($arr);
         if ( $result && $result->num_rows == 1) {
             //inputs match entry in Admin.
-            $_SESSION['saborAdmin']= $name;                       
+            $_SESSION['saborAdmin']= $name;
         }
         else {
                 echo "Username or Password entered was invalid.<br>";
@@ -134,7 +160,6 @@
             echo "Nice to see you again, $saborAdmin :)<br>";
         }
     }
-
     //Time helper function that returns an array. Array[0] returns a HTML
     //string that populates the hour select box and Array[1] returns a HTML     
     //string that populates the minute select box.
