@@ -59,6 +59,7 @@ h1{
 #calendar {
     text-align:center;
     width: 100%;
+    float:right;
 }
 #events {
     border: 2px solid #CFB53B;
