@@ -396,6 +396,29 @@
       *@calling updateRelationship
       */
     function deletePicture( $pictureID, $pathToFile ) {
+        if ( $pictureID == 0 ) {
+            return "Cannot delete this picture<br>";
+        }
+        /*require_once "config.php";
+        $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+        if (!$mysqli) {
+            return "Error: cannot connect to database. Try again later<br>";
+        }
+
+        get all members that have this picture as profile picture.
+        $query= "SELECT idMembers WHERE pictureID = $pictureID";
+        $result= $mysqli->query ( $query );
+        if ( !$result ) {
+            $err = "$mysqli->error<br>";
+            $mysqli->close();
+            return $err;
+        }
+        */
+        $query= "UPDATE Members SET pictureID= 0 WHERE pictureID=$pictureID";
+        $error= updateRelationship( $query );
+        if ($error) {
+            return $error;
+        }
         $query= "DELETE FROM Pictures WHERE idPictures = $pictureID";
         $error= updateRelationship( $query );
         if ( !$error and unlink($pathToFile) ) {
