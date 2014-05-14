@@ -62,6 +62,6 @@ h1{
 }
 #events {
     border: 5px solid #000;
-    text-align:center;
+    background-color: #CFB53B;
     list-style-type: none;
 }
