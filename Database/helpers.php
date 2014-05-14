@@ -25,7 +25,7 @@
          *
        function example1(s, t) {
            //some code here    
-       }
+       } 
        
        @param (assume no parameters so empty)
        @caller (assume no one calls this function so empty)
