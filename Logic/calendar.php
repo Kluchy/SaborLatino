@@ -9,7 +9,6 @@
     Zend_Loader::loadClass('Zend_Gdata_Calendar');
 
 ?>
-<h1 class="feat">Calendar of Events</h1>
 <?php
     
     /**Derek
