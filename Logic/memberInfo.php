@@ -8,73 +8,10 @@ include_once "../Database/modifiers.php";
 include_once "videoSearch.php";
 include_once "checkinput.php";
 
-/**validate and retrieve GET variables*/
 
-
- /*if ( isset( $_GET["firstName"] ) && validateText( $_GET["firstName"] ) ) {
-    $firstName= $_GET["firstName"];
-} else {
-    $firstName= "";
-}
-if ( isset( $_GET["lastName"] ) && validateText( $_GET["lastName"] ) ) {
-    $lastName= $_GET["lastName"];
-} else {
-    $lastName= "";
-}
-if ( isset( $_GET["year"] ) && validateDate( $_GET["year"] ) ) {
-    $year= $_GET["year"];
-} else {
-    $year= "";
-}
-if (  isset( $_GET["historyID"] ) && validateID( $_GET["historyID"] ) ) {
-    $historyID= $_GET["historyID"];
-} else {
-    $historyID= "";
-}
-if (  isset( $_GET["positionID"] ) && validateID( $_GET["positionID"] ) ) {
-    $positionID= $_GET["positionID"];
-} else {
-    $positionID= "";
-}
-if (  isset( $_GET["position"] ) && validateText( $_GET["position"] ) ) {
-    $position= $_GET["position"];
-} else {
-    $position= "";
-}
-if (  isset( $_GET["startDate"] ) && validateDate( $_GET["startDate"] ) ) {
-    $startDate= $_GET["startDate"];
-} else {
-    $startDate= "";
-}
-if (  isset( $_GET["endDate"] ) && validateDate( $_GET["endDate"] ) ) {
-    $endDate= $_GET["endDate"];
-} else {
-    $endDate= "";
-}
-if (  isset( $_GET["profilePic"] ) && validateText( $_GET["profilePic"] ) ) {   
-    $profilePic= $_GET["profilePic"];
-} else {
-    $profilePic= "http://info230.cs.cornell.edu/users/skemab/www/Sabor/SaborLatino/img/defaultProfilePic.jpg";
-}
-if (  isset( $_GET["bio"] ) && validateText( $_GET["bio"] ) ) {
-    $bio= $_GET["bio"];
-} else {
-    $bio="";
-}
-if (  isset( $_GET["email"] ) && validateText( $_GET["email"] ) ) {
-    $email= $_GET["email"];
-} else {
-    $email="";
-}
-if (  isset( $_GET["phone"] ) && validatePhone( $_GET["phone"] ) ) {
-    $phone= $_GET["phone"];
-} else {
-    $phone= "";
-}*/
-
-/** End validate GET varibales */
 
 createHeader("Sabor Member", "memberInfo.css");
+
 if ( isset( $_GET["memberID"] ) ) {
     $memberInfo= retrieveMemberInfo();
     displayMember( $memberInfo );
@@ -207,7 +144,7 @@ function displayVideos( $id ) {
     $myvids= $result[0];
     $error= $result[1];
     if ( $error ) {
-        echo "$error<br>";
+        echo "$error";
         return;
     }
     echo displayThumbnails($myvids);

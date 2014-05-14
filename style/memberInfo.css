@@ -62,6 +62,12 @@ text-decoration: none;
 img {
     box-shadow: 0px 0px 10px gold;
 }
+#vidInfo {
+    color:#CFB53B;
+}
+#vidInfo ul{
+    list-style-type: none;
+}
 #vidThumbnail {
     box-shadow: 0px 0px 10px gold;
 }
