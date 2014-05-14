@@ -94,8 +94,8 @@ function loadMainVid() {
 			}
 		}
 		
-		$output = $embedLink + $infoDisplay;
-        return $embedLink;
+		$output = $embedLink . $infoDisplay;
+        return $output;
 } 
 
 /**Derek
