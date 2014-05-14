@@ -1,5 +1,5 @@
 <?php
-include_once "../database/helpers.php";
+include_once "../Database/helpers.php";
 
 /**
  * Collects inputs to fields from contact form and sends appropriate email.
