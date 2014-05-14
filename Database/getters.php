@@ -275,7 +275,7 @@
         }
         $mysqli->close();
         return array( $vidInfo, null );
-    }  
+    }
     
     /** Karl
       *@param videoID - target video
