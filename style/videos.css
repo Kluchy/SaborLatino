@@ -21,7 +21,7 @@ ul{
     color:#CFB53B;
     width:300px;
     height:300px;
-    overflow:scroll;
+    overflow-y:scroll;
 }
 ul#vidPerformers{
 	display: block;
