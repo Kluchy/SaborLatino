@@ -3,18 +3,21 @@ include_once "../Database/getters.php";
 include_once "../Database/helpers.php";
 include_once "displayfunctions.php";
 
-/*********** NOT USING THIS FILE ANYMORE ******************/
+
 function updateMemberForm() {
         ?>
-        <form action="updateDB.php" method="post">
+        <form action="memberInfo.php" method="get">
         <?php
            displayMemberSelect(); 
         ?>
           <input type="submit" name="updateMember" value="Update Member">
         </form>
         
-        <form action="update.php" method="post">
-          <input type="submit" name="deleteMember" value="Delete Member">
+        <form action="members.php" method="get">
+		  <?php
+			displayMemberSelect(); 
+          ?>
+          <input type="submit" name="remove" value="Delete Member">
         </form>
         <?php          
 }
@@ -119,7 +122,7 @@ function updatePerformanceForm() {
             echo "$error";
             exit();
         }
-        echo '<form action = "update.php" action = "post"><select id = "genreSelect" name = "genreSelect">';
+        echo '<form action = "update.php" method = "post"><select id = "genreSelect" name = "genreSelect">';
         foreach($genres as $genre) {
             echo '<option value = "'.$genre["idGenres"].'">'.$genre["genreName"].'</option>';
         }
@@ -162,7 +165,7 @@ function updatePerformanceForm() {
             exit();
         }
         echo '<form action = "update.php" method = "post"><select id = "pictureSelect" name = "pictureSelect">';
-        foreach($pos as $picture) {
+        foreach($pic as $picture) {
             echo '<option value = "'.$picture["idPictures"].'">'.$picture["urlP"].' - '.$picture["captionP"].'</option>';
         }
         echo '</select>';

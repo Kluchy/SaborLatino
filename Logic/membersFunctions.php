@@ -78,7 +78,8 @@ function display($members) {
         $endDate= $mem["endDate"];
         $year= $mem["year"];
         $memID= $mem["idMembers"];
-        $customUrl= "memberInfo.php?memberID=$memID&firstName=$firstName&lastName=$lastName&year=$year&bio=$bio&profilePic=$profilePic&email=$email&historyID=$historyID&positionID=$positionID&position=$position&startDate=$startDate&endDate=$endDate&phone=$phone";
+        //$customUrl= "memberInfo.php?memberID=$memID&firstName=$firstName&lastName=$lastName&year=$year&bio=$bio&profilePic=$profilePic&email=$email&historyID=$historyID&positionID=$positionID&position=$position&startDate=$startDate&endDate=$endDate&phone=$phone";
+        $customUrl= "memberInfo.php?memberID=$memID";
         echo "<li id=\"member\"> ";
         echo "<div id=\"member\">";
         echo "$name<br>";

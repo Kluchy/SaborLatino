@@ -195,6 +195,7 @@
                     } else {
                         echo "Successfully modified genre";
                 }
+            }
             elseif(isset($_POST['updatePosition'])) {
                     $positionInfo = formatPositionInput();
                     $id = $_POST['hidden'];
@@ -227,7 +228,7 @@
                     if ( $error ) {
                         echo "$error";
                     } else {
-                        echo "Successfully added picture<br>";
+                        echo "Successfully modified picture<br>";
                     }
 
             }

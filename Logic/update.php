@@ -195,6 +195,7 @@
                     } else {
                         echo "Successfully modified genre";
                 }
+            }
             elseif(isset($_POST['updatePosition'])) {
                     $positionInfo = formatPositionInput();
                     $id = $_POST['hidden'];
@@ -231,6 +232,7 @@
                     }
 
             }
+        }
 
             //Check deletes
             checkDeletes();        

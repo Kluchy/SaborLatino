@@ -107,14 +107,17 @@
                  $performanceInfo= formatPerformanceInput();
                  $dbInfo = $performanceInfo[0];
 
+<<<<<<< HEAD
                  if (isset($dbInfo["performancetitle"])) {
+=======
+                 if ( isset($_POST["performanceTitle"] ) ) {
+>>>>>>> 17b8d0b548574f5dfd75b57c6c6f78446c4b3f84
                      //make DB call
                      $addRes = addPerformance($dbInfo);
-                     echo $addRes[1];
                      $error= $addRes[0];
                  }
                  else {
-                     $error = "Please specify a performance title";
+                     $error = "Please specify a performance title<br>";
                  }
                  //check for error
                 if ( $error ) {

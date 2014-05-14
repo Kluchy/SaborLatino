@@ -34,7 +34,7 @@ INSERT INTO Positions (idPositions, position) VALUES ( 6, "Secretary" );
 INSERT INTO Positions (idPositions, position) VALUES ( 7, "Publicity Chair" );
 
 -- Insert Pictures
-INSERT INTO Pictures (idPictures, urlP, captionP) VALUES (0, "../img/defaultProfilePic.jpg", "generic pic");
+INSERT INTO Pictures (idPictures, urlP, captionP) VALUES (0, "../img/profilePics/defaultProfilePic.jpg", "generic pic");
 
 -- Insert Performances
 INSERT INTO Performances (idPerformances, performancetitle, performanceLocation, performanceDate) VALUES ( 0, "Miscallaeneous", "Ithaca State Theatre", "2013-12-07" );

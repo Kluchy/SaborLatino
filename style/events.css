@@ -60,3 +60,7 @@ h1{
     text-align:center;
     width: 100%;
 }
+#events {
+    border: 3px, #000, solid;
+    text-align:center;
+}

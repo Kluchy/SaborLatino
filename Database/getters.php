@@ -409,7 +409,7 @@
         //query for retrieving all of this member's info from Members and MemberContactInfo
         $query= "SELECT * 
                  FROM Members INNER JOIN MemberContactInfo ON idMembers = memberID
-                              INNER JOIN Picures ON pictureID = idPictures
+                              INNER JOIN Pictures ON pictureID = idPictures
                  WHERE idMembers = $memberID;";
         //query for retrieving all history records associated with this member         
         $query= $query."SELECT *
@@ -419,18 +419,17 @@
         $memberInfo= array();
         $results= $mysqli->multi_query ( $query );
         $memberNContactInfo= $mysqli->store_result();//result of first query
-        $memberHistory= $mysqli->more_results();//result of second query
-        
         if ( $memberNContactInfo ) {
             //store member and contact info
             $memberInfo= $memberNContactInfo->fetch_assoc();
             //schema should guarante at most one result.   
         } else {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return array( null, "$mysqli->error<br>" );
+            return array( null, $msg );
         }
-        
-        if ( $memberHistory ) {
+        $memberNContactInfo->free();
+        if ($mysqli->more_results() && $mysqli->next_result() && $memberHistory= $mysqli->store_result() ) {
             $memberInfo["positions"]= array();
             $row= $memberHistory->fetch_assoc();
             //store each history record in memberInfo
@@ -439,10 +438,11 @@
                 $row= $memberHistory->fetch_assoc();
             }
         } else {
+            $msg= "$mysqli->error<br>";
             $mysqli->close();
-            return array( null, "$mysqli->error<br>" );
+            return array( null, $msg );
         }
-        $mysqi->close();
+        $mysqli->close();
         return array( $memberInfo, null );
     }
     

@@ -504,14 +504,20 @@
     function storePicture($tempLocation, $photoName, $pictureInfo, $hasLink) {
         if ( !file_exists ( "../img" ) ) {
             //create folder
-            if ( !mkdir ( "../img" ) ) {
+            if ( !mkdir ( "../img" ) || !mkdir("../img/profilePics") ) {
                 return "Error creating 'img' directory<br>";
             }
+        } elseif ( !file_exists( "../img/profilePics" ) ) {
+            if ( !mkdir("../img/profilePics") ) {
+                return "Error creating 'profilePics' directory<br>";
+            }
         }
-          move_uploaded_file( $tempLocation, "../img/".$photoName );
+          
           if ( $hasLink ) {
+            move_uploaded_file( $tempLocation, "../img/profilePics/".$photoName );
             return addPictureWithLink( $pictureInfo );
           } else {
+              move_uploaded_file( $tempLocation, "../img/".$photoName );
             return addPicture( $pictureInfo );
           }
     }

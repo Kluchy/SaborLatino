@@ -54,7 +54,7 @@
 			 * 
 			 * displayMembers();
 			 */
-			 if ( isset( $_GET["remove"] ) && $_GET["remove"] == 1 && validateID( $_GET["memberID"]) ) {
+			 if ( isset( $_SESSION["saborAdmin"] ) && isset( $_GET["remove"] ) &&  validateID( $_GET["memberID"]) ) {
 			     //delete chosen member
 			     $error= deleteMember($_GET["memberID"]);
 			     if ( $error ) {

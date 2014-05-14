@@ -60,7 +60,15 @@ text-decoration: none;
     box-shadow: 0px 0px 10px gold;
 }
 img {
+    width:360px;
+    height:400px;
     box-shadow: 0px 0px 10px gold;
+}
+#vidInfo {
+    color:#CFB53B;
+}
+#vidInfo ul{
+    list-style-type: none;
 }
 #vidThumbnail {
     box-shadow: 0px 0px 10px gold;

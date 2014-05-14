@@ -113,7 +113,7 @@
                      $error= $addRes[0];
                  }
                  else {
-                     $error = "Please specify a performance title";
+                     $error = "Please specify a performance title<br>";
                  }
                  //check for error
                 if ( $error ) {

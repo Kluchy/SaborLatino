@@ -105,12 +105,12 @@ function loadVideos() {
  * @param assocArray - Associated array of record information that will be used here to help create the HTML display logic for the thumbnails.
  * @return An html string that displays the videos properly in thumbnail form.
  * @spec None
- * @caller function loadVideos -> This is only a display helper function
+ * @caller displayVideos, function loadVideos -> This is only a display helper function
  * NOTE to GRADERS: This function is a part of display logic and will be moved to a seperate file when more code has been written.
  * */
 function displayThumbnails($assocArray) {
 
-    $htmlFull = '<ul>';
+    $htmlFull = "<div id=\"vidInfo\"><ul>";
     foreach($assocArray as $val) {
             $videoID = getVideoID($val['urlV']);
             $idVideo = $val['idVideos'];
@@ -128,7 +128,7 @@ function displayThumbnails($assocArray) {
             $htmlFull = $htmlFull. $html;
     }
 
-        $htmlFull = $htmlFull. '</ul>';
+        $htmlFull = $htmlFull. '</ul></div>';
         return $htmlFull;
 
     /* We will use youtube thumbnail image links as the thumbnails. Youtube has an API/urls for us to use here */
