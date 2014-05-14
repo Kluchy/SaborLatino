@@ -24,7 +24,8 @@
 
 	<div class="content">
 		<!-- Need to add about content here -->
-Founded in 1992, Sabor Latino Dance Ensemble strives to educate the Cornell and surrounding Ithaca community about Latino culture through music, dance, and visual arts. We are the first Latino dance troupe on Cornell University's campus and represent our Latin American and Caribbean roots through dances such as Merengue, Bachata, and Cumbia as well as our ties to our experience as Latinos in the U.S. through dances such as Salsa, Latin-Jazz, Latin Hip-Hop, Reggaeton, and Latino House. Through our annual concert, dance workshops, and community service, we present the significance of music and dance in our Latino cultures.
+        <img src="../img/saborgroup.jpg" alt="group photo" height="400" width="600">
+        Founded in 1992, Sabor Latino Dance Ensemble strives to educate the Cornell and surrounding Ithaca community about Latino culture through music, dance, and visual arts. We are the first Latino dance troupe on Cornell University's campus and represent our Latin American and Caribbean roots through dances such as Merengue, Bachata, and Cumbia as well as our ties to our experience as Latinos in the U.S. through dances such as Salsa, Latin-Jazz, Latin Hip-Hop, Reggaeton, and Latino House. Through our annual concert, dance workshops, and community service, we present the significance of music and dance in our Latino cultures.
 
 	</div>
 	<?php

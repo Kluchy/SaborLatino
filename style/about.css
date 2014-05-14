@@ -56,3 +56,6 @@ h1{
 #menubar a#activepage{
 	border-bottom: solid 4px #CFB53B;
 }
+img {
+    text-align:center;
+}
