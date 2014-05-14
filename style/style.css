@@ -48,7 +48,7 @@ h1{
 	font-size: medium;
 	color: #CFB53B;
 	font-weight: bold;
-	border-bottom: solid 4px #333;
+	border-bottom: solid 4px #000;
 }
 #menubar a:hover{
 	border-color: #CFB53B;
