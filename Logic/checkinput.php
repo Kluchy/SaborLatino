@@ -165,7 +165,7 @@ include_once "../Database/helpers.php";
     function formatPictureInput($photoName) { 
         $pictureInfo= array();
 
-        $pictureInfo["urlP"]= "../img/".$photoName;
+
         if ( validateText( $_POST["captionP"] ) ) {
             $pictureInfo["captionP"]= $_POST["captionP"];
         }
@@ -174,6 +174,9 @@ include_once "../Database/helpers.php";
         }
         if ( validateID( $_POST["memberID"] ) ) {
             $pictureInfo["memberID"]= $_POST["memberID"];
+            $pictureInfo["urlP"]= "../img/profilePics/".$photoName;
+        } else {
+            $pictureInfo["urlP"]= "../img/".$photoName;
         }
         return $pictureInfo;
     }

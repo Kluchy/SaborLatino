@@ -106,12 +106,12 @@
                  //format input
                  $performanceInfo= formatPerformanceInput();
 
-                 if isset($_POST["performanceTitle"]) {
+                 if ( isset($_POST["performanceTitle"] ) ) {
                      //make DB call
                      $error= addPerformance( $performanceInfo[0] );
                  }
                  else {
-                     $error = "Please specify a performance title";
+                     $error = "Please specify a performance title<br>";
                  }
                  //check for error
                 if ( $error ) {
