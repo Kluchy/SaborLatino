@@ -38,6 +38,11 @@ if ( isset( $_GET["memberID"] ) ) {
  
           
  displayVideos( $memberID );
+ 
+ //link back to members page
+ ?>
+	<br><a href="members.php">Return to Members List</a>
+ <?php
  createFooter();
 ?>
 

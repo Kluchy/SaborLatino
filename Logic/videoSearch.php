@@ -45,7 +45,7 @@ function searchVideosReturn() {
 } 
 
 /**
- *Derek
+ *Derek & Allan
  * @param None
  * @return HTML string that displays the current active video.
  * @Caller Video PHP page
@@ -63,8 +63,39 @@ function loadMainVid() {
         $embedLink = "<iframe width = \"560\" height= \"315\" 
             src = //www.youtube.com/embed/".$vidID."
              frameborder = \"0\" allowfullscreen class = \"mainVid\">
-             </iframe>";
-        return $embedLink;
+             </iframe><br>";
+		
+		// display video info or form to edit videos
+		
+		if ( isset( $_SESSION["saborAdmin"] ) ) {
+			//create the form to edit
+		}else{
+			//just display video info
+			$vidCaption=$video['captionV'];
+			$perfDate=$video['performanceDate'];
+			$perfTitle=$video['performanceTitle'];
+			$infoDisplay = "<span class=\"vidCaption\">$vidCaption</span><br>
+							<span class=\"vidPerf\">$perfDate - $perfTitle
+							</span></br>";
+			//if there are associated performers, list them
+			$res = getMembersForVideo($videoID);
+			$error= $res[1];
+			if ( !$error ) {
+				$vidPerformers = $res[0];
+				$performerList = "Performers: <ul id=\"vidPerformers\">";
+				foreach ($vidPerformers as $vidPerformer){
+					$perfID = $vidPerformer['idMembers'];
+					$perfName = $vidPerformer['firstName']." ".$vidPerformer['lastName'];
+					$perfLink = "<li><a href=\"memberInfo.php?memberID=$perfID\">$perfName</a></li>";
+					$performerList = $performerList.$perfLink;
+				}
+				$performerList = $performerList."</ul>";
+				$infoDisplay = $infoDisplay.$performerList;
+			}
+		}
+		
+		$output = $embedLink . $infoDisplay;
+        return $output;
 } 
 
 /**Derek
