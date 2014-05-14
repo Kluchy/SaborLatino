@@ -2,18 +2,21 @@
 include_once "../Database/getters.php";
 include_once "displayfunctions.php";
 
-/*********** NOT USING THIS FILE ANYMORE ******************/
+
 function updateMemberForm() {
         ?>
-        <form action="updateDB.php" method="post">
+        <form action="memberInfo.php" method="get">
         <?php
            displayMemberSelect(); 
         ?>
           <input type="submit" name="updateMember" value="Update Member">
         </form>
         
-        <form action="update.php" method="post">
-          <input type="submit" name="deleteMember" value="Delete Member">
+        <form action="members.php" method="get">
+		  <?php
+			displayMemberSelect(); 
+          ?>
+          <input type="submit" name="remove" value="Delete Member">
         </form>
         <?php          
 }

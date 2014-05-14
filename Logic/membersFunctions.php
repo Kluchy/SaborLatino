@@ -1,5 +1,5 @@
 <?php
-    include "../Database/getters.php";
+    include "../database/getters.php";
 ?>
 <?php
 
