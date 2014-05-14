@@ -30,7 +30,10 @@ ul#vidPerformers{
 	padding: 0;
 }
 ul#vidPerformers a{
-	display: inline-block;
+	display: block;
 	float: left;
 	padding: 0px 5px 0px 0px;
+}
+#vidSearh{
+	display: block;
 }

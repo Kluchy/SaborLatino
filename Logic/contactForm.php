@@ -1,8 +1,4 @@
 <?php
-    require_once('config.php');
-?>
-
-<?php
 
 /**
  * Collects inputs to fields from contact form and sends appropriate email.
@@ -13,15 +9,17 @@
  * @spec None */
 function collectInputs() {
     $from = $_POST["from"];
+	$category = $_POST['category'];
     $subject = "From contact form: ".$category.$_POST["subject"];
-    $message = $_POST["message"];
-    mail("kfm53@gcornell.edu", $from, $subject, $message);
-//    if($success) {
-//        //echo "<p>Thank you for reaching out! Sabor Latino will try to respond to your inquiry as soon as possible.</p>";
-//    }
-//    else {
-//        //echo "<p>Oh no! Looks like something went wrong. Please try again.</p>";
-//    }
-
+    $message = $from." says: ".$_POST["message"];
+    mail("kfm53@cornell.edu", $subject, $message, "From: $from");
+	/*
+    if($success) {
+       echo "<p>Thank you for reaching out! Sabor Latino will try to respond to your inquiry as soon as possible.</p>";
+    }
+    else {
+        echo "<p>Oh no! Looks like something went wrong. Please try again.</p>";
+    }
+	*/
 }
 ?>

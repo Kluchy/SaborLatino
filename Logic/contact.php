@@ -6,6 +6,7 @@
 	
 	// load necessary function files
 	include_once "displayfunctions.php";
+	include_once "contactForm.php";
 	// include_once "contactForm.php"; 		will uncomment when file is fixed
 	
 	// process the email if the form has been submitted
@@ -28,7 +29,13 @@
 	<div class='content'>
         <div id="contact">
 		<h2>Contact Sabor Latino</h2>
-            <form method="post" action="contactForm.php">
+			<?php
+				//send email if submitted
+				if ( isset( $_POST['send'] ) ){
+					collectInputs();
+				}
+			?>
+            <form method="post" action="contact.php">
                 <label for="category">What is this concerning?</label><div id="dropdown"><select id="category" name="category"> 
                     <option value="general" selected>General</option> 
                     <option value="performance">Request a Performance</option> 
