@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	// declare 'events' as the active page
 	$ACTIVEPAGE = 'events';
 	// set the title of the page

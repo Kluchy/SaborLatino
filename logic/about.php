@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	// declare 'about' as the active page
 	$ACTIVEPAGE = 'about';
 	// set the title of the page

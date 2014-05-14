@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	// declare 'contact' as the active page
 	$ACTIVEPAGE = 'contact';
 	// set the title of the page

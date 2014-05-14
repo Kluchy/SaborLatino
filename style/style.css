@@ -7,6 +7,12 @@ body{
 	margin-right: auto;
 	max-width: 960px;
 }
+a{
+	color: #847326;
+}
+a:hover, a:active{
+	color: #CFB53B;
+}
 h1{
 	font-family: 'Kaushan Script', cursive;
 	color: #CFB53B;
@@ -55,4 +61,17 @@ h1{
 }
 #menubar a#activepage{
 	border-bottom: solid 4px #CFB53B;
+}
+
+/* footer styling */
+#footer{
+	background-color: #eee;
+	overflow: auto;
+	padding: 4px;
+}
+#copyright{
+	float: left;
+}
+#adminlink{
+	float:right;
 }

@@ -31,3 +31,23 @@ body{
 #menubar a:hover{
 	border-color: #CFB53B;
 }
+/* footer styling */
+#footer{
+	background-color: #000;
+	overflow: auto;
+	color: #CFB53B;
+	opacity: 0.7;
+	float: right;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+#footer a{
+	color: #CFB53B;
+}
+#adminlink{
+	float:right;
+	padding-left: 10px;
+	border-left: solid 2px #CFB53B;
+	margin-left: 10px;
+}
