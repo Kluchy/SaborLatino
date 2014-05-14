@@ -66,6 +66,9 @@ img {
 }
 #vidInfo {
     color:#CFB53B;
+    width:300px;
+    height:300px;
+    overflow:scroll;
 }
 #vidInfo ul{
     list-style-type: none;
