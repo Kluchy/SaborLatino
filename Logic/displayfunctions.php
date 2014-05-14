@@ -22,14 +22,14 @@ function createMenubar($ACTIVEPAGE){
 			<li><a href='members.php' <?php if ($ACTIVEPAGE == 'members'){echo "id='activepage'";} ?>>Members</a></li>
 			<li><a href='videos.php' <?php if ($ACTIVEPAGE == 'videos'){echo "id='activepage'";} ?>>Videos</a></li>
 			<li><a href='contact.php' <?php if ($ACTIVEPAGE == 'contact'){echo "id='activepage'";} ?>>Contact</a></li>
-			
-			<!-- Add a simple login form for administration
-			<li>
-				<form>...</form>
-				* form has username, password, and login fields
-			</li>
-			-->
-			
+			<?php
+				//display link to admin page if admin is logged in
+				if ( isset( $_SESSION["saborAdmin"] ) ){
+					?>
+					<li><a href='admin.php' <?php if ($ACTIVEPAGE == 'admin'){echo "id='activepage'";} ?>>Admin</a></li>
+					<?php
+				}
+			?>			
 		</ul>
 	</div>
 	<?php
