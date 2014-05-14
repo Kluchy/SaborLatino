@@ -41,7 +41,7 @@ if ( isset( $_GET["memberID"] ) ) {
  
  //link back to members page
  ?>
-	<br><a href="members.php">Return to Members List</a>
+	<br><p><a href="members.php">Return to Members List</a></p>
  <?php
  createFooter();
 ?>
