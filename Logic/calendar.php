@@ -110,7 +110,7 @@
         $todayString = $todayString. generateEventString($todayEvents). '</ul>';
         $futureString = $futureString. generateEventString($futureEvents). '</ul>';
 
-        $finalString = '<h2>Upcoming events</h2>'.$futureString.'<h2>Events today</h2>'.$todayString.'<h2>Past events</h2>'.$pastString;
+        $finalString = '<div id="events"><h2>Upcoming events</h2>'.$futureString.'<h2>Events today</h2>'.$todayString.'<h2>Past events</h2>'.$pastString."</div>";
 
         return $finalString;
 
