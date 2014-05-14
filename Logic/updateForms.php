@@ -24,8 +24,8 @@ function updateMemberForm() {
 
 function updateVideoForm() {
     ?>
-    <form action="updateDB.php" method="post">
-        <select name="videoID">
+    <form action="videos.php" method="post">
+        <select name="vidID">
         <?php
         $res= getVideos();
         $videos= $res[0];

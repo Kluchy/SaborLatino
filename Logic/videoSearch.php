@@ -51,9 +51,11 @@ function searchVideosReturn() {
  * @Caller Video PHP page
  * */
 function loadMainVid() {
-    if(isset($_POST['thumbnails_x']) && isset($_POST['thumbnails_y'])) {
-
+    if(isset($_POST['vidID']) ) {
         $videoID = $_POST['vidID'];
+	}else {
+		$videoID = 1;
+	}
         $video = getVideoInfo($videoID);
         $video = $video[0];
 
@@ -63,11 +65,6 @@ function loadMainVid() {
              frameborder = \"0\" allowfullscreen class = \"mainVid\">
              </iframe>";
         return $embedLink;
-
-    }
-    else {
-			return '<img src="img/vid_filler.png" alt="This will be a real video!">';
-    }
 } 
 
 /**Derek
