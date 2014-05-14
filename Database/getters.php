@@ -5,7 +5,40 @@
  
     /************************ GET FUNCTIONS **************************
     /*All functions that retrieve information from the database */
- 
+    
+    /** Karl, Derek
+      *@param query - single SELECT query to database
+      *@return results of query as an array of asociative arrays
+                     where eah associative array is a record from the DB + null on success
+                     On Failure, returns null + error message. Also returns the most recent
+                     id created from the query.
+      *@note helper
+      *@spec returns null on error
+      *@caller EVERY OTHER FUNCTION IN HERE
+      */
+    function addRetrieve( $query ) {
+        require_once "config.php";
+        $mysqli= new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+        if (!$mysqli) {
+            return array( null, "Error: cannot connect to database. Try again later<br>", null );
+        }
+        
+        $result= $mysqli->query( $query );
+        if ( !$result ) {
+            $msg= $mysqli->error;
+            $mysqli->close();
+            return array( null,"$msg<br>, null" ) ;
+        }
+        $records= array();//array of associative arrays
+        $entry= $result->fetch_assoc();
+        while ( $entry ) {
+            $records[]= $entry;
+            $entry= $result->fetch_assoc();               
+        }
+        $mysqli->close();
+        return array( $records, null, $mysqli->insert_id );
+    }   
+    
     /** Karl
       *@param query - single SELECT query to database
       *@return results of query as an array of asociative arrays
