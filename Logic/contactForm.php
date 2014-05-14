@@ -12,12 +12,10 @@
  * @caller contact form PHP page
  * @spec None */
 function collectInputs() {
-
-    $to = SABOR_EMAIL; //SABOR_EMAIL will be a defined constant in another file.
     $from = $_POST["from"];
     $subject = "From contact form: ".$category.$_POST["subject"];
     $message = $_POST["message"];
-    mail("EMAIL", $subject, $message);
+    mail("kfm53@gcornell.edu", $from, $subject, $message);
 //    if($success) {
 //        //echo "<p>Thank you for reaching out! Sabor Latino will try to respond to your inquiry as soon as possible.</p>";
 //    }

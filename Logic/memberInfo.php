@@ -144,7 +144,7 @@ function displayMember($memberInfo) {
   *@spec prints videos in whih target appears
   */
 function displayVideos( $id ) {
-    echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><h1> Featured Videos </h1>";
+    echo "<br><h1 class=\"feat\"> Featured Videos </h1>";
     $result= getVideosFor( $id );
     $myvids= $result[0];
     $error= $result[1];
