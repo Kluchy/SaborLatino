@@ -23,3 +23,14 @@ ul{
     height:300px;
     overflow:scroll;
 }
+ul#vidPerformers{
+	display: block;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+}
+ul#vidPerformers a{
+	display: inline-block;
+	float: left;
+	padding: 0px 5px 0px 0px;
+}
