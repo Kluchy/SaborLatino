@@ -37,6 +37,7 @@
 				// display link to videos associated with event
 			?>
 			<!-- begin filler
+			<div id="events">
 			<h2>Upcoming Events</h2>
 			<ul>
 				<li>Date - Showcase</li>
@@ -44,6 +45,8 @@
 				<li>Date - Showcase</li>
 				<li>Date - Showcase</li>
 			</ul>
+			</div>
+			<div id="events">
 			<h2>Past Events</h2>
 			<ul>
 				<li>Date - Showcase</li>
@@ -53,6 +56,7 @@
 				<li>Date - Showcase</li>
 				<li>Date - Showcase</li>
 			</ul>
+			</div>
 			end filler -->
 		</div>
 		
