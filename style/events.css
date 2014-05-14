@@ -61,10 +61,11 @@ h1{
     width: 100%;
 }
 #events {
-    border: 2px solid #000;
+    border: 2px solid #CFB53B;
     border-radius: 10px;
-    background-color: #CFB53B;
+    background-color: #fff;
     padding: 10px;
-    width: 300px;
+    width: 200px;
     list-style-type: none;
+    float:left;
 }
