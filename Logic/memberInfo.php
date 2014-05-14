@@ -9,12 +9,9 @@ include_once "videoSearch.php";
 include_once "checkinput.php";
 
 /**validate and retrieve GET variables*/
-if ( isset( $_GET["memberID"] ) && validateID(  $_GET["memberID"] ) ) {
-    $memberID= $_GET["memberID"];
-} else {
-    $memberID= "";
-}
- if ( isset( $_GET["firstName"] ) && validateText( $_GET["firstName"] ) ) {
+
+
+ /*if ( isset( $_GET["firstName"] ) && validateText( $_GET["firstName"] ) ) {
     $firstName= $_GET["firstName"];
 } else {
     $firstName= "";
@@ -73,12 +70,16 @@ if (  isset( $_GET["phone"] ) && validatePhone( $_GET["phone"] ) ) {
     $phone= $_GET["phone"];
 } else {
     $phone= "";
-}
+}*/
+
 /** End validate GET varibales */
- $status= getStatus($year);
- 
-$title= $firstName." ".$lastName; 
-createHeader($title, "memberInfo.css");
+
+createHeader("Sabor Member", "memberInfo.css");
+if ( isset( $_GET["memberID"] ) ) {
+    $memberInfo= retrieveMemberInfo();
+    displayMember( $memberInfo );
+    $memberID= $memberInfo["idMembers"];
+}
  
  //process user input
  if ( isset( $_POST["updateMember"] ) ) {
@@ -91,41 +92,13 @@ createHeader($title, "memberInfo.css");
             } else {
                 echo "Successfully updated member<br>";
             }
+            $memberID= $_POST["memberID"];
+            $_GET["memberID"]=  $memberID;
+            $memberInfo= retrieveMemberInfo();
+            displayMember( $memberInfo );
     }
  }
  
- echo "<h1> <a href=\"members.php\"> Members > </a> $title </h1>
-              <div id=\"memberPic\">
-                <img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">
-              </div>
-              <div id=\"memberInfo\">";
-              if ( isset( $_SESSION["saborAdmin"] ) ) {
-                  echo "<form action=\"memberInfo.php\" method=\"post\">
-                                First Name: <input type=\"text\" name=\"firstName\" value=\"$firstName\"> <br>
-                                Last Name: <input type=\"text\" name=\"lastName\" value=\"$lastName\"> <br>
-                                Status: <input type=\"text\" name=\"year\" value=\"$year\"> <br>";
-                  displayPositionSelect($positionID);     
-                  echo "  <br>
-                                Start Date: <input type=\"text\"name=\"startDate\" value=\"$startDate\"> <br>
-                                End Date: <input type=\"text\"name=\"endDate\" value=\"$endDate\"> <br>
-                                <input type=\"hidden\" name=\"oldPositionID\" value=\"$positionID\">
-                                <input type=\"hidden\" name=\"memberID\" value=$memberID>
-                                <input type=\"hidden\" name=\"historyID\" value=$historyID>
-                                E-mail: <input type=\"text\" name=\"email\" value=\"$email\"> <br>
-                                #tel: <input type=\"text\" name=\"phone\" value=\"$phone\"> <br>
-                                bio: <input type=\"textarea\" name=\"bio\" value=\"$bio\"> <br>
-                                <input type=\"submit\" name=\"updateMember\" value=\"Update Member\">
-                            </form>";
-                } else {      
-                    echo" First Name: $firstName<br>
-                               Last Name: $lastName<br>
-                               Status: $status<br>
-                               Position: $position<br>
-                               E-Mail: $email<br>
-                               #tel: $phone<br>
-                              $bio<br>";
-                }
-                echo "</div>";
           
  displayVideos( $memberID );
  createFooter();
@@ -154,12 +127,82 @@ function getStatus( $year ) {
     }
 }
 
+function retrieveMemberInfo() {
+    if ( validateID(  $_GET["memberID"] ) ) {
+        $memberID= $_GET["memberID"];   
+        $res= getMemberInfo( $memberID );
+        $memberInfo= $res[0];
+        $error= $res[1];
+        if ( $error ) {
+            echo "$error";
+            exit();
+        }
+        return $memberInfo;
+    }
+    exit();    
+}
+
+function displayMember($memberInfo) {
+    $memberID= $memberInfo["idMembers"];
+    $firstName= $memberInfo["firstName"];
+    $lastName= $memberInfo["lastName"];
+    $title= $firstName." ".$lastName;
+    $profilePic= $memberInfo["urlP"];
+    $year= $memberInfo["year"];
+    $status= getStatus( $year );
+    $historyID= $memberInfo["positions"][0]["idHistory"];
+    $positionID= $memberInfo["positions"][0]["idPositions"];
+    $position= $memberInfo["positions"][0]["position"];
+    $startDate= $memberInfo["positions"][0]["startDate"];
+    $endDate= $memberInfo["positions"][0]["endDate"];
+    $email= $memberInfo["email"];
+    $phone=  $memberInfo["phone"];
+    $bio= $memberInfo["bio"];
+    $state=  $memberInfo["state"];
+    $city=  $memberInfo["city"];
+    $country= $memberInfo["country"];
+    echo "<h1> <a href=\"members.php\"> Members > </a> $title </h1>
+              <div id=\"memberPic\">
+                <img id=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">
+              </div>
+              <div id=\"memberInfo\">";
+              if ( isset( $_SESSION["saborAdmin"] ) ) {
+                  echo "<form action=\"memberInfo.php\" method=\"post\">
+                                First Name: <input type=\"text\" name=\"firstName\" value=\"$firstName\"> <br>
+                                Last Name: <input type=\"text\" name=\"lastName\" value=\"$lastName\"> <br>
+                                Status: <input type=\"text\" name=\"year\" value=\"$year\"> <br>";
+                  displayPositionSelect($positionID);     
+                  echo "  <br>
+                                Start Date: <input type=\"text\"name=\"startDate\" value=\"$startDate\"> <br>
+                                End Date: <input type=\"text\"name=\"endDate\" value=\"$endDate\"> <br>
+                                <input type=\"hidden\" name=\"oldPositionID\" value=\"$positionID\">
+                                <input type=\"hidden\" name=\"memberID\" value=$memberID>
+                                <input type=\"hidden\" name=\"historyID\" value=$historyID>
+                                E-mail: <input type=\"text\" name=\"email\" value=\"$email\"> <br>
+                                #tel: <input type=\"text\" name=\"phone\" value=\"$phone\"> <br>
+                                Bio: <textarea name=\"bio\"> \"$bio\"</textarea> <br>
+                                City: <input type=\"text\" name=\"city\" value=\"$city\"> <br>
+                                State: <input type=\"text\" name=\"state\" value=\"$state\"> <br>
+                                Country: <input type=\"text\" name=\"country\" value=\"$country\"> <br>
+                                <input type=\"submit\" name=\"updateMember\" value=\"Update Member\">
+                            </form>";
+                } else {      
+                    echo" First Name: $firstName<br>
+                               Last Name: $lastName<br>
+                               Status: $status<br>
+                               Position: $position<br>
+                              $bio<br>";
+                }
+                echo "</div>";    
+    
+}
+
 /** Karl
   *@param id - target member
   *@spec prints videos in whih target appears
   */
 function displayVideos( $id ) {
-    echo "<h1> Featured Videos </h1>";
+    echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><h1> Featured Videos </h1>";
     $result= getVideosFor( $id );
     $myvids= $result[0];
     $error= $result[1];
