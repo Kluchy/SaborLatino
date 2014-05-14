@@ -61,6 +61,7 @@ h1{
     width: 100%;
 }
 #events {
-    border: 3px, #000, solid;
+    border: 5px solid #000;
     text-align:center;
+    list-style-type: none;
 }
