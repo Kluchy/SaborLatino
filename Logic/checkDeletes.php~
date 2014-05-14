@@ -55,15 +55,17 @@ if(isset($_POST["removePos"])) {
 
 if(isset($_POST["removePic"])) {
     $id = $_POST["pictureSelect"];
-    $pic = getPicture($pictureID);
+    $pic = getPicture($id);
+    print_r($pic);
     $pic = $pic[0];
+    print_r($pic);
     $url = $pic["urlP"];
     $error = deletePicture($id, $url);
     if($error) {
         echo $error; 
     }
     else {
-        echo 'Position succesfully deleted';
+        echo 'Picture succesfully deleted';
     }
 }
 

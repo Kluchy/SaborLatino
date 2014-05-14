@@ -55,7 +55,8 @@ if(isset($_POST["removePos"])) {
 
 if(isset($_POST["removePic"])) {
     $id = $_POST["pictureSelect"];
-    $pic = getPicture($pictureID);
+    $pic = getPicture($id);
+    $pic = $pic[0];
     $pic = $pic[0];
     $url = $pic["urlP"];
     $error = deletePicture($id, $url);
