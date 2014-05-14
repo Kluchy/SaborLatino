@@ -42,6 +42,7 @@
                     <option value="other">Other</option> 
                     </select> </div><br>
                <input type="text" id="from" name="from" placeholder="Enter Your Full Name"><br><br>
+			   <input type="email" id="email" name="email" placeholder="Enter Your Email Address"><br><br>
                <input type="text" id="subject" name="subject" placeholder="Your Specific Inquiry"><br><br>
                 <textarea id="message" name="message" rows="10" cols="30" placeholder="Type Message Here"></textarea><br><br>
             <input id="send" name="send" type="submit" value="Send"><br>
