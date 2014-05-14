@@ -24,8 +24,6 @@
                 special behavior, anything noteworthy not mentioned above
          *
        function example1(s, t) {
-           //some code here
-       }
        
        @param (assume no parameters so empty)
        @caller (assume no one calls this function so empty)
@@ -41,11 +39,11 @@
       *convert common special latin characters in $input to their entity code
       */
     function fixEntities($input){
-        $specialLetters= array("&" => "&amp;","à" => "a&#768;", "â" => "a&#770;",
-        "a~" => "a&#771;", "á" => "a&#769;", "ì" => "i&#768;", "î" => "i&#770;",
-        "í" => "i&#769;", "ù" => "u&#768;", "û" => "u&#770;", "u~" => "u&#771;",
-        "ú" => "u&#769;", "è" => "e&#768;", "ê" => "e&#770;", "é" => "e&#769;",
-        "ò" => "o&#768;", "ô" => "o&#770;", "õ" => "o&#771;", "ó" => "o&#769;");
+        $specialLetters= array("&" => "&amp;","ï¿½" => "a&#768;", "ï¿½" => "a&#770;",
+        "a~" => "a&#771;", "ï¿½" => "a&#769;", "ï¿½" => "i&#768;", "ï¿½" => "i&#770;",
+        "ï¿½" => "i&#769;", "ï¿½" => "u&#768;", "ï¿½" => "u&#770;", "u~" => "u&#771;",
+        "ï¿½" => "u&#769;", "ï¿½" => "e&#768;", "ï¿½" => "e&#770;", "ï¿½" => "e&#769;",
+        "ï¿½" => "o&#768;", "ï¿½" => "o&#770;", "ï¿½" => "o&#771;", "ï¿½" => "o&#769;");
         
         foreach ( $specialLetters as $special => $entity ){
             if (strpos($input,$special) !== false)
@@ -59,7 +57,7 @@
       *true if user '$input' string meets our requirements
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)){
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]{1,255}$/",$input)){
             return true;
         }
         
@@ -69,7 +67,6 @@
       * true if input is of a valid email format
       */
     function validateEmail($input) {
-       return preg_match("^/[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
        return preg_match("/^[a-zA-Z0-9!\&]{1,40}@[a-zA-Z]{1,40}\.[a-z]{1,10}$/",$input);
     }
     
