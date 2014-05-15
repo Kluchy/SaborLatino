@@ -113,7 +113,7 @@ function displayMember($memberInfo) {
                                 First Name: <input type=\"text\" name=\"firstName\" value=\"$firstName\"> <br>
                                 Last Name: <input type=\"text\" name=\"lastName\" value=\"$lastName\"> <br>
                                 Status: <input type=\"text\" name=\"year\" value=\"$year\"> <br>";
-                  displayPositionSelect($positionID);     
+                  displayPositionSelect($positionID, $memberInfo["positions"]);     
                   echo "  <br>
                                 Start Date: <input type=\"text\"name=\"startDate\" value=\"$startDate\"> <br>
                                 End Date: <input type=\"text\"name=\"endDate\" value=\"$endDate\"> <br>
