@@ -17,7 +17,7 @@
      * @Caller Events page
      * */
     function displayGoogleCalendar() {
-        echo '<div id="calendar"><iframe src="https://www.google.com/calendar/embed?src=saborlatinoeventscal%40gmail.com&ctz=America/New_York" style="border: 0" width="690" height="600" scrolling="no"></iframe></div>';
+        echo '<div id="calendar"><iframe src="https://www.google.com/calendar/embed?src=saborlatinoeventscal%40gmail.com&ctz=America/New_York" style="border: 0" width="690" height="600"></iframe></div>';
     }
 
     /**Derek
