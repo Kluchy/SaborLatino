@@ -295,7 +295,7 @@ function updatePerformanceForm() {
         <br>
         Remove members from video
         <br>
-        <select id = "removeMembers" name = "removeMembers" multiple>
+        <select id = "removeMembers" name = "removeMembers[]" multiple>
         <?php
         $members = getMembersForVideo($id);
          $error = $members[1];

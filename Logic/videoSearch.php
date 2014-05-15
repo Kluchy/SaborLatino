@@ -75,7 +75,6 @@ function checkVideoUpdateForm() {
         if(isset($_POST['addMembers'])) {
             $addMems = $_POST['addMembers'];
             foreach($addMems as $mem) {
-                echo "Hello";
                 $check = addMemToVideo($mem, $id);
                 if($check) {
                     echo $check;
