@@ -17,7 +17,7 @@
      * @Caller Events page
      * */
     function displayGoogleCalendar() {
-        echo '<div id="calendar"><iframe src="https://www.google.com/calendar/embed?src=saborlatinoeventscal%40gmail.com&ctz=America/New_York" style="border: 0" width="690" height="600" frameborder="0" scrolling="no"></iframe></div>';
+        echo '<div id="calendar"><iframe src="https://www.google.com/calendar/embed?src=saborlatinoeventscal%40gmail.com&amp;ctz=America/New_York" style="border: 0" width="690" height="600"></iframe></div>';
     }
 
     /**Derek
@@ -49,9 +49,13 @@
             $when->endTime = "{$date}T{$endTime}:00";
             $newEvent->when = array($when);
         }
-
-        $gdataCal->insertEvent($newEvent);
-
+		
+		try {
+			$gdataCal->insertEvent($newEvent);
+		}
+		catch(Zend_Gdata_App_HttpException $e) {
+			echo "Failed to add to calendar. Invalid times<br>";
+		}
         
     }
 

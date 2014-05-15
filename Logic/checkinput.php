@@ -90,6 +90,7 @@ include_once "../Database/helpers.php";
             $performanceInfo["performanceLocation"]= $_POST["performanceLocation"];
         } 
         else {
+			echo "HELLO";
             $performanceInfo["performanceLocation"] = "Unknown";
         }
          if ( validateDate( $_POST["performanceDate"] ) ) {

@@ -146,7 +146,7 @@ function loadMainVid() {
         $vidID = getVideoID($video['urlV']);
         $embedLink = "<iframe width = \"560\" height= \"315\" 
             src = //www.youtube.com/embed/".$vidID."
-             frameborder = \"0\" allowfullscreen class = \"mainVid\">
+             allowfullscreen class = \"mainVid\">
              </iframe><br>";
 		
 		// display video info or form to edit videos
@@ -161,7 +161,7 @@ function loadMainVid() {
 			$perfTitle=$video['performanceTitle'];
 			$infoDisplay = "<span class=\"vidCaption\">$vidCaption</span><br>
 							<span class=\"vidPerf\">$perfDate - $perfTitle
-							</span></br>";
+							</span><br>";
 			//if there are associated performers, list them
 			$res = getMembersForVideo($videoID);
 			$error= $res[1];
@@ -234,7 +234,7 @@ function displayThumbnails($assocArray) {
                 '<li>
                 <div> 
                 <form action = "videos.php" method = "post">
-                <input  id="vidThumbnail" type = "image" src = "'.$thumbnail.'" name = "thumbnails" alt = "No image" />
+                <input  class="vidThumbnail" type = "image" src = "'.$thumbnail.'" name = "thumbnails" alt = "No image" />
                 <input type = "hidden" value = "'.$idVideo.'" name = "vidID" />
                 </form>
                 </div>
