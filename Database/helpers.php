@@ -139,9 +139,10 @@
             return false;
         }
         $inputPassword= hash( 'sha256', $password );
+        $inputName= hash( 'sha256', $name );
         $query= "SELECT *
                  FROM Admin
-                 WHERE username = \"$name\" AND password = \"$inputPassword\";";
+                 WHERE username = \"$inputName\" AND password = \"$inputPassword\";";
         $result= $mysqli->query ( $query );
         $arr = $result->fetch_row();
         if ( $result && $result->num_rows == 1) {
