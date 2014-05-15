@@ -56,6 +56,7 @@ function createHeader($title, $style = null){
 					<link rel="stylesheet" type="text/css" <?php echo "href=\"../style/$style\""; ?>>
 					<?php
 				}
+				?>
 		</head>
 		<body>
 			<div id="bigbox">
