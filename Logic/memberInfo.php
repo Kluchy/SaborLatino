@@ -124,7 +124,7 @@ function displayMember($memberInfo) {
                                 #tel: <input type=\"text\" name=\"phone\" value=\"$phone\"> <br>
                                 Bio: <textarea name=\"bio\"> \"$bio\"</textarea> <br>
                                 City: <input type=\"text\" name=\"city\" value=\"$city\"> <br>
-                                State: <input type=\"text\" name=\"state\" value=\"$state\"> <br>
+                                Year: <input type=\"text\" name=\"state\" value=\"$state\"> <br>
                                 Country: <input type=\"text\" name=\"country\" value=\"$country\"> <br>
                                 <input type=\"submit\" name=\"updateMember\" value=\"Update Member\">
                             </form>";
