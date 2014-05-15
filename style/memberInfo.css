@@ -31,8 +31,8 @@ a{
 }
 #memberPic {
     float: left;
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 #member li{
         float: left;
@@ -52,6 +52,9 @@ a{
     margin:0;
     padding:0;
 
+}
+#msg {
+    text-color:#CFB53B;
 }
 #member img{
     width:360px;

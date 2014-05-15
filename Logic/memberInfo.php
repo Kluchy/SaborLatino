@@ -24,11 +24,13 @@ if ( isset( $_GET["memberID"] ) ) {
     $memberInfo["idHistory"]= $_POST["historyID"];
     //if ($memberInfo["positionID"] == $_POST["oldPositionID"]) {
             $error= updateMemInfo( $_POST["memberID"], $memberInfo );
+            echo "<div id=\"msg\">";
             if ( $error ) {
                 echo "Error updating member: $error";
             } else {
                 echo "Successfully updated member<br>";
             }
+            echo "</div>";
             $memberID= $_POST["memberID"];
             $_GET["memberID"]=  $memberID;
             $memberInfo= retrieveMemberInfo();
