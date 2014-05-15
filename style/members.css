@@ -19,15 +19,15 @@ h1{
 	min-height: 100%;
 	overflow: auto;
 }
-#member {
+.memberBox {
     overflow:auto;
 }
-#member li{
+.memberBox li{
         float: left;
 	margin: 0;
 	padding: 0;
 }
-#member ul{
+.memberBox ul{
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -35,7 +35,7 @@ h1{
 	overflow: hidden;
 	float: right;
 }
-#member div{
+.memberBox div{
     text-align:center;
     width:220px;
     height:300px;

@@ -56,13 +56,7 @@ function createHeader($title, $style = null){
 					<link rel="stylesheet" type="text/css" <?php echo "href=\"../style/$style\""; ?>>
 					<?php
 				}
-				if ($style == "add.css") {
-				    ?>
-				    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="3ehc33g5hx8oo6w">
-				    </script>
-				    <?php
-				}
-			?>
+				?>
 		</head>
 		<body>
 			<div id="bigbox">
@@ -162,15 +156,19 @@ function displayGenreSelect($default) {
   *@calling getPositions
   *@caller addMemberForm
   */
-function displayPositionSelect($default) {
-            $res= getPositions();
-            $positions= $res[0];
-            $error= $res[1];
-            $options= "Position <select name=\"positionID\">";
-            if ( $error ) {
-                echo "$error";
-                exit();
+function displayPositionSelect($default, $memPositions=null) {
+            if ( !$memPositions ) {
+                $res= getPositions();
+                $positions= $res[0];
+                $error= $res[1];
+                if ( $error ) {
+                    echo "$error";
+                    exit();
+            	}
+            } else {
+                $positions= $memPositions;
             }
+            $options= "Position <select name=\"positionID\">";
             foreach( $positions as $record ) {
                 $id= $record["idPositions"];
                 $name= $record["position"];

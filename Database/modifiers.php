@@ -181,10 +181,10 @@
                      
         $results= $mysqli->multi_query ( $multiQuery );
         $memberRes= $mysqli->store_result();
-        $contactRes= $mysqli->more_results();
-        $historyRes= $mysqli->more_results();//null if there was no query
+        $contactRes= $mysqli->next_result();
+        $historyRes= $mysqli->next_result();//null if there was no query
 
-        if (!$memberRes || !$contactRes || !$historyID || !$historyRes) {
+        if ($mysqli->errno || !$contactRes || !$historyID || !$historyRes) {
             $msg= "$mysqli->error<br>";
             $mysqli->close();
             return $msg;

@@ -80,8 +80,8 @@ function display($members) {
         $memID= $mem["idMembers"];
         //$customUrl= "memberInfo.php?memberID=$memID&firstName=$firstName&lastName=$lastName&year=$year&bio=$bio&profilePic=$profilePic&email=$email&historyID=$historyID&positionID=$positionID&position=$position&startDate=$startDate&endDate=$endDate&phone=$phone";
         $customUrl= "memberInfo.php?memberID=$memID";
-        echo "<li id=\"member\"> ";
-        echo "<div id=\"member\">";
+        echo "<li class=\"memberBox\"> ";
+        echo "<div class=\"memberBox\">";
         echo "$name<br>";
         echo "<a href=\"$customUrl\">";
            echo "<img class=\"member\" src=\"$profilePic\" alt=\"Profile Picture\">";
@@ -131,21 +131,21 @@ function groupMembers() {
     //display E-board
     echo "<div>";
     echo "<h1> The Executive Board </h1>";
-    echo "<ul id=\"member\">";
+    echo "<ul class=\"memberBox\">";
     display( $eboard );
     echo "</ul>";
     echo "</div>";
     //display choreos
     echo "<div>";
     echo "<h1> The Head Choreographers </h1>";
-    echo "<ul id=\"member\">";
+    echo "<ul class=\"memberBox\">";
     display( $choreographers );
     echo "</ul>";
     echo "</div>";
     //display G-Body
     echo "<div>";
     echo "<h1> General Body Members </h1>";
-    echo "<ul id=\"member\">";
+    echo "<ul class=\"memberBox\">";
     display( $gbody );
     echo "</ul>";
     echo "</div>";
