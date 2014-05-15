@@ -139,20 +139,17 @@
             return false;
         }
         $inputPassword= hash( 'sha256', $password );
-        echo $name;
-        echo $inputPassword;
         $query= "SELECT *
                  FROM Admin
                  WHERE username = \"$name\" AND password = \"$inputPassword\";";
         $result= $mysqli->query ( $query );
         $arr = $result->fetch_row();
-        print_r($arr);
         if ( $result && $result->num_rows == 1) {
             //inputs match entry in Admin.
             $_SESSION['saborAdmin']= $name;
         }
         else {
-                echo "Username or Password entered was invalid.<br>";
+            echo "Username or Password entered was invalid.<br>";
         }
         $mysqli->close();
     }

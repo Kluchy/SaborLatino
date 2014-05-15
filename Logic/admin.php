@@ -30,15 +30,6 @@
 	
 	// include the menubar
 	createMenubar($ACTIVEPAGE);
-	//check if logging out
-	if ( isset( $_POST["logout"] ) ) {
-	    $msg= logout();
-	    echo "$msg";
-	}
-	//check login
-	adminLogin();
-	ensureLogin(); //displays login form if not logged in
-	// add form
 	?>
 	<div class="content">
 		<?php
@@ -61,7 +52,17 @@
              * if that option was chosen. The skeletons for these two functions have not been written yet, but they will basically run a query
              * to delete the chosen member/video.
              * */
+             
+        //check if logging out
+	if ( isset( $_POST["logout"] ) ) {
+	   $msg= logout();
+	   echo "$msg";
+	}
+	//check login
+	adminLogin();
+	ensureLogin(); //displays login form if not logged in
              ?>
+             
              <a href="add.php"> Add to Database </a>
              <br>
              <a href="update.php"> Update Database </a>
