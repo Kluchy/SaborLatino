@@ -22,7 +22,7 @@ if ( isset( $_GET["memberID"] ) ) {
  if ( isset( $_POST["updateMember"] ) ) {
     $memberInfo= formatMemberInput();
     $memberInfo["idHistory"]= $_POST["historyID"];
-    if ($memberInfo["positionID"] == $_POST["oldPositionID"]) {
+    //if ($memberInfo["positionID"] == $_POST["oldPositionID"]) {
             $error= updateMemInfo( $_POST["memberID"], $memberInfo );
             if ( $error ) {
                 echo "Error updating member: $error";
@@ -33,7 +33,7 @@ if ( isset( $_GET["memberID"] ) ) {
             $_GET["memberID"]=  $memberID;
             $memberInfo= retrieveMemberInfo();
             displayMember( $memberInfo );
-    }
+    //}
  }
  
           
@@ -113,7 +113,7 @@ function displayMember($memberInfo) {
                                 First Name: <input type=\"text\" name=\"firstName\" value=\"$firstName\"> <br>
                                 Last Name: <input type=\"text\" name=\"lastName\" value=\"$lastName\"> <br>
                                 Status: <input type=\"text\" name=\"year\" value=\"$year\"> <br>";
-                  displayPositionSelect($positionID, $memberInfo["positions"]);     
+                  displayPositionSelect($positionID);     
                   echo "  <br>
                                 Start Date: <input type=\"text\"name=\"startDate\" value=\"$startDate\"> <br>
                                 End Date: <input type=\"text\"name=\"endDate\" value=\"$endDate\"> <br>
