@@ -159,8 +159,8 @@
         $results= $mysqli->multi_query ( $multiQuery );
         
         $videoInserted= $mysqli->store_result();//get the result for the video query
-        $genreInserted= $mysqli->store_result();//get the result for the genre query 
-        if ( $videoInserted && $genreInserted ) {
+        $genreInserted= $mysqli->next_result();//get the result for the genre query 
+        if ( !$mysqli->errno && $genreInserted ) {
             //success
             $mysqli->close();
             return null;    
@@ -253,21 +253,14 @@
         
         //get result of insert into Members table.
         $memberInserted= $mysqli->store_result();
-        //get result of insert into MemberContactInfo table.
-        $contactInserted= $mysqli->store_result();
-        //get result of insert into MembersHistory table.
-        $historyInserted= $mysqli->store_result();
-        //print_r($memberInserted);
-        //print_r($contactInserted);
-        //print_r($historyInserted);
-        if ( !$memberInserted || !$contactInserted || !$historyInserted ) {
+        $contactInserted= $mysqli->next_result();
+        $historyInserted= $mysqli->next_result();
+        //$contactInserted= $mysqli->store_result()
+        if ( $mysqli->errno || !$contactInserted || !$historyInserted ) {
             $msg= "Error adding to Members: $mysqli->error<br>";
             $mysqli->close();
             return "$msg";
         }
-        $mysqli->close();
-        return null;
-        
     }
     
     /*   END MEMBER ADDERS ***********************************/
@@ -481,7 +474,9 @@
         $query= $query."; UPDATE Members SET pictureID = $id 
                                         WHERE idMembers = $memberID;";
         $result= $mysqli->multi_query ( $query );
-        if ( !$result ) {
+        $res1= $mysqli->store_result();
+        $res2= $mysqli->next_result();
+        if ( $mysqli->errno || !$res2 ) {
             $msg= "$mysqli->error<br>";
             $mysqli->close();
             return $msg;
