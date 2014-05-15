@@ -6,17 +6,11 @@ body{
 	background: url(../img/bkg2.png) top center no-repeat fixed;
 }
 #bigbox{
-	max-width: 960px;
+	width: 960px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow: auto;
 	background-color: #000;
-}
-#smallbox{
-	max-width: 960px;
-	margin-left: auto;
-	margin-right: auto;
-	overflow: auto;
 }
 a{
 	color: #847326;
