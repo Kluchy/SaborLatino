@@ -1,5 +1,4 @@
 <?php
-    session_start();
 	// declare 'videos' as the active page
 	$ACTIVEPAGE = 'videos';
 	// set the title of the page

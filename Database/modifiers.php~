@@ -233,7 +233,8 @@
       */
     function addChoreographerOfVid($memberID,$videoID) {
         $query= "INSERT INTO ChoreographersOfVid
-                        VALUES ($memberID, $videoID)";
+                        VALUES memberID = $memberID,
+                                       videoID = $videoID";
         return updateRelationship( $query );
     }
     

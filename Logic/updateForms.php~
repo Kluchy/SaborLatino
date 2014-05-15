@@ -306,7 +306,6 @@ function updatePerformanceForm() {
     </select>
     <br>
     Add choreographers to video
-    <br>
     <select id = "addChoreo" name = "addChoreo[]" multiple>
 <?php
     $choreos = notChoreographersOfVideo($id);

@@ -517,7 +517,6 @@
     function notChoreographersOfVideo($videoID) {
         $query = "SELECT * FROM Members WHERE idMembers NOT IN 
             (SELECT idMembers FROM ChoreographersOfVid,Members WHERE idMembers = memberID AND videoID = $videoID)";
-        return retrieve($query);
     }
     
     /** Karl

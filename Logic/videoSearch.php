@@ -2,6 +2,9 @@
     include_once "../Database/helpers.php";
     require_once('../Database/config.php');
     include_once "../Database/getters.php";
+    include_once "../Database/modifiers.php";
+    include_once "checkinput.php";
+    include_once "updateForms.php";
 
 /**Derek
  * @param None
@@ -43,6 +46,81 @@ function searchVideosReturn() {
 
 
 } 
+//Checks the video update form and makes necessary DB calls.
+function checkVideoUpdateForm() {
+    if(isset($_POST['updateVideo'])) {
+        $id = $_POST['hidden'];
+         //format input
+         $videoInfo= formatVideoInput();
+
+        $genreID = $_POST['genreID'];
+        $oldGenID = $_POST['hiddenGenre'];
+            unset($videoInfo['genreID']);
+        $genError = remGenreFromVideo($oldGenID, $id);
+        if($genError) {
+        }
+        else {
+            $adderror = addGenreToVideo($genreID, $id);
+        }
+         //make DB call
+            $error= updateVidInfo($id,$videoInfo);
+        
+        if(isset($_POST['removeMembers'])) {
+            $remMems = $_POST['removeMembers'];
+            foreach($remMems as $mem) {
+                $check = remMemFromVideo($mem, $id);
+            }
+
+        }
+        if(isset($_POST['addMembers'])) {
+            $addMems = $_POST['addMembers'];
+            foreach($addMems as $mem) {
+                echo "Hello";
+                $check = addMemToVideo($mem, $id);
+                if($check) {
+                    echo $check;
+                }
+            }
+
+        }
+        if(isset($_POST['removeChoreo'])) {
+
+            $remMems = $_POST['removeChoreo'];
+            foreach($remMems as $mem) {
+                $check = remChoreographerOfVid($mem, $id);
+            }
+
+        }
+        if(isset($_POST['addChoreo'])) {
+            $addMems = $_POST['addChoreo'];
+            foreach($addMems as $mem) {
+                $check = addChoreographerOfVid($mem, $id);
+            }
+
+        }
+
+         //check for error
+         if ( $error ) {
+             echo "$error";
+        } else {
+            echo "Succesfully updated video<br>";
+        }
+
+    }
+    
+    if(isset($_POST['deleteVideo'])) {
+        $error = deleteVideo($_POST['hidden']);
+        if($error) {
+            echo $error;
+        }
+        else {
+            echo "Video successfully deleted";
+        }
+        
+
+    } 
+
+}
 
 /**
  *Derek & Allan
@@ -51,11 +129,13 @@ function searchVideosReturn() {
  * @Caller Video PHP page
  * */
 function loadMainVid() {
+    checkVideoUpdateForm();
     if(isset($_POST['vidID']) ) {
         $videoID = $_POST['vidID'];
 	}else {
 		$videoID = 1;
 	}
+        $infoDisplay = '';
         $video = getVideoInfo($videoID);
         $video = $video[0];
 
@@ -69,6 +149,7 @@ function loadMainVid() {
 		
 		if ( isset( $_SESSION["saborAdmin"] ) ) {
 			//create the form to edit
+            updateVideoActionForm($videoID);
 		}else{
 			//just display video info
 			$vidCaption=$video['captionV'];
