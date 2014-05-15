@@ -38,7 +38,7 @@
     /**Karl
       *convert common special latin characters in $input to their entity code
       */
-    function fixEntities($input){
+        function fixEntities($input){
         $specialLetters= array("&" => "&amp;","Ã " => "a&#768;", "Ã¢" => "a&#770;",
         "aÌƒ" => "a&#771;", "Ã¡" => "a&#769;", "Ã¬" => "i&#768;", "Ã®" => "i&#770;",
         "Ã­" => "i&#769;", "Ã¹" => "u&#768;", "Ã»" => "u&#770;", "uÌƒ" => "u&#771;",
@@ -56,20 +56,10 @@
       *true if user '$input' string meets our requirements
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& Ã Ã¨Ã¬Ã²Ã¹Ã¡Ã©Ã­Ã³ÃºÃ¢ÃªÃ®Ã´Ã»Ã±Ã£Ãµ]{1,255}$/",$input)){
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& Ã Ã¨Ã¬Ã²Ã¹Ã¡Ã©Ã­Ã³ÃºÃ¢ÃªÃ®Ã´Ã»Ã±Ã£Ãµ]{1,255}$/",$input)) {
             return true;
         }
     }
-
-   /** Karl
-*@return true for urls like: https://www.youtube.com/watch?v=sEw_b7N0PVg
-*@return false for urls like: https://www.youtube.com/watch?v=thTd14ptEqU&list=TLcV6SChuBvdhv-OZM0mVZQKZiCjD8bQK2
-*@caller formatVideoInput
-*/
-    function validateUrl($link) {
-        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);
-    } 
-
     
     /** Karl
       * true if input is of a valid email format
@@ -110,9 +100,9 @@
     *@return false for urls like: https://www.youtube.com/watch?v=thTd14ptEqU&list=TLcV6SChuBvdhv-OZM0mVZQKZiCjD8bQK2
     *@caller formatVideoInput
     */
-        function validateUrl($link) {
-            return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);
-        } 
+    function validateUrl($link) {
+        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) Ã Ã¨Ã¬Ã²Ã¹Ã¡Ã©Ã­Ã³ÃºÃ¢ÃªÃ®Ã´Ã»Ã±Ã£Ãµ]{1,255}$/",$link);
+    } 
     
     function currentDate(){
         $date= getdate();

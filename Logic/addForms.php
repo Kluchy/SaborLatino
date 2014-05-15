@@ -179,7 +179,7 @@ include_once "displayfunctions.php";
          Link this picture to a performance:
          <br>
          <?php
-            displayPerformanceSelect();
+            displayPerformanceSelect(0);
          ?>
          <br>
          Set this image as a member's profile picture:
