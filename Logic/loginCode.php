@@ -18,6 +18,9 @@ function ensureLogin() {
         //Display a 'You are not logged in message'
         //Also, display a button that is part of a form that will redirect you to login page so you can access the current page.
         displayLogin();
+		?>
+		</div>
+		<?php
         createFooter();
         exit(); //Makes it so that if you are not logged in, then the page stops rendering/loading.
     } else {
