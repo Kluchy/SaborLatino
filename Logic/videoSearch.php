@@ -161,7 +161,7 @@ function loadMainVid() {
 			$perfTitle=$video['performanceTitle'];
 			$infoDisplay = "<span class=\"vidCaption\">$vidCaption</span><br>
 							<span class=\"vidPerf\">$perfDate - $perfTitle
-							</span></br>";
+							</span><br>";
 			//if there are associated performers, list them
 			$res = getMembersForVideo($videoID);
 			$error= $res[1];
