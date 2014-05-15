@@ -65,6 +65,7 @@ function createHeader($title, $style = null){
 			?>
 		</head>
 		<body>
+			<div id="bigbox">
 	<?php
 }
 
@@ -195,6 +196,7 @@ function createFooter(){
 		<div id="adminlink">
 			<a href="admin.php">Admin Controls</a>
 		</div>
+	</div>
 	</div>
 	</body>
 	</html>
