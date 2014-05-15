@@ -277,8 +277,7 @@
                         WHERE videoID = $videoID;";
         $results= $mysqli->multi_query ( $query );
         $vidNPerformance= $mysqli->store_result();//get result of first query
-        $genres= $mysqli->more_results();//get result fo second query
-        $mysqli->next_result();
+        $genres= $mysqli->next_result();//get result fo second query
         $genreStore = $mysqli->store_result();
 
 

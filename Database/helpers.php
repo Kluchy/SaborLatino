@@ -39,28 +39,26 @@
       *convert common special latin characters in $input to their entity code
       */
     function fixEntities($input){
-        $specialLetters= array("&" => "&amp;","�" => "a&#768;", "�" => "a&#770;",
-        "a~" => "a&#771;", "�" => "a&#769;", "�" => "i&#768;", "�" => "i&#770;",
-        "�" => "i&#769;", "�" => "u&#768;", "�" => "u&#770;", "u~" => "u&#771;",
-        "�" => "u&#769;", "�" => "e&#768;", "�" => "e&#770;", "�" => "e&#769;",
-        "�" => "o&#768;", "�" => "o&#770;", "�" => "o&#771;", "�" => "o&#769;");
+        $specialLetters= array("&" => "&amp;","à" => "a&#768;", "â" => "a&#770;",
+        "ã" => "a&#771;", "á" => "a&#769;", "ì" => "i&#768;", "î" => "i&#770;",
+        "í" => "i&#769;", "ù" => "u&#768;", "û" => "u&#770;", "ũ" => "u&#771;",
+        "ú" => "u&#769;", "è" => "e&#768;", "ê" => "e&#770;", "é" => "e&#769;",
+        "ò" => "o&#768;", "ô" => "o&#770;", "õ" => "o&#771;", "ó" => "o&#769;");
         
         foreach ( $specialLetters as $special => $entity ){
             if (strpos($input,$special) !== false)
                 $input= preg_replace('/$special/', $entity, $input);
         }
         return $input;
-  
     }
     
     /** Karl
       *true if user '$input' string meets our requirements
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& ������������������]{1,255}$/",$input)){
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)){
             return true;
         }
-        
     }
 
    /** Karl

@@ -173,18 +173,25 @@
                 } else {
                     $photoName= $_FILES["file"]["name"];
                     $tempLocation= $_FILES["file"]["tmp_name"];
-                    //echo "$photoName<br>";
-                    //echo "$tempLocation<br>";'
-                    $pictureInfo= formatPictureInput($photoName);
-                    if ( isset( $pictureInfo["memberID"] ) ) {
-                        $error= storePicture( $tempLocation, $photoName, $pictureInfo, 1 );
-                    } else {
-                        $error= storePicture( $tempLocation, $photoName, $pictureInfo, 0 );
-                    }
-                    if ( $error ) {
-                        echo "$error";
-                    } else {
+                    $size= getimagesize( $tempLocation );
+                    $width= $size[0];
+                    $height= $size[1];
+                    //bounds based off size of image in memberInfo.php
+                    if ( $width >= 340 && $width <= 550 && $height >= 540  && $height <= 825 ) {
+                        //success
+                        $pictureInfo= formatPictureInput($photoName);
+                        if ( isset( $pictureInfo["memberID"] ) ) {
+                            $error= storePicture( $tempLocation, $photoName, $pictureInfo, 1 );
+                        } else {
+                            $error= storePicture( $tempLocation, $photoName, $pictureInfo, 0 );
+                        }
+                        if ( $error ) {
+                            echo "$error";
+                        } else {
                         echo "Successfully added picture<br>";
+                        }
+                    } else {
+                        echo "dimensions must be in the following ranges: width{340-550}, height{540,650}<br>";
                     }
                 }   
             }
