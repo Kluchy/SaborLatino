@@ -239,13 +239,6 @@
             //Checks DB updates
             updateDB();
 
-            //display  add forms
-             //updateMemberForm();
-             //updateVideoForm();
-             updatePerformanceForm();
-             updateGenreForm();
-             updatePositionForm();
-             updatePictureForm();
 		?>
 	</div>
 	<?php

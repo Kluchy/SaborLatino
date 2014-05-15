@@ -59,7 +59,6 @@
              //process addPerformance
              if ( isset( $_POST["updatePerf"] ) ) {
                  updatePerformancesActionForm($_POST["performanceSelect"]);
-                 exit();
              }
              elseif(isset($_POST["updateGen"])) {
                  updateGenreActionForm($_POST["genreSelect"]);
@@ -69,6 +68,16 @@
              }
              elseif(isset($_POST["updatePic"])) {
                  updatePictureActionForm($_POST["pictureSelect"]);
+             }
+             else {
+
+                //display  add forms
+                 //updateMemberForm();
+                 //updateVideoForm();
+                 updatePerformanceForm();
+                 updateGenreForm();
+                 updatePositionForm();
+                 updatePictureForm();
              }
                    
             
