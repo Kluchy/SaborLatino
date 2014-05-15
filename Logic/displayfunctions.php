@@ -102,12 +102,11 @@ function displayMemberSelect() {
   *@spec displays select input for Performances to the screen
   *@spec on error, displays message and stops rendering
   */
-function displayPerformanceSelect() {
+function displayPerformanceSelect($def) {
     $res= getPerformances();
     $performances= $res[0];
     $error= $res[1];
-    $options="Performance <select name=\"performanceID\">
-                       <option value=\"none\"> \"None\" </option> ";
+    $options="Performance <select name=\"performanceID\">";
     if ( $error ) {
         echo "$error";
         exit();
@@ -117,7 +116,11 @@ function displayPerformanceSelect() {
         $title= $performance["performanceTitle"];
         $location= $performance["performanceLocation"];
         $date= $performance["performanceDate"];
-        $options= $options."<option value=$id> $title - $location - $date </option>";
+         if (  $id == $def ) {  
+            $options= $options."<option selected=\"selected\" value=$id> $title - $location - $date </option>"; 
+         } else {
+            $options= $options."<option value=$id> $title - $location - $date </option>";
+        }
      }
      $options= $options."</select>";
     print($options);    

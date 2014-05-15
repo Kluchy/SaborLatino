@@ -77,9 +77,6 @@ function checkVideoUpdateForm() {
             foreach($addMems as $mem) {
                 echo "Hello";
                 $check = addMemToVideo($mem, $id);
-                if($check) {
-                    echo $check;
-                }
             }
 
         }
@@ -136,13 +133,8 @@ function loadMainVid() {
 		$videoID = 1;
 	}
         $infoDisplay = '';
-        $res = getVideoInfo($videoID);
-        $video = $res[0];
-        $error= $res[1];
-        
-        if ( $error ) {
-            echo "$error";
-        }
+        $video = getVideoInfo($videoID);
+        $video = $video[0];
 
         $vidID = getVideoID($video['urlV']);
         $embedLink = "<iframe width = \"560\" height= \"315\" 

@@ -277,7 +277,8 @@
                         WHERE videoID = $videoID;";
         $results= $mysqli->multi_query ( $query );
         $vidNPerformance= $mysqli->store_result();//get result of first query
-        $genres= $mysqli->next_result();//get result fo second query
+        $genres= $mysqli->more_results();//get result fo second query
+        $mysqli->next_result();
         $genreStore = $mysqli->store_result();
 
 
@@ -516,7 +517,6 @@
     function notChoreographersOfVideo($videoID) {
         $query = "SELECT * FROM Members WHERE idMembers NOT IN 
             (SELECT idMembers FROM ChoreographersOfVid,Members WHERE idMembers = memberID AND videoID = $videoID)";
-        return retrieve($query);
     }
     
     /** Karl
