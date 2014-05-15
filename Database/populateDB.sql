@@ -65,7 +65,7 @@ INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (19, "Mariana"
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (20, "Dri", "Watson", 2016);
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (21, "Rubina", "Ogno", 2015);
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (22, "Rebecca", "Jakubson", 2015);
-INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (23, "Leonardo", "Peña", 2016);
+INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (23, "Leonardo", "Pena", 2016);
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (24, "Sahil", "Gupta", 2015);
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (25, "Jeffrey", "Ly", 2015);
 INSERT INTO Members (idMembers, firstName, lastName, year) VALUES (26, "Deborah", "Cabrera", 2014);
