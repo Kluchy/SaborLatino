@@ -206,8 +206,10 @@
 	</div>
 	<?php
 	
-	//include the page footer
-	createFooter();
+	//include the page footer, if not set
+	if ( isset( $_SESSION["saborAdmin"] ) ) {
+	   createFooter();
+	}
 	
 	
 ?>
