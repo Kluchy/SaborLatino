@@ -56,7 +56,7 @@
       *true if user '$input' string meets our requirements
       */
     function validateText($input){
-        if (preg_match("/^[A-Za-z0-9@!\-\s\.\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$/",$input)) {
+        if (preg_match("/^[A-Za-z0-9@!\-\s\.\,\(\)\& àèìòùáéíóúâêîôûñãõ]{1,255}$$/",$input)) {
             return true;
         }
     }
@@ -101,7 +101,7 @@
     *@caller formatVideoInput
     */
     function validateUrl($link) {
-        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);
+        return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\,\(\) àèìòùáéíóúâêîôûñãõ]{1,255}$/",$link);
     } 
     
     function currentDate(){
