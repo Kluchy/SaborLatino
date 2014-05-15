@@ -90,7 +90,7 @@
             if ( $nextResult= $mysqli->store_result() ) {
                 //for each successful query, append its results to 'ids' array
                 $ids= array_merge( $ids, $nextResult->fetch_assoc() );
-                //echo "ids are: ";
+                // "ids are: ";
                 //print_r($ids);
                 $numResultsSeen= $numResultsSeen + 1;
                 $nextResult->free();
@@ -245,7 +245,7 @@
         $contactQuery= $contactQueryP1.") ".$contactQueryP2.")";
         $historyQuery= $historyQueryP1.") ".$historyQueryP2.")";
         $multiQuery= $memberQuery.";".$contactQuery.";".$historyQuery.";";
-        echo "Query is: $multiQuery<br>";
+         //"Query is: $multiQuery<br>";
         $results= $mysqli->multi_query ( $multiQuery );
         
         //TODO analyze the errors that could occur in this triple query.
