@@ -105,6 +105,14 @@
             return true;
         }
    }
+       /** Karl
+    *@return true for urls like: https://www.youtube.com/watch?v=sEw_b7N0PVg
+    *@return false for urls like: https://www.youtube.com/watch?v=thTd14ptEqU&list=TLcV6SChuBvdhv-OZM0mVZQKZiCjD8bQK2
+    *@caller formatVideoInput
+    */
+        function validateUrl($link) {
+            return preg_match("/^http[s]{0,1}\:\/\/(www.){0,1}[a-zA-Z0-9]{1,255}\.com\/[A-Za-z0-9@?_!=\-\s\.\(\) אטלעשביםףתגךמפûסדץ]{1,255}$/",$link);
+        } 
     
     function currentDate(){
         $date= getdate();
