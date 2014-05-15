@@ -58,6 +58,11 @@ function loadMainVid() {
 	}
         $video = getVideoInfo($videoID);
         $video = $video[0];
+        $error= $video[1];
+        
+        if ( $error ) {
+            echo "$error";
+        }
 
         $vidID = getVideoID($video['urlV']);
         $embedLink = "<iframe width = \"560\" height= \"315\" 
