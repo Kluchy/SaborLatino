@@ -40,6 +40,9 @@
 	}
 	//check login
 	adminLogin();
+	?>
+	<div>
+	<?php
 	ensureLogin(); //displays login form if not logged in
 	// add form
 	?>
