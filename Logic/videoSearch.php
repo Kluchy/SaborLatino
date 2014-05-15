@@ -56,9 +56,9 @@ function loadMainVid() {
 	}else {
 		$videoID = 1;
 	}
-        $video = getVideoInfo($videoID);
-        $video = $video[0];
-        $error= $video[1];
+        $res = getVideoInfo($videoID);
+        $video = $res[0];
+        $error= $res[1];
         
         if ( $error ) {
             echo "$error";
