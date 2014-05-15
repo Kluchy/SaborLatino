@@ -625,6 +625,12 @@
         $query= "SELECT * FROM Performances";
          return retrieve( $query );
     }
+
+    //Get a performance
+    function getPerformance($pID) {
+        $query = 'SELECT * FROM Performances WHERE idPerformances = "'.$pID.'"'; 
+        return retrieve($query);
+    }
     
     /** Karl
       *@param performanceID - target performance
@@ -653,6 +659,13 @@
     function getGenres() {
         $query= "SELECT * FROM Genres";
         return retrieve( $query );    
+    }
+
+    //Get a single genre
+    function getGenre($genreID) {
+        $query = 'SELECT * FROM Genres WHERE idGenres = "'.$genreID.'"';
+        return retrieve($query);
+            
     }
     
     /** Karl
@@ -724,6 +737,11 @@
     function getPositions() {
         $query= "SELECT * FROM Positions";
         return retrieve( $query );
+    }
+
+    function getPosition($pID) {
+        $query = 'SELECT * FROM Positions WHERE idPositions = "'.$pID.'"'; 
+        return retrieve($query);
     }
     
     /*** END POSITION GETTERS *****************************/

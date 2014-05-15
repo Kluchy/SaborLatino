@@ -83,16 +83,22 @@ function updatePerformanceForm() {
 }
     //Displays update/delete form that actually performs the necessary calendar and database functions.
     function updatePerformancesActionForm($id) {
+        $perf = getPerformance($id);
+        $perf = $perf[0];
+        $perf = $perf[0];
+        $title = $perf["performanceTitle"];
+        $location = $perf["performanceLocation"];
+        $date = $perf["performanceDate"];
         echo '
         <form action="update.php" method="post">
          <h1>Update a Performance</h1>
          <input type = "hidden" name = "hidden" value = "'.$id.'" />
          <br>
-         Name of Event <input type="text" name="performanceTitle">
+         Name of Event <input type="text" name="performanceTitle" value = "'.$title.'" />
          <br>
-         Location of Event <input type="text" name="performanceLocation">
+         Location of Event <input type="text" name="performanceLocation" value = "'.$location.'" />
          <br>
-         Date of Event <input type="text" name="performanceDate">(yyyy-mm-dd)
+         Date of Event <input type="text" name="performanceDate" value = "'.$date.'" />(yyyy-mm-dd)
          <br>
          Start time <select id = "startHour" name = "startHour">';
 ?>
@@ -178,11 +184,15 @@ function updatePerformanceForm() {
 
     //Displays action form for updating genre.
     function updateGenreActionForm($id) {
+        $gen = getGenre($id);
+        $gen = $gen[0];
+        $gen = $gen[0];
+        $genName = $gen["genreName"];
         echo '<form action="update.php" method="post">
          <h1>Update a Dance Genre</h1>
          <input type = "hidden" name = "hidden" value = "'.$id.'" />
          <br>
-         New Genre <input type="text" name="genreName">
+         New Genre <input type="text" name="genreName" value = "'.$genName.'" />
          <br>
          <input type="submit" name="updateGenre" value="Update Genre">
          
@@ -193,11 +203,15 @@ function updatePerformanceForm() {
     
     //Displays action form for actually modifying positions.
     function updatePositionActionForm($id) {
+        $pos = getPosition($id);
+        $pos = $pos[0];
+        $pos = $pos[0];
+        $pName = $pos["position"];
         echo '<form action="update.php" method="post">
          <h1>Update a Position</h1>
          <input type = "hidden" name = "hidden" value = "'.$id.'" />
          <br>
-         New Position <input type="text" name="position">
+         New Position <input type="text" name="position" value = "'.$pName.'" />
          <br>
          <input type="submit" name="updatePosition" value="Update Position">
          
@@ -207,17 +221,26 @@ function updatePerformanceForm() {
     
     //Displays action form for actually modifying pictures.
     function updatePictureActionForm($id) {
+        $pic = getPicture($id);
+        $pic = $pic[0];
+        $pic = $pic[0];
+        $perfID = $pic["PerformanceID"];
+        $cap = $pic["captionP"];
+        if($perfID == null) {
+            $perfID = 0;
+        }
+        
         echo '<form action="update.php" method="post" enctype="multipart/form-data" >
          <h1> Update new Picture</h1>
          <input type = "hidden" name = "hidden" value = "'.$id.'" />
          <br>
          <input type="file" name="file" id="file">
          <br>
-         Add Caption <input type="text" name="captionP">
+         Add Caption <input type="text" name="captionP" value = "'.$cap.'" />
          <br>
          Link this picture to a performance:
          <br>';
-            displayPerformanceSelect();
+            displayPerformanceSelect($perfID);
          echo '<br>
          Set this image as a member\'s profile picture:
          <br>';
@@ -231,6 +254,10 @@ function updatePerformanceForm() {
     }
 
     function updateVideoActionForm($id) {
+        $vids = getVideoInfo($id);
+        $vids = $vids[0];
+        $cap = $vids["captionV"];
+        $urlV = $vids["urlV"];
 
 ?>
         <form action = "videos.php" method = "post">
@@ -240,10 +267,10 @@ function updatePerformanceForm() {
          <h1> Update a Video </h1>
          <br>
          Paste a link to the video here:
-         <input type="text" name="urlV">
+         <input type="text" name="urlV" value = "<?php echo $urlV ?>" />
          <br>
          Add a short description for this video:
-         <input type="text" name="captionV">
+         <input type="text" name="captionV" value = "<?php echo $cap ?>" />
          <br>
          Dance genre depicted in video:
          <br>
