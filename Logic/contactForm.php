@@ -23,7 +23,7 @@ function collectInputs() {
 	$category = $_POST['category'];
 	if ( isset($_POST["subject"]) && validateText($_POST["subject"]) 
 			&& isset($_POST["message"]) && validateText($_POST["message"])){
-		$subject = "From contact form: ".$category.$_POST["subject"];
+		$subject = "[".$category.$_POST["subject"]."]";
 		$message = $from." says: ".$_POST["message"];
 	} else {
 	$success = false;

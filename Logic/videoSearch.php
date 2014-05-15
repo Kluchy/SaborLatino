@@ -23,21 +23,21 @@ function searchVideosReturn() {
    }
     $searchArray = array();
 
-    if($_POST['yearPerformed'] && trim(htmlentities($_POST['yearPerformed'])) != "") {
+    if(isset($_POST['yearPerformed']) && trim(htmlentities($_POST['yearPerformed'])) != "" && $_POST['yearPerformed'] != "None") {
         $searchArray["year"] =  trim(htmlentities($_POST['yearPerformed']));
     }    
-    if($_POST['genre'] && trim(htmlentities($_POST['genre'])) != "") {
+    if(isset($_POST['genre']) && trim(htmlentities($_POST['genre'])) != "" && $_POST['genre'] != "None") {
         $searchArray["genreName"] = trim(htmlentities($_POST['genre']));
     }    
-    if($_POST['performers'] && trim(htmlentities($_POST['performers'])) != "") {
+    if(isset($_POST['performers']) && trim(htmlentities($_POST['performers'])) != "") {
         $searchArray["firstName"] = trim(htmlentities($_POST['performers']));
         $searchArray["lastName"] = trim(htmlentities($_POST['performers']));
     }    
-    if($_POST['choreographers'] && trim(htmlentities($_POST['choreographers'])) != "") {
+    if(isset($_POST['choreographers']) && trim(htmlentities($_POST['choreographers'])) != "") {
         $searchArray["cFirstName"] = trim(htmlentities($_POST['choreographers']));
         $searchArray["cLastName"] = trim(htmlentities($_POST['choreographers']));
     }    
-    if($_POST['performanceTitle'] && trim(htmlentities($_POST['performanceTitle'])) != "") {
+    if(isset($_POST['performanceTitle']) && trim(htmlentities($_POST['performanceTitle'])) != "") {
         $searchArray["performanceTitle"] = trim(htmlentities($_POST['performanceTitle']));
     }    
 
@@ -198,6 +198,7 @@ function loadVideos() {
         $results = searchVideosReturn();
         $error = $results[1];
         if ( $error ) {
+            echo $error;
             return;
         }
         $results = $results[0];
@@ -331,7 +332,7 @@ function displayVideoSearch() {
         $genreString = $genreString. '<option value = "'.$genre["genreName"].'">'.$genre["genreName"].'</option>';
     }
 
-    $dates = retrieve("SELECT Year(performanceDate) as year FROM Performances ORDER BY performanceDate");
+    $dates = retrieve("SELECT DISTINCT Year(performanceDate) as year FROM Performances ORDER BY performanceDate");
     $pString = "";
     $error = $dates[1];
     if($error) {
@@ -345,12 +346,14 @@ function displayVideoSearch() {
     echo '
         <form action = "videos.php" method = "post" id = "vidSearch">
             <label for = "yearPerformed">Year performed</label>
-            <select id = "yearPerformed" name = "yearPerformed">';
+            <select id = "yearPerformed" name = "yearPerformed">
+            <option value = "None">None</option>';
     echo $pString; 
     echo '
             </select>
             <label for = "genre">Genre</label>
-            <select id = "genre" name = "genre">';
+            <select id = "genre" name = "genre">
+            <option value = "None">None</option>';
     echo $genreString;
     echo '
             </select>

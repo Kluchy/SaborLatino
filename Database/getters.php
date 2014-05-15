@@ -144,7 +144,6 @@
                                           WHERE $field = \"$value\"";
             } 
             elseif(in_array($field, $choreoSchema) ) {
-                echo "HELLOWORLD";
                 $choreoBool = true;
                 if($field == "cFirstName") {
                     $field = "firstName";
@@ -153,21 +152,21 @@
                     $field = "lastName";
                 }
                 if ( $choreoCheck == "" ) {
-                    $choreoCheck = "SELECT * FROM Videos V, Members M, ChoreographersOfVid CV WHERE V.idMembers
-                        = CV.memberID AND CV.videoID = V.idVideos AND M.$field REGEXP \"$value\"";
+                    $choreoCheck = "SELECT * FROM Videos V, Members M, ChoreographersOfVid CV WHERE M.idMembers
+                        = CV.memberID AND CV.videoID = V.idVideos AND (M.$field REGEXP \"$value\"";
                 }
                 else {
-                    $choreoCheck = $choreoCheck. " OR M.$field REGEXP \"$value\"";
+                    $choreoCheck = $choreoCheck. " OR M.$field REGEXP \"$value\")";
                 } 
             }
             elseif(in_array($field, $memberSchema) ) {
                 $memberBool = true;
                 if ( $memberCheck == "" ) {
-                    $memberCheck = "SELECT * FROM Videos V, Members M, MembersInVid MV WHERE V.idMembers
-                        = MV.memberID AND MV.videoID = V.idVideos AND M.$field REGEXP \"$value\"";
+                    $memberCheck = "SELECT * FROM Videos V, Members M, MembersInVid MV WHERE M.idMembers
+                        = MV.memberID AND MV.videoID = V.idVideos AND (M.$field REGEXP \"$value\"";
                 }
                 else {
-                    $memberCheck = $memberCheck. " OR M.$field REGEXP \"$value\"";
+                    $memberCheck = $memberCheck. " OR M.$field REGEXP \"$value\")";
                 } 
             }
             else {
@@ -189,16 +188,16 @@
         //aggregate query
 
         if (!$perfBool) {
-            $query = "SELECT * FROM Videos VS";
+            $query = "SELECT * FROM Videos VS WHERE VS.idVideos = VS.idVideos";
         }
         if ($genreBool) {
             $query= $query." AND EXISTS( ".$genreCheck." AND VS.idVideos = videoID )";
         }
         if ($memberBool) {
-            $query = $query. "AND EXISTS( ".$memberCheck." AND VS.idVideos = V.idVideos )";
+            $query = $query. " AND EXISTS( ".$memberCheck." AND VS.idVideos = V.idVideos )";
         }
         if ($choreoBool) {
-            $query = $query. "AND EXISTS( ".$choreoCheck." AND VS.idVideos = V.idVideos )";
+            $query = $query. " AND EXISTS( ".$choreoCheck." AND VS.idVideos = V.idVideos )";
         }
         $query = $query. ";";
         //submit query and return results
